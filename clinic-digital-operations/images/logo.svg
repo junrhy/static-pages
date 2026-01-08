@@ -1,0 +1,15 @@
+<svg width="180" height="36" viewBox="0 0 180 36" xmlns="http://www.w3.org/2000/svg">
+  <!-- Icon: System/Operations symbol - represents digital operations and coordination -->
+  <circle cx="18" cy="18" r="8" fill="#1F3A5F"/>
+  <rect x="13" y="13" width="10" height="10" fill="none" stroke="white" stroke-width="1.3" rx="1.2"/>
+  <line x1="18" y1="6" x2="18" y2="13" stroke="white" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="18" y1="23" x2="18" y2="30" stroke="white" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="6" y1="18" x2="13" y2="18" stroke="white" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="23" y1="18" x2="30" y2="18" stroke="white" stroke-width="1.6" stroke-linecap="round"/>
+  
+  <!-- Text -->
+  <text x="38" y="23" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" font-size="15" font-weight="600" fill="#1F3A5F" letter-spacing="-0.3">
+    Continuum
+  </text>
+</svg>
+
