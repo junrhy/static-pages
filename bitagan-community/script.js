@@ -331,7 +331,7 @@ async function fetchNews() {
                 .replace(/\r?\n/g, '<br>');
 
             return `
-                <div class="news-card" style="margin-bottom: 25px; position: relative;">
+                <div class="news-card" style="margin-bottom: 25px; position: relative; border: 1px solid var(--border-color); border-radius: 16px; overflow: hidden; background: var(--bg-white); box-shadow: var(--shadow-sm); transition: transform 0.3s ease, box-shadow 0.3s ease;">
                     <div class="news-image" style="width: 100%;">
                         <img src="${imageUrl}" alt="${news.title}" onerror="this.src='https://placehold.co/400x250?text=Image+Unavailable'">
                     </div>

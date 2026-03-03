@@ -1290,3 +1290,8 @@ section {
   -webkit-box-orient: vertical;
   overflow: hidden text-overflow ellipsis;
 }
+.news-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-xl), var(--shadow-primary);
+    border-color: var(--primary-color) !important;
+}
