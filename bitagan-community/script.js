@@ -305,6 +305,13 @@ async function fetchNews() {
         const newsData = await response.json();
         const newsList = newsData.data || [];
 
+        // Sort news by date (newest first)
+        newsList.sort((a, b) => {
+            const dateA = new Date(a.published_at || a.created_at);
+            const dateB = new Date(b.published_at || b.created_at);
+            return dateB - dateA; // Descending order
+        });
+
         loadingEl.style.display = 'none';
 
         if (newsList.length === 0) {

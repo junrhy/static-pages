@@ -1295,3 +1295,14 @@ section {
     box-shadow: var(--shadow-xl), var(--shadow-primary);
     border-color: var(--primary-color) !important;
 }
+
+.news-card {
+    background: var(--bg-white);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+}
