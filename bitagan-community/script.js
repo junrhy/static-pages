@@ -303,12 +303,15 @@ async function fetchNews() {
         }
 
         const newsData = await response.json();
-        const newsList = newsData.data || [];
+        let newsList = newsData.data || [];
 
-        // Sort news by date (newest first)
+        // Only show published content
+        newsList = newsList.filter(news => news.status === 'published');
+
+        // Sort news by updated_at (newest first)
         newsList.sort((a, b) => {
-            const dateA = new Date(a.published_at || a.created_at);
-            const dateB = new Date(b.published_at || b.created_at);
+            const dateA = new Date(a.updated_at);
+            const dateB = new Date(b.updated_at);
             return dateB - dateA; // Descending order
         });
 
@@ -321,7 +324,7 @@ async function fetchNews() {
 
         // Generate HTML for each news item
         const newsHTML = newsList.map(news => {
-            const publishDate = new Date(news.published_at || news.created_at);
+            const publishDate = new Date(news.updated_at);
             const dateString = publishDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 
             const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
