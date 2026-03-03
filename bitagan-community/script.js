@@ -320,12 +320,11 @@ async function fetchNews() {
             // Use featured image or a placeholder
             let imageUrl = news.featured_image || 'https://placehold.co/400x250?text=News';
 
-            // Generate an excerpt from content if excerpt is null
-            let itemExcerpt = news.excerpt;
-            if (!itemExcerpt && news.content) {
-                // Strip URLs and take first 100 chars
-                itemExcerpt = news.content.replace(/(?:https?|ftp):\/\/[\n\S]+/g, '').substring(0, 100) + '...';
-            }
+            // Convert content into HTML formatting (handling newlines and making links clickable)
+            const urlRegex = /(https?:\/\/[^\s]+)/g;
+            let formattedContent = (news.content || '')
+                .replace(urlRegex, '<a href="$1" target="_blank" rel="noopener noreferrer" style="color: var(--primary-color); font-weight: 500;">$1</a>')
+                .replace(/\r?\n/g, '<br>');
 
             return `
                 <div class="news-card">
@@ -335,8 +334,7 @@ async function fetchNews() {
                     <div class="news-content">
                         <span class="news-date">${dateString}</span>
                         <h3 class="news-title">${news.title}</h3>
-                        <p class="news-excerpt">${itemExcerpt || ''}</p>
-                        ${news.content.includes('http') ? `<a href="${news.content.match(/(?:https?|ftp):\/\/[\n\S]+/)[0]}" target="_blank" class="btn btn-primary btn-sm" style="margin-top: 15px; padding: 8px 15px; font-size: 0.9rem;">Read More</a>` : ''}
+                        <p class="news-excerpt" style="white-space: pre-wrap;">${formattedContent}</p>
                     </div>
                 </div>
             `;

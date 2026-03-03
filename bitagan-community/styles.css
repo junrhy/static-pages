@@ -1259,3 +1259,9 @@ section {
     }
 }
 
+
+@media (min-width: 900px) {
+    .news-grid {
+        grid-template-columns: repeat(3, 1fr) !important;
+    }
+}
