@@ -158,17 +158,18 @@ async function fetchProducts() {
         // Generate HTML for each product
         const productsHTML = products.map(product => {
             // Use thumbnail, first image, or a placeholder
-            let imageUrl = 'https://via.placeholder.com/300x200?text=No+Image';
+            let imageUrl = 'https://placehold.co/300x200?text=No+Image';
             if (product.thumbnail_url) {
                 // If it's a relative path starting with /, prepend the backend URL (assuming it serves the images)
                 // Otherwise if it's already a full URL or base64, use it directly
                 imageUrl = product.thumbnail_url.startsWith('/')
                     ? `http://localhost:8001${product.thumbnail_url}`
                     : product.thumbnail_url;
-            } else if (product.images && product.images.length > 0 && product.images[0].url) {
-                imageUrl = product.images[0].url.startsWith('/')
-                    ? `http://localhost:8001${product.images[0].url}`
-                    : product.images[0].url;
+            } else if (product.images && product.images.length > 0 && (product.images[0].url || product.images[0].image_url)) {
+                let imgField = product.images[0].image_url || product.images[0].url;
+                imageUrl = imgField.startsWith('/')
+                    ? `http://localhost:8001${imgField}`
+                    : imgField;
             }
 
             const formattedPrice = new Intl.NumberFormat('en-PH', {
@@ -182,7 +183,7 @@ async function fetchProducts() {
             return `
                 <div class="product-card">
                     <div class="product-image">
-                        <img src="${imageUrl}" alt="${product.name}" onerror="this.src='https://via.placeholder.com/300x200?text=Image+Unavailable'">
+                        <img src="${imageUrl}" alt="${product.name}" onerror="this.src='https://placehold.co/300x200?text=Image+Unavailable'">
                         <div class="product-status ${statusClass}">${statusText}</div>
                     </div>
                     <div class="product-content">
@@ -249,7 +250,7 @@ async function fetchEvents() {
             const timeString = `${formatTime(startDate)} - ${formatTime(endDate)}`;
 
             // Use specific image if available, else a nice default family picnic image
-            let imageUrl = event.image_url || 'https://images.unsplash.com/photo-1528607929212-2636ec44253e?w=400&q=80';
+            let imageUrl = event.image_url || event.image || 'https://images.unsplash.com/photo-1528607929212-2636ec44253e?w=400&q=80';
             if (imageUrl.startsWith('/')) {
                 imageUrl = 'https://sakto-app-backend.onrender.com' + imageUrl;
             }
@@ -281,8 +282,78 @@ async function fetchEvents() {
     }
 }
 
+async function fetchNews() {
+    const container = document.getElementById('news-container');
+    const loadingEl = document.getElementById('news-loading');
+    const errorEl = document.getElementById('news-error');
+
+    if (!container || !loadingEl || !errorEl) return;
+
+    try {
+        const response = await fetch(`${API_BASE_URL}/content-creator?client_identifier=${CLIENT_IDENTIFIER}`, {
+            method: 'GET',
+            headers: {
+                'x-api-key': API_KEY,
+                'Accept': 'application/json'
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const newsData = await response.json();
+        const newsList = newsData.data || [];
+
+        loadingEl.style.display = 'none';
+
+        if (newsList.length === 0) {
+            container.innerHTML = '<div class="no-products">No news available at the moment.</div>';
+            return;
+        }
+
+        // Generate HTML for each news item
+        const newsHTML = newsList.map(news => {
+            const publishDate = new Date(news.published_at || news.created_at);
+            const dateString = publishDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+
+            // Use featured image or a placeholder
+            let imageUrl = news.featured_image || 'https://placehold.co/400x250?text=News';
+
+            // Generate an excerpt from content if excerpt is null
+            let itemExcerpt = news.excerpt;
+            if (!itemExcerpt && news.content) {
+                // Strip URLs and take first 100 chars
+                itemExcerpt = news.content.replace(/(?:https?|ftp):\/\/[\n\S]+/g, '').substring(0, 100) + '...';
+            }
+
+            return `
+                <div class="news-card">
+                    <div class="news-image">
+                        <img src="${imageUrl}" alt="${news.title}" onerror="this.src='https://placehold.co/400x250?text=Image+Unavailable'">
+                    </div>
+                    <div class="news-content">
+                        <span class="news-date">${dateString}</span>
+                        <h3 class="news-title">${news.title}</h3>
+                        <p class="news-excerpt">${itemExcerpt || ''}</p>
+                        ${news.content.includes('http') ? `<a href="${news.content.match(/(?:https?|ftp):\/\/[\n\S]+/)[0]}" target="_blank" class="btn btn-primary btn-sm" style="margin-top: 15px; padding: 8px 15px; font-size: 0.9rem;">Read More</a>` : ''}
+                    </div>
+                </div>
+            `;
+        }).join('');
+
+        container.innerHTML = newsHTML;
+
+    } catch (error) {
+        console.error('Error fetching news:', error);
+        loadingEl.style.display = 'none';
+        errorEl.style.display = 'block';
+    }
+}
+
 // Call fetch functions when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     fetchProducts();
     fetchEvents();
+    fetchNews();
 });
