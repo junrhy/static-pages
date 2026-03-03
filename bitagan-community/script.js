@@ -242,11 +242,10 @@ async function fetchEvents() {
             const startDate = new Date(event.start_date);
             const endDate = new Date(event.end_date);
 
-            const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-            const month = monthNames[startDate.getMonth()];
-            const day = startDate.getDate();
+            const month = startDate.toLocaleDateString('en-US', { timeZone: 'Asia/Manila', month: 'short' });
+            const day = startDate.toLocaleDateString('en-US', { timeZone: 'Asia/Manila', day: 'numeric' });
 
-            const formatTime = (date) => date.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+            const formatTime = (date) => date.toLocaleTimeString('en-US', { timeZone: 'Asia/Manila', hour: 'numeric', minute: '2-digit', hour12: true });
             const timeString = `${formatTime(startDate)} - ${formatTime(endDate)}`;
 
             // Use specific image if available, else a nice default family picnic image
@@ -325,11 +324,9 @@ async function fetchNews() {
         // Generate HTML for each news item
         const newsHTML = newsList.map(news => {
             const publishDate = new Date(news.updated_at);
-            const dateString = publishDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 
-            const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-            const month = monthNames[publishDate.getMonth()];
-            const day = publishDate.getDate();
+            const month = publishDate.toLocaleDateString('en-US', { timeZone: 'Asia/Manila', month: 'short' });
+            const day = publishDate.toLocaleDateString('en-US', { timeZone: 'Asia/Manila', day: 'numeric' });
 
             // Use featured image or a placeholder
             let imageUrl = news.featured_image || 'https://placehold.co/400x250?text=News';
