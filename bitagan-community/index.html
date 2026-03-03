@@ -24,6 +24,7 @@
                     </li>
                     <li><a href="#home" class="nav-link">Home</a></li>
                     <li><a href="#about" class="nav-link">About</a></li>
+                    <li><a href="#products" class="nav-link">Products</a></li>
                     <li><a href="#events" class="nav-link">Events</a></li>
                     <li><a href="#contact" class="nav-link">Contact</a></li>
                 </ul>
@@ -80,6 +81,29 @@
                         we create opportunities for family members to connect, learn, and grow together.
                     </p>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="products" class="products">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Community Products</h2>
+                <p class="section-subtitle">Support our family members by checking out their products and services</p>
+            </div>
+            
+            <div id="products-loading" class="products-loading">
+                <div class="spinner"></div>
+                <p>Loading products...</p>
+            </div>
+            
+            <div id="products-error" class="products-error" style="display: none;">
+                <p>Unable to load products at this time. Please try again later.</p>
+            </div>
+            
+            <div id="products-container" class="products-grid">
+                <!-- Products will be injected here via JavaScript -->
             </div>
         </div>
     </section>
