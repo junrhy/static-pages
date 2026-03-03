@@ -206,5 +206,83 @@ async function fetchProducts() {
     }
 }
 
-// Call fetchProducts when DOM is loaded
-document.addEventListener('DOMContentLoaded', fetchProducts);
+async function fetchEvents() {
+    const container = document.getElementById('events-container');
+    const loadingEl = document.getElementById('events-loading');
+    const errorEl = document.getElementById('events-error');
+
+    if (!container || !loadingEl || !errorEl) return;
+
+    try {
+        const response = await fetch(`${API_BASE_URL}/events/upcoming?client_identifier=${CLIENT_IDENTIFIER}`, {
+            method: 'GET',
+            headers: {
+                'x-api-key': API_KEY,
+                'Accept': 'application/json'
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const eventsData = await response.json();
+        const events = eventsData.data || [];
+
+        loadingEl.style.display = 'none';
+
+        if (events.length === 0) {
+            container.innerHTML = '<div class="no-products">No upcoming events at the moment.</div>';
+            return;
+        }
+
+        // Generate HTML for each event
+        const eventsHTML = events.map(event => {
+            const startDate = new Date(event.start_date);
+            const endDate = new Date(event.end_date);
+
+            const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+            const month = monthNames[startDate.getMonth()];
+            const day = startDate.getDate();
+
+            const formatTime = (date) => date.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+            const timeString = `${formatTime(startDate)} - ${formatTime(endDate)}`;
+
+            // Use specific image if available, else a nice default family picnic image
+            let imageUrl = event.image_url || 'https://images.unsplash.com/photo-1528607929212-2636ec44253e?w=400&q=80';
+            if (imageUrl.startsWith('/')) {
+                imageUrl = 'https://sakto-app-backend.onrender.com' + imageUrl;
+            }
+
+            return `
+                <div class="event-card">
+                    <div class="event-image">
+                        <img src="${imageUrl}" alt="${event.title}">
+                    </div>
+                    <div class="event-date">
+                        <span class="date-day">${day}</span>
+                        <span class="date-month">${month}</span>
+                    </div>
+                    <div class="event-details">
+                        <h3>${event.title}</h3>
+                        <p class="event-time">📍 ${event.location || 'TBA'} | ${timeString}</p>
+                        <p class="event-description">${event.description ? event.description.replace(/\\n/g, '<br>') : ''}</p>
+                    </div>
+                </div>
+            `;
+        }).join('');
+
+        container.innerHTML = eventsHTML;
+
+    } catch (error) {
+        console.error('Error fetching events:', error);
+        loadingEl.style.display = 'none';
+        errorEl.style.display = 'block';
+    }
+}
+
+// Call fetch functions when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    fetchProducts();
+    fetchEvents();
+});
