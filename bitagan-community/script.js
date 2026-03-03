@@ -317,6 +317,10 @@ async function fetchNews() {
             const publishDate = new Date(news.published_at || news.created_at);
             const dateString = publishDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 
+            const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+            const month = monthNames[publishDate.getMonth()];
+            const day = publishDate.getDate();
+
             // Use featured image or a placeholder
             let imageUrl = news.featured_image || 'https://placehold.co/400x250?text=News';
 
@@ -327,14 +331,18 @@ async function fetchNews() {
                 .replace(/\r?\n/g, '<br>');
 
             return `
-                <div class="news-card">
-                    <div class="news-image">
+                <div class="news-card" style="margin-bottom: 25px; position: relative;">
+                    <div class="news-image" style="width: 100%;">
                         <img src="${imageUrl}" alt="${news.title}" onerror="this.src='https://placehold.co/400x250?text=Image+Unavailable'">
                     </div>
-                    <div class="news-content">
-                        <span class="news-date">${dateString}</span>
-                        <h3 class="news-title">${news.title}</h3>
-                        <p class="news-excerpt" style="white-space: pre-wrap;">${formattedContent}</p>
+                    <div class="event-date" style="position: absolute; top: 20px; left: 20px;">
+                        <span class="date-day">${day}</span>
+                        <span class="date-month">${month}</span>
+                    </div>
+                    <div class="event-details" style="padding: 2rem; display: flex; flex-direction: column; justify-content: center; flex-grow: 1;">
+                        <h3 style="font-size: 1.5rem; color: var(--primary-dark); margin-bottom: 0.5rem; line-height: 1.4;">${news.title}</h3>
+                        <p class="event-time" style="color: var(--secondary-dark); font-weight: 500; margin-bottom: 1rem; font-size: 0.95rem;">✍️ ${news.author || 'Bitagan Family'}</p>
+                        <p class="event-description" style="color: var(--text-light); line-height: 1.7; white-space: pre-wrap; margin-bottom: 0;">${formattedContent}</p>
                     </div>
                 </div>
             `;
