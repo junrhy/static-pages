@@ -502,6 +502,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Fetch demographics from Family Tree API
 async function fetchDemographics() {
+    const totalEl = document.getElementById('demo-total');
+    const maleEl = document.getElementById('demo-male');
+    const femaleEl = document.getElementById('demo-female');
     const adultsEl = document.getElementById('demo-adults');
     const kidsEl = document.getElementById('demo-kids');
     const seniorsEl = document.getElementById('demo-seniors');
@@ -510,7 +513,7 @@ async function fetchDemographics() {
     if (!adultsEl || !kidsEl || !seniorsEl) return;
 
     try {
-        const response = await fetch(`${API_BASE_URL}/family-tree/members?client_identifier=${CLIENT_IDENTIFIER}`, {
+        const response = await fetch(`${API_BASE_URL}/family-tree/statistics?client_identifier=${CLIENT_IDENTIFIER}`, {
             method: 'GET',
             headers: {
                 'x-api-key': API_KEY,
@@ -522,39 +525,17 @@ async function fetchDemographics() {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
 
-        const members = await response.json();
-
-        let kids = 0;
-        let adults = 0;
-        let seniors = 0;
-
-        const today = new Date();
-
-        // Calculate age for each member
-        members.forEach(member => {
-            if (member.birth_date) {
-                const birthDate = new Date(member.birth_date);
-                let age = today.getFullYear() - birthDate.getFullYear();
-                const m = today.getMonth() - birthDate.getMonth();
-
-                if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-                    age--;
-                }
-
-                if (age < 18) {
-                    kids++;
-                } else if (age >= 18 && age < 60) {
-                    adults++;
-                } else {
-                    seniors++;
-                }
-            }
-        });
+        const dataResponse = await response.json();
+        const stats = dataResponse.data;
 
         // Update DOM elements with gentle animation
-        animateValue(adultsEl, 0, adults, 1500);
-        animateValue(kidsEl, 0, kids, 1500);
-        animateValue(seniorsEl, 0, seniors, 1500);
+        if (totalEl) animateValue(totalEl, 0, stats.living_vs_deceased.living, 1500);
+        if (maleEl) animateValue(maleEl, 0, stats.gender_distribution.male, 1500);
+        if (femaleEl) animateValue(femaleEl, 0, stats.gender_distribution.female, 1500);
+
+        if (adultsEl) animateValue(adultsEl, 0, stats.age_distribution.adults, 1500);
+        if (kidsEl) animateValue(kidsEl, 0, stats.age_distribution.kids, 1500);
+        if (seniorsEl) animateValue(seniorsEl, 0, stats.age_distribution.seniors, 1500);
 
     } catch (error) {
         console.error('Error fetching demographics:', error);
