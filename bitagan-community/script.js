@@ -415,7 +415,7 @@ async function fetchChallenges() {
                 gradientAttr = 'background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);';
                 iconAttr = '🎤';
                 dateDisplay = `<span>⏳</span> <span style="color: var(--text-light); font-size: 0.9rem;">Starts: ${startDate.toLocaleDateString('en-US', { timeZone: 'Asia/Manila', month: 'short', day: 'numeric', year: 'numeric' })}</span>`;
-                actionBtn = `<a href="https://neulify.com/challenges/${challenge.id}/public-register" target="_blank" rel="noopener noreferrer" class="btn" style="background: #e2e8f0; color: #64748b; width: 100%; text-align: center; padding: 0.8rem; border-radius: 12px; font-weight: 600; text-decoration: none; cursor: not-allowed;">Registration Opens Soon</a>`;
+                actionBtn = `<a href="https://neulify.com/challenges/${challenge.id}/public" target="_blank" rel="noopener noreferrer" class="btn" style="background: #e2e8f0; color: #64748b; width: 100%; text-align: center; padding: 0.8rem; border-radius: 12px; font-weight: 600; text-decoration: none; cursor: not-allowed;">Registration Opens Soon</a>`;
             } else if (now > endDate) {
                 // Completed
                 statusBadge = 'COMPLETED';
@@ -423,7 +423,7 @@ async function fetchChallenges() {
                 gradientAttr = 'background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);';
                 iconAttr = '🏅';
                 dateDisplay = `<span>📅</span> <span style="color: var(--text-light); font-size: 0.9rem;">Ended: ${endDate.toLocaleDateString('en-US', { timeZone: 'Asia/Manila', month: 'short', day: 'numeric', year: 'numeric' })}</span>`;
-                actionBtn = `<a href="https://neulify.com/challenges/${challenge.id}/public-register" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="width: 100%; text-align: center; padding: 0.8rem; border-radius: 12px;">View Results</a>`;
+                actionBtn = `<a href="https://neulify.com/challenges/${challenge.id}/public" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="width: 100%; text-align: center; padding: 0.8rem; border-radius: 12px;">View Results</a>`;
             } else {
                 // Active
                 statusBadge = 'ACTIVE';
@@ -431,7 +431,7 @@ async function fetchChallenges() {
                 gradientAttr = 'background: linear-gradient(135deg, #FF9A9E 0%, #FECFEF 99%, #FECFEF 100%);';
                 iconAttr = '🎯';
                 dateDisplay = `<span>⏳</span> <span style="color: var(--text-light); font-size: 0.9rem;">Ends: ${endDate.toLocaleDateString('en-US', { timeZone: 'Asia/Manila', month: 'short', day: 'numeric', year: 'numeric' })}</span>`;
-                actionBtn = `<a href="https://neulify.com/challenges/${challenge.id}/public-register" target="_blank" rel="noopener noreferrer" class="btn" style="background: white; color: var(--accent-color); border: 2px solid var(--accent-color); width: 100%; text-align: center; padding: 0.8rem; border-radius: 12px; font-weight: 600; text-decoration: none; transition: all 0.3s;">Join Challenge</a>`;
+                actionBtn = `<a href="https://neulify.com/challenges/${challenge.id}/public" target="_blank" rel="noopener noreferrer" class="btn" style="background: white; color: var(--accent-color); border: 2px solid var(--accent-color); width: 100%; text-align: center; padding: 0.8rem; border-radius: 12px; font-weight: 600; text-decoration: none; transition: all 0.3s;">Join Challenge</a>`;
             }
 
             // Custom cover image if provided, otherwise fallback to gradient
