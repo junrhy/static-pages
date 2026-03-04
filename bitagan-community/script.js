@@ -497,4 +497,80 @@ document.addEventListener('DOMContentLoaded', () => {
     fetchEvents();
     fetchChallenges();
     fetchNews();
+    fetchDemographics();
 });
+
+// Fetch demographics from Family Tree API
+async function fetchDemographics() {
+    const adultsEl = document.getElementById('demo-adults');
+    const kidsEl = document.getElementById('demo-kids');
+    const seniorsEl = document.getElementById('demo-seniors');
+
+    // Only proceed if elements exist
+    if (!adultsEl || !kidsEl || !seniorsEl) return;
+
+    try {
+        const response = await fetch(`${API_BASE_URL}/family-tree/members?client_identifier=${CLIENT_IDENTIFIER}`, {
+            method: 'GET',
+            headers: {
+                'x-api-key': API_KEY,
+                'Accept': 'application/json'
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const members = await response.json();
+
+        let kids = 0;
+        let adults = 0;
+        let seniors = 0;
+
+        const today = new Date();
+
+        // Calculate age for each member
+        members.forEach(member => {
+            if (member.birth_date) {
+                const birthDate = new Date(member.birth_date);
+                let age = today.getFullYear() - birthDate.getFullYear();
+                const m = today.getMonth() - birthDate.getMonth();
+
+                if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+                    age--;
+                }
+
+                if (age < 18) {
+                    kids++;
+                } else if (age >= 18 && age < 60) {
+                    adults++;
+                } else {
+                    seniors++;
+                }
+            }
+        });
+
+        // Update DOM elements with gentle animation
+        animateValue(adultsEl, 0, adults, 1500);
+        animateValue(kidsEl, 0, kids, 1500);
+        animateValue(seniorsEl, 0, seniors, 1500);
+
+    } catch (error) {
+        console.error('Error fetching demographics:', error);
+    }
+}
+
+// Helper to animate numbers
+function animateValue(obj, start, end, duration) {
+    let startTimestamp = null;
+    const step = (timestamp) => {
+        if (!startTimestamp) startTimestamp = timestamp;
+        const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+        obj.innerHTML = Math.floor(progress * (end - start) + start);
+        if (progress < 1) {
+            window.requestAnimationFrame(step);
+        }
+    };
+    window.requestAnimationFrame(step);
+}
