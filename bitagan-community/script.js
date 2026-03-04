@@ -364,9 +364,137 @@ async function fetchNews() {
     }
 }
 
+async function fetchChallenges() {
+    const container = document.getElementById('challenges-container');
+    const loadingEl = document.getElementById('challenges-loading');
+    const errorEl = document.getElementById('challenges-error');
+
+    if (!container || !loadingEl || !errorEl) return;
+
+    try {
+        const response = await fetch(`${API_BASE_URL}/challenges?client_identifier=${CLIENT_IDENTIFIER}`, {
+            method: 'GET',
+            headers: {
+                'x-api-key': API_KEY,
+                'Accept': 'application/json'
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        // The API returns an array directly, but let's be safe
+        const challenges = Array.isArray(data) ? data : (data.data || []);
+
+        loadingEl.style.display = 'none';
+
+        if (challenges.length === 0) {
+            container.innerHTML = '<div class="no-products" style="grid-column: 1 / -1; text-align: center;">More exciting challenges coming soon!</div>';
+            return;
+        }
+
+        const challengesHTML = challenges.map(challenge => {
+            // Determine status and corresponding styling
+            const now = new Date();
+            const startDate = new Date(challenge.start_date);
+            const endDate = new Date(challenge.end_date);
+
+            let statusBadge = '';
+            let statusStyle = '';
+            let gradientAttr = '';
+            let iconAttr = '🏆';
+            let actionBtn = '';
+            let dateDisplay = '';
+
+            if (now < startDate) {
+                // Upcoming
+                statusBadge = 'UPCOMING';
+                statusStyle = 'color: var(--accent-color);';
+                gradientAttr = 'background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);';
+                iconAttr = '🎤';
+                dateDisplay = `<span>⏳</span> <span style="color: var(--text-light); font-size: 0.9rem;">Starts: ${startDate.toLocaleDateString('en-US', { timeZone: 'Asia/Manila', month: 'short', day: 'numeric', year: 'numeric' })}</span>`;
+                actionBtn = `<a href="https://neulify.com/challenges/${challenge.id}/public-register" target="_blank" rel="noopener noreferrer" class="btn" style="background: #e2e8f0; color: #64748b; width: 100%; text-align: center; padding: 0.8rem; border-radius: 12px; font-weight: 600; text-decoration: none; cursor: not-allowed;">Registration Opens Soon</a>`;
+            } else if (now > endDate) {
+                // Completed
+                statusBadge = 'COMPLETED';
+                statusStyle = 'color: var(--primary-color);';
+                gradientAttr = 'background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);';
+                iconAttr = '🏅';
+                dateDisplay = `<span>📅</span> <span style="color: var(--text-light); font-size: 0.9rem;">Ended: ${endDate.toLocaleDateString('en-US', { timeZone: 'Asia/Manila', month: 'short', day: 'numeric', year: 'numeric' })}</span>`;
+                actionBtn = `<a href="https://neulify.com/challenges/${challenge.id}/public-register" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="width: 100%; text-align: center; padding: 0.8rem; border-radius: 12px;">View Results</a>`;
+            } else {
+                // Active
+                statusBadge = 'ACTIVE';
+                statusStyle = 'color: var(--accent-color);';
+                gradientAttr = 'background: linear-gradient(135deg, #FF9A9E 0%, #FECFEF 99%, #FECFEF 100%);';
+                iconAttr = '🎯';
+                dateDisplay = `<span>⏳</span> <span style="color: var(--text-light); font-size: 0.9rem;">Ends: ${endDate.toLocaleDateString('en-US', { timeZone: 'Asia/Manila', month: 'short', day: 'numeric', year: 'numeric' })}</span>`;
+                actionBtn = `<a href="https://neulify.com/challenges/${challenge.id}/public-register" target="_blank" rel="noopener noreferrer" class="btn" style="background: white; color: var(--accent-color); border: 2px solid var(--accent-color); width: 100%; text-align: center; padding: 0.8rem; border-radius: 12px; font-weight: 600; text-decoration: none; transition: all 0.3s;">Join Challenge</a>`;
+            }
+
+            // Custom cover image if provided, otherwise fallback to gradient
+            const imageDisplay = challenge.image_url
+                ? `<img src="${challenge.image_url}" alt="${challenge.title}" style="width: 100%; height: 100%; object-fit: cover; position: absolute; top:0; left:0; z-index: 0;">
+                   <div style="position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.3); z-index: 1;"></div>`
+                : `<span style="font-size: 5rem; filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.2)); position: relative; z-index: 2;">${iconAttr}</span>`;
+
+            // Format rewards
+            let prizeText = 'TBA';
+            if (challenge.rewards && challenge.rewards.length > 0) {
+                prizeText = challenge.rewards.map(r => r.value).join(', ');
+            } else if (challenge.prize) {
+                prizeText = challenge.prize; // Fallback to 'prize' property if it exists
+            }
+
+            // Include goal info if available
+            let goalDisplay = '';
+            if (challenge.goal_value && challenge.goal_unit) {
+                goalDisplay = `<div style="display: flex; align-items: center; gap: 10px; margin-bottom: 5px;">
+                                    <span>🎯</span> <span style="color: var(--text-light); font-size: 0.9rem;">Goal: ${challenge.goal_value} ${challenge.goal_unit}</span>
+                               </div>`;
+            }
+
+            return `
+                <div class="challenge-card" style="background: var(--bg-white); border-radius: 16px; overflow: hidden; border: 1px solid var(--border-color); box-shadow: var(--shadow-sm); transition: transform 0.3s ease, box-shadow 0.3s ease; display: flex; flex-direction: column;">
+                    <div style="position: relative; height: 180px; ${gradientAttr} display: flex; align-items: center; justify-content: center;">
+                        ${imageDisplay}
+                        <div style="position: absolute; top: 15px; right: 15px; background: white; ${statusStyle} padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; box-shadow: 0 2px 10px rgba(0,0,0,0.1); z-index: 2;">${statusBadge}</div>
+                    </div>
+                    <div style="padding: 2rem; display: flex; flex-direction: column; flex-grow: 1;">
+                        <h3 style="font-size: 1.4rem; color: var(--text-dark); margin-bottom: 0.5rem; font-family: 'Playfair Display', serif;">${challenge.title}</h3>
+                        <p style="color: var(--text-light); font-size: 0.95rem; line-height: 1.6; margin-bottom: 1.5rem; flex-grow: 1;">${challenge.description ? challenge.description.replace(/\n|\\n/g, '<br>') : ''}</p>
+                        
+                        <div style="background: var(--bg-light); padding: 1rem; border-radius: 12px; margin-bottom: 1.5rem;">
+                            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 5px;">
+                                <span>🏆</span> <strong style="color: var(--primary-dark); font-size: 0.9rem;">Prize: ${prizeText}</strong>
+                            </div>
+                            ${goalDisplay}
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                ${dateDisplay}
+                            </div>
+                        </div>
+                        
+                        ${actionBtn}
+                    </div>
+                </div>
+            `;
+        }).join('');
+
+        container.innerHTML = challengesHTML;
+
+    } catch (error) {
+        console.error('Error fetching challenges:', error);
+        loadingEl.style.display = 'none';
+        errorEl.style.display = 'block';
+    }
+}
+
 // Call fetch functions when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     fetchProducts();
     fetchEvents();
+    fetchChallenges();
     fetchNews();
 });
