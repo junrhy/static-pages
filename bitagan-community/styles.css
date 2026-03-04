@@ -1340,3 +1340,9 @@ section {
     box-shadow: var(--shadow-xl), var(--shadow-primary) !important;
     border-color: var(--primary-color) !important;
 }
+
+.committee-card:hover {
+    transform: translateY(-8px) !important;
+    box-shadow: var(--shadow-xl), var(--shadow-primary) !important;
+    border-color: var(--primary-color) !important;
+}
