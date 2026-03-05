@@ -125,6 +125,7 @@ window.addEventListener('scroll', highlightNavigation);
 const API_BASE_URL = 'https://sakto-app-backend.onrender.com/api';
 const API_KEY = '4|d5d5bsHmujUgRsu1Y3iwfZFQBQDb8croK66RkkuR69f0a8b5';
 const CLIENT_IDENTIFIER = 'b6ac6642-4a05-4ede-9423-54adb9a0b9f1';
+const JOB_BOARD_ID = '1';
 
 async function fetchProducts() {
     const container = document.getElementById('products-container');
@@ -567,7 +568,7 @@ async function fetchJobs() {
     if (!container || !loadingEl || !errorEl || !emptyEl) return;
 
     try {
-        const response = await fetch(`${API_BASE_URL}/jobs?client_identifier=${CLIENT_IDENTIFIER}&job_board_id=1`, {
+        const response = await fetch(`${API_BASE_URL}/jobs?client_identifier=${CLIENT_IDENTIFIER}&job_board_id=${JOB_BOARD_ID}`, {
             method: 'GET',
             headers: {
                 'x-api-key': API_KEY,
@@ -639,12 +640,7 @@ async function fetchJobs() {
             const iconText = '💼';
 
             // Application URL handling
-            let applyLink = '#contact';
-            if (job.application_url) {
-                applyLink = job.application_url;
-            } else if (job.application_email) {
-                applyLink = `mailto:${job.application_email}`;
-            }
+            let applyLink = `https://neulify.com/jobs/${job.job_board_id}/apply?client=${job.client_identifier}`;
 
             return `
                 <div class="job-card"
