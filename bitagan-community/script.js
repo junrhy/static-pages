@@ -339,18 +339,18 @@ async function fetchNews() {
                 .replace(/\r?\n/g, '<br>');
 
             return `
-                <div class="news-card" style="margin-bottom: 25px; position: relative; border: 1px solid var(--border-color); border-radius: 16px; overflow: hidden; background: var(--bg-white); box-shadow: var(--shadow-sm); transition: transform 0.3s ease, box-shadow 0.3s ease;">
-                    <div class="news-image" style="width: 100%;">
+                <div class="event-card">
+                    <div class="event-image">
                         <img src="${imageUrl}" alt="${news.title}" onerror="this.src='https://placehold.co/400x250?text=Image+Unavailable'">
                     </div>
-                    <div class="event-date" style="position: absolute; top: 20px; left: 20px;">
+                    <div class="event-date">
                         <span class="date-day">${day}</span>
                         <span class="date-month">${month}</span>
                     </div>
-                    <div class="event-details" style="padding: 2rem; display: flex; flex-direction: column; justify-content: center; flex-grow: 1;">
-                        <h3 style="font-size: 1.5rem; color: var(--primary-dark); margin-bottom: 0.5rem; line-height: 1.4;">${news.title}</h3>
-                        <p class="event-time" style="color: var(--secondary-dark); font-weight: 500; margin-bottom: 1rem; font-size: 0.95rem;">✍️ ${news.author || 'Bitagan Family'}</p>
-                        <p class="event-description" style="color: var(--text-light); line-height: 1.7; white-space: pre-wrap; margin-bottom: 0;">${formattedContent}</p>
+                    <div class="event-details">
+                        <h3>${news.title}</h3>
+                        <p class="event-time">✍️ ${news.author || 'Bitagan Family'}</p>
+                        <p class="event-description">${formattedContent}</p>
                     </div>
                 </div>
             `;
