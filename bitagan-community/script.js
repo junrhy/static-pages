@@ -664,9 +664,9 @@ async function fetchJobs() {
                         ${job.description ? job.description.replace(/\n|\\n/g, '<br>') : ''}
                     </p>
                     <div
-                        style="display: flex; gap: 1rem; margin-bottom: 0.5rem; color: var(--text-light); font-size: 0.85rem; font-weight: 500;">
-                        <span>📍 ${locationText}</span>
-                        <span>💰 ${salaryText}</span>
+                        style="display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 0.5rem; color: var(--text-light); font-size: 0.85rem; font-weight: 500;">
+                        <span style="display: flex; align-items: center; gap: 6px;"><span>📍</span> ${locationText}</span>
+                        <span style="display: flex; align-items: center; gap: 6px;"><span>💰</span> ${salaryText}</span>
                     </div>
                     ${deadlineDisplay}
                     
