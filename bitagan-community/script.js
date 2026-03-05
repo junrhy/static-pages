@@ -498,6 +498,7 @@ document.addEventListener('DOMContentLoaded', () => {
     fetchChallenges();
     fetchNews();
     fetchDemographics();
+    fetchJobs();
 });
 
 // Fetch demographics from Family Tree API
@@ -555,3 +556,136 @@ function animateValue(obj, start, end, duration) {
     };
     window.requestAnimationFrame(step);
 }
+
+// Fetch jobs from API
+async function fetchJobs() {
+    const container = document.getElementById('jobs-container');
+    const loadingEl = document.getElementById('jobs-loading');
+    const errorEl = document.getElementById('jobs-error');
+    const emptyEl = document.getElementById('jobs-empty');
+
+    if (!container || !loadingEl || !errorEl || !emptyEl) return;
+
+    try {
+        const response = await fetch(`${API_BASE_URL}/jobs?client_identifier=${CLIENT_IDENTIFIER}&job_board_id=1`, {
+            method: 'GET',
+            headers: {
+                'x-api-key': API_KEY,
+                'Accept': 'application/json'
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const dataResponse = await response.json();
+        let jobs = dataResponse.data;
+
+        loadingEl.style.display = 'none';
+
+        // Filter out draft jobs
+        if (jobs) {
+            jobs = jobs.filter(job => job.status !== 'draft');
+        }
+
+        if (!jobs || jobs.length === 0) {
+            emptyEl.style.display = 'block';
+            return;
+        }
+
+        const jobsHTML = jobs.map(job => {
+
+            // Format employment type appearance
+            let typeColor = 'var(--primary-color)';
+            let typeBg = 'rgba(107, 142, 90, 0.1)';
+            if (job.employment_type === 'Part-Time' || job.employment_type === 'part_time') {
+                typeColor = 'var(--secondary-dark)';
+                typeBg = 'rgba(212, 165, 116, 0.1)';
+            } else if (job.employment_type === 'Project' || job.employment_type === 'contract') {
+                typeColor = 'var(--accent-dark)';
+                typeBg = 'rgba(224, 122, 95, 0.1)';
+            }
+            const empType = job.employment_type ? job.employment_type.replace('_', ' ').toUpperCase() : 'JOB';
+
+            // Format salary
+            let salaryText = 'Not specified';
+            if (job.salary_min && job.salary_max) {
+                const currency = job.salary_currency || 'Php';
+                salaryText = `${currency} ${job.salary_min} - ${job.salary_max}`;
+            } else if (job.salary_min) {
+                const currency = job.salary_currency || 'Php';
+                salaryText = `${currency} ${job.salary_min}+`;
+            }
+
+            // Application Deadline Display
+            let deadlineDisplay = '';
+            if (job.application_deadline) {
+                const deadlineDate = new Date(job.application_deadline);
+                const formatter = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+                deadlineDisplay = `<div style="display: flex; align-items: center; gap: 6px; margin-top: 1rem; color: var(--accent-color); font-size: 0.85rem; font-weight: 600;">
+                                    <span>⏳</span> Ends: ${formatter.format(deadlineDate)}
+                                   </div>`;
+            }
+
+            // Featured Tag
+            const featuredTag = job.is_featured ?
+                `<span style="position: absolute; top: -12px; right: 2rem; background: var(--secondary-color); color: white; padding: 4px 12px; border-radius: 12px; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.5px; box-shadow: 0 4px 6px rgba(224, 122, 95, 0.3);">FEATURED</span>`
+                : '';
+
+            // Fallbacks for display
+            const locationText = job.location || 'Remote';
+            const categoryText = job.job_category || 'Bitagan Family Network';
+            const iconText = '💼';
+
+            // Application URL handling
+            let applyLink = '#contact';
+            if (job.application_url) {
+                applyLink = job.application_url;
+            } else if (job.application_email) {
+                applyLink = `mailto:${job.application_email}`;
+            }
+
+            return `
+                <div class="job-card"
+                    style="position: relative; background: var(--bg-white); border-radius: 16px; padding: 2.5rem; border: 1px solid var(--border-color); box-shadow: var(--shadow-sm); transition: transform 0.3s ease, box-shadow 0.3s ease;">
+                    ${featuredTag}
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem;">
+                        <div>
+                            <span
+                                style="font-size: 0.8rem; font-weight: 600; color: ${typeColor}; background: ${typeBg}; padding: 4px 10px; border-radius: 20px; letter-spacing: 1px;">${empType}</span>
+                            <h3
+                                style="font-size: 1.4rem; color: var(--primary-dark); margin-top: 0.8rem; margin-bottom: 0.3rem;">
+                                ${job.title}</h3>
+                            <p style="color: var(--text-light); font-size: 0.95rem;">${categoryText}</p>
+                        </div>
+                        <div
+                            style="background: var(--bg-light); width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem;">
+                            ${iconText}</div>
+                    </div>
+                    <p style="color: var(--text-dark); line-height: 1.6; font-size: 0.95rem; margin-bottom: 1.5rem;">
+                        ${job.description ? job.description.replace(/\n|\\n/g, '<br>') : ''}
+                    </p>
+                    <div
+                        style="display: flex; gap: 1rem; margin-bottom: 0.5rem; color: var(--text-light); font-size: 0.85rem; font-weight: 500;">
+                        <span>📍 ${locationText}</span>
+                        <span>💰 ${salaryText}</span>
+                    </div>
+                    ${deadlineDisplay}
+                    
+                    <a href="${applyLink}" ${job.application_url ? 'target="_blank" rel="noopener noreferrer"' : ''} class="btn btn-primary"
+                        style="width: 100%; text-align: center; padding: 0.8rem; margin-top: 2rem;">Apply Now</a>
+                </div>
+            `;
+        }).join('');
+
+        container.innerHTML = jobsHTML;
+
+    } catch (error) {
+        console.error('Error fetching jobs:', error);
+        loadingEl.style.display = 'none';
+        errorEl.style.display = 'block';
+    }
+}
+
