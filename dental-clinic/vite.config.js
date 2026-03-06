@@ -11,7 +11,7 @@ export default defineConfig(({ mode }) => {
             createHtmlPlugin({
                 inject: {
                     data: {
-                        VITE_THEME: env.VITE_THEME || 'gold'
+                        VITE_THEME: process.env.VITE_THEME || env.VITE_THEME || 'gold'
                     }
                 }
             })
