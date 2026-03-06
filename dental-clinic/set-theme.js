@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+require('dotenv').config();
 
 const THEME = process.env.VITE_THEME || 'gold';
 console.log(`[Pre-build] Setting theme to: ${THEME}`);
