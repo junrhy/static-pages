@@ -3,17 +3,16 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "dev": "node set-theme.js && vite",
+    "build": "node set-theme.js && vite build",
+    "preview": "node set-theme.js && vite preview",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
   "devDependencies": {
-    "vite": "^7.3.1",
-    "vite-plugin-html": "^3.2.2"
+    "vite": "^7.3.1"
   }
 }
