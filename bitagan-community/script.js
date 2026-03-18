@@ -334,12 +334,30 @@ async function fetchNews() {
 
             // Convert content into HTML formatting (handling newlines and making links clickable)
             const urlRegex = /(https?:\/\/[^\s]+)/g;
-            let formattedContent = (news.content || '')
+            const formattedContent = (news.content || '')
                 .replace(urlRegex, '<a href="$1" target="_blank" rel="noopener noreferrer" style="color: var(--primary-color); font-weight: 500;">$1</a>')
                 .replace(/\r?\n/g, '<br>');
 
+            // Character limit for truncation
+            const CHAR_LIMIT = 250;
+            const hasMore = (news.content || '').length > CHAR_LIMIT;
+
+            let displayContent = formattedContent;
+            let expandedContent = '';
+
+            if (hasMore) {
+                // Find a good place to cut (after a space)
+                const truncated = (news.content || '').substring(0, CHAR_LIMIT);
+                const lastSpace = truncated.lastIndexOf(' ');
+                const cutIndex = lastSpace > 0 ? lastSpace : CHAR_LIMIT;
+
+                const shortText = (news.content || '').substring(0, cutIndex);
+                displayContent = shortText.replace(urlRegex, '<a href="$1" target="_blank" rel="noopener noreferrer" style="color: var(--primary-color); font-weight: 500;">$1</a>').replace(/\r?\n/g, '<br>');
+                expandedContent = formattedContent;
+            }
+
             return `
-                <div class="event-card">
+                <div class="event-card news-item">
                     <div class="event-image">
                         <img src="${imageUrl}" alt="${news.title}" onerror="this.src='https://placehold.co/400x250?text=Image+Unavailable'">
                     </div>
@@ -350,13 +368,43 @@ async function fetchNews() {
                     <div class="event-details">
                         <h3>${news.title}</h3>
                         <p class="event-time">✍️ ${news.author || 'Bitagan Family'}</p>
-                        <p class="event-description">${formattedContent}</p>
+                        <div class="news-content-wrapper">
+                            <p class="event-description short-content">${displayContent}${hasMore ? '...' : ''}</p>
+                            ${hasMore ? `
+                            <p class="event-description full-content" style="display: none;">${expandedContent}</p>
+                            <button class="read-more-btn">Read More</button>
+                            ` : ''}
+                        </div>
                     </div>
                 </div>
             `;
         }).join('');
 
         container.innerHTML = newsHTML;
+
+        // Add event listeners for Read More buttons using delegation
+        container.addEventListener('click', (e) => {
+            if (e.target.classList.contains('read-more-btn')) {
+                const button = e.target;
+                const wrapper = button.closest('.news-content-wrapper');
+                const shortContent = wrapper.querySelector('.short-content');
+                const fullContent = wrapper.querySelector('.full-content');
+
+                if (fullContent.style.display === 'none') {
+                    fullContent.style.display = 'block';
+                    shortContent.style.display = 'none';
+                    button.textContent = 'Read Less';
+                } else {
+                    fullContent.style.display = 'none';
+                    shortContent.style.display = 'block';
+                    button.textContent = 'Read More';
+
+                    // Optional: scroll back to the top of the card
+                    const card = button.closest('.news-item');
+                    card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }
+            }
+        });
 
     } catch (error) {
         console.error('Error fetching news:', error);
