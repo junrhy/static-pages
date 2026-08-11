@@ -18,13 +18,34 @@
 
     <!-- Custom CSS -->
   <link rel="stylesheet" crossorigin href="/assets/index-Tl6cgL9l.css">
+
+    <!-- Theme from URL param: apply before render to avoid flash -->
+    <script>
+      (function () {
+        var validThemes = ['gold', 'default', 'emerald', 'rose'];
+        var params = new URLSearchParams(window.location.search);
+        var urlTheme = params.get('theme');
+        if (urlTheme && validThemes.includes(urlTheme)) {
+          document.documentElement.setAttribute('data-theme', urlTheme);
+        }
+        // Sync the select dropdown value once the DOM is ready
+        document.addEventListener('DOMContentLoaded', function () {
+          var select = document.getElementById('theme-select');
+          if (select) {
+            var current = document.documentElement.getAttribute('data-theme') || 'gold';
+            select.value = validThemes.includes(current) ? current : 'gold';
+          }
+        });
+      })();
+    </script>
 </head>
 
 <body>
     <!-- Theme Switcher -->
     <div class="theme-switcher">
         <i class='bx bx-palette'></i>
-        <select id="theme-select" onchange="document.documentElement.setAttribute('data-theme', this.value)"
+        <select id="theme-select"
+            onchange="document.documentElement.setAttribute('data-theme', this.value); var p = new URLSearchParams(window.location.search); p.set('theme', this.value); history.replaceState(null, '', '?' + p.toString());"
             aria-label="Select Theme">
             <option value="gold" selected>Gold Theme</option>
             <option value="default">Ocean Blue</option>
