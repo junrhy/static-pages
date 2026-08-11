@@ -5,7 +5,7 @@ require('dotenv').config();
 const THEME = process.env.VITE_THEME || 'gold';
 console.log(`[Pre-build] Setting theme to: ${THEME}`);
 
-const htmlPath = path.join(__dirname, 'index.html');
+const htmlPath = path.join(__dirname, 'dist', 'index.html');
 let html = fs.readFileSync(htmlPath, 'utf8');
 
 // Replace the placeholder or the previous theme with the correct theme
