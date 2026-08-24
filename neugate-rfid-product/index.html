@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NeuGate — School Entrance RFID System</title>
+  <meta name="description" content="NeuGate is a cross-platform, local-first RFID entrance and parent notification system. Manage student registration, track real-time gate activity, and send direct parent SMS alerts." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 0.4rem;">
+        <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+        <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+      </svg>
+      Neu<span>Gate</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#features">Features</a></li>
+      <li><a href="#download">Download</a></li>
+    </ul>
+    <a href="#download" class="btn btn-primary">Get App</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <span class="badge">🚀 v0.1.0 Release</span>
+    <h1>Local-First <span>School Entrance</span> RFID System</h1>
+    <p class="lead">
+      Secure your campus with fast RFID student check-ins, automated parent notification logs, and offline-first data storage.
+    </p>
+    <div class="hero-ctas">
+      <a href="#download" class="btn btn-primary btn-lg">Download App</a>
+      <a href="#features" class="btn btn-outline btn-lg">Explore Features</a>
+    </div>
+    
+    <div class="hero-showcase">
+      <img src="public/neugate_hero_showcase.png" alt="NeuGate Interface Dashboard Mockup" />
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section id="features" class="features">
+    <div class="section-header">
+      <h2>Engineered for Campus Safety</h2>
+      <p>Secure, lightweight, and fully integrated desktop suite.</p>
+    </div>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🪪</div>
+        <h3>RFID Keyboard HID</h3>
+        <p>Works out-of-the-box with any standard USB keyboard-emulating RFID card readers. No drivers needed.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">💬</div>
+        <h3>Parent Alerts</h3>
+        <p>Integrate custom HTTP webhooks or direct Semaphore API endpoints to notify parents instantly on entry/exit scans.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">💾</div>
+        <h3>SQLite Persistence</h3>
+        <p>All student registrations, gate scans, and log details are securely kept locally in a local sandbox database.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">⚙️</div>
+        <h3>Branding & Theme</h3>
+        <p>Customize system names, upload your school logo, configure scanner locations, and switch between light and dark modes.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">📥</div>
+        <h3>CSV Import / Export</h3>
+        <p>Bulk import students or export attendance log summaries directly to CSV sheets inside a native file dialog.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🔒</div>
+        <h3>Hardware Keys</h3>
+        <p>Authorized workspace protection. Run applications secured behind node-generated machine fingerprint locks.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- DOWNLOAD -->
+  <section id="download" class="download">
+    <div class="download-wrapper">
+      <div class="section-header">
+        <h2>Install NeuGate</h2>
+        <p>Cross-platform builds available via GitHub Release pages.</p>
+      </div>
+
+      <div class="download-cards">
+        <div class="download-card">
+          <div class="download-icon">🍎</div>
+          <h3>macOS</h3>
+          <p class="download-meta">Apple Silicon & Intel Universal (.dmg)</p>
+          <a href="https://github.com/junrhy/school-entrance-id-system/releases" target="_blank" class="btn btn-outline" style="width: 100%; justify-content: center;">Download for Mac</a>
+        </div>
+
+        <div class="download-card">
+          <div class="download-icon">🪟</div>
+          <h3>Windows</h3>
+          <p class="download-meta">Windows 10 / 11 64-bit Installer (.msi)</p>
+          <a href="https://github.com/junrhy/school-entrance-id-system/releases" target="_blank" class="btn btn-outline" style="width: 100%; justify-content: center;">Download for Windows</a>
+        </div>
+
+        <div class="download-card">
+          <div class="download-icon">🐧</div>
+          <h3>Linux</h3>
+          <p class="download-meta">Debian Package & AppImage (.deb)</p>
+          <a href="https://github.com/junrhy/school-entrance-id-system/releases" target="_blank" class="btn btn-outline" style="width: 100%; justify-content: center;">Download for Linux</a>
+        </div>
+      </div>
+
+      <p class="system-req">
+        Required: Node.js 18+ (for generate_key utility) and a USB keyboard-emulation RFID reader.
+      </p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">NeuGate RFID</div>
+    <div class="footer-tagline">Campus Security. Simplified Attendance. Parent Notifications.</div>
+    <div style="margin-top: 1.5rem; font-size: 0.8rem; color: var(--text-muted);">
+      &copy; 2026 NeuGate • Released under MIT License
+    </div>
+  </footer>
+
+</body>
+</html>
