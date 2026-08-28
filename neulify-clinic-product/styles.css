@@ -482,11 +482,16 @@ footer {
   .stats { gap: 2rem; }
 }
 
-/* ── REQUEST LICENSE FORM ── */
-#request-license {
+/* ── PRICING SECTION ── */
+#pricing {
   background: var(--bg-card);
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
+}
+
+/* ── REQUEST LICENSE FORM ── */
+#request-license {
+  background: var(--bg);
 }
 
 .request-box {
