@@ -4,267 +4,176 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>NeuTruck Freight — Enterprise Desktop Fleet Logistics & Waybill POS System</title>
-  <meta name="description" content="Commercial desktop software for Philippine logistics haulers, inter-island RoRo freight management, live vehicle telemetry, SMS notifications, and printable waybills." />
+  <meta name="description" content="NeuTruck Freight is a cross-platform desktop logistics engine and waybill POS system for Philippine hauling fleets, RoRo inter-island passages, live telemetry, and SMS notifications." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
-  <!-- Navigation Bar -->
-  <nav class="navbar">
-    <a href="#" class="brand">
-      <img src="public/logo.png" alt="NeuTruck Freight Logo" class="brand-logo-img" />
-      <div>
-        <div class="brand-title">NeuTruck <span style="color: var(--primary);">Freight</span></div>
-        <div class="brand-tagline">Logistics Engine</div>
-      </div>
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">
+      <img src="public/logo.png" alt="NeuTruck Logo" />
+      Neu<span>Truck</span>
     </a>
-
     <ul class="nav-links">
       <li><a href="#features">Features</a></li>
-      <li><a href="#pricing">Pricing &amp; Licenses</a></li>
-      <li><a href="#download">Download App</a></li>
-      <li><a href="#download" class="btn btn-primary">Get App</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#download">Download</a></li>
     </ul>
+    <a href="#download" class="btn btn-primary">Get App</a>
   </nav>
 
-  <!-- Hero Section -->
+  <!-- HERO -->
   <section class="hero">
-    <div class="hero-content">
-      <div class="badge-tag">
-        🚚 Philippines Freight &amp; RoRo Logistics POS
-      </div>
-      <h1 class="hero-h1">
-        Master Inter-Island Freight &amp; Fleet Operations <span>Without Monthly Fees.</span>
-      </h1>
-      <p class="hero-p">
-        Enterprise desktop POS &amp; logistics engine designed for Philippine hauling fleets. Track live vehicle checkpoints, automate client SMS notifications, issue official printable waybills, and sync terminals across LAN &amp; Cloud PostgreSQL.
-      </p>
-
-      <div class="hero-actions">
-        <a href="#pricing" class="btn btn-primary">
-          🚀 View License Packages
-        </a>
-        <a href="#features" class="btn btn-outline">
-          📖 Explore Modules
-        </a>
-      </div>
+    <span class="badge">🚀 Freight &amp; Logistics Engine</span>
+    <h1><span>Enterprise Logistics</span> &amp; Waybill System</h1>
+    <p class="lead">
+      Master inter-island hauling, live vehicle telemetry, automated multi-recipient SMS dispatches, and official printable waybill contracts without monthly fees.
+    </p>
+    <div class="hero-ctas">
+      <a href="#download" class="btn btn-primary btn-lg">Download App</a>
+      <a href="#features" class="btn btn-outline btn-lg">Explore Features</a>
     </div>
-
-    <div class="hero-preview">
-      <img src="public/hero-showcase.png" alt="NeuTruck Desktop POS System Interface Showcase" class="hero-img" />
+    
+    <div class="hero-showcase">
+      <img src="public/hero-showcase.png" alt="NeuTruck Desktop POS Interface Dashboard Showcase" />
     </div>
   </section>
 
-  <!-- Pricing & Commercial License Packages -->
-  <section class="pricing-section" id="pricing">
-    <div class="section-title">
-      <h2>Transparent Commercial Pricing</h2>
-      <p>Pay once for base installation, plus flexible multi-terminal workstation add-ons. 100% offline-ready with lifetime database ownership.</p>
-    </div>
-
-    <div class="pricing-grid">
-
-      <!-- Plan 1: Single Station Base -->
-      <div class="pricing-card">
-        <div class="plan-name">Starter Terminal</div>
-        <div class="plan-desc">Perfect for independent haulers, solo dispatchers, and single-office freight logistics operators.</div>
-        
-        <div class="price-box">
-          <span class="price-currency">₱</span>
-          <span class="price-amount">24,999</span>
-          <span class="price-period">/ lifetime base license</span>
-        </div>
-
-        <ul class="features-list">
-          <li class="highlight"><span class="check-icon">✓</span> 1 Main Dispatcher Desktop License</li>
-          <li class="highlight"><span class="check-icon">✓</span> Full Fleet Vehicle Registry &amp; Driver Logs</li>
-          <li class="highlight"><span class="check-icon">✓</span> Live Checkpoint Tracking &amp; RoRo Ferry Support</li>
-          <li><span class="check-icon">✓</span> Printable Official Waybills &amp; Receipts</li>
-          <li><span class="check-icon">✓</span> SMS Gateway Integration (Semaphore / UniSMS)</li>
-          <li><span class="check-icon">✓</span> Local SQLite Database Engine</li>
-          <li><span class="check-icon">✓</span> Lifetime Software Updates &amp; Zero Monthly Subscriptions</li>
-        </ul>
-
-        <a href="https://neulify.com/contact" class="btn btn-outline">Get Starter License</a>
-      </div>
-
-      <!-- Plan 2: Multi-Terminal Standard (FEATURED) -->
-      <div class="pricing-card featured">
-        <div class="popular-badge">MOST POPULAR FOR LOGISTICS FLEETS</div>
-        <div class="plan-name">Enterprise Fleet Pack</div>
-        <div class="plan-desc">Designed for growing transport companies requiring multi-terminal dispatch &amp; cashier stations.</div>
-
-        <div class="price-box">
-          <span class="price-currency">₱</span>
-          <span class="price-amount">39,999</span>
-          <span class="price-period">/ base license (Includes 3 PCs)</span>
-        </div>
-
-        <ul class="features-list">
-          <li class="highlight"><span class="check-icon">✓</span> Base Installation + 3 Included Desktop PCs</li>
-          <li class="highlight"><span class="check-icon">✓</span> Multi-Terminal LAN Database Sync (SQLite / Postgres)</li>
-          <li class="highlight"><span class="check-icon">✓</span> Dynamic Multi-Recipient SMS Audience Broadcaster</li>
-          <li class="highlight"><span class="check-icon">✓</span> Repairs, Fuel Allowances &amp; Maintenance P&amp;L</li>
-          <li><span class="check-icon">✓</span> Accounts Receivable &amp; Terms Billing Ledger</li>
-          <li><span class="check-icon">✓</span> Role-Based Access Control (RBAC Permissions)</li>
-          <li><span class="check-icon">✓</span> AWS S3 / Cloud Backup Sync Engine</li>
-          <li><span class="check-icon">✓</span> Priority Onsite / Remote Technical Support</li>
-        </ul>
-
-        <a href="https://neulify.com/contact" class="btn btn-primary">Order Enterprise Pack</a>
-      </div>
-
-      <!-- Plan 3: Extra PC Terminal Add-On -->
-      <div class="pricing-card">
-        <div class="plan-name">Workstation Add-On</div>
-        <div class="plan-desc">Add extra PC terminals for additional dispatchers, billing cashiers, or port coordinators anytime.</div>
-
-        <div class="price-box">
-          <span class="price-currency">₱</span>
-          <span class="price-amount">4,500</span>
-          <span class="price-period">/ additional PC terminal</span>
-        </div>
-
-        <ul class="features-list">
-          <li class="highlight"><span class="check-icon">✓</span> Additional Desktop Client Seat License</li>
-          <li class="highlight"><span class="check-icon">✓</span> Connects to Main Base Database Engine</li>
-          <li class="highlight"><span class="check-icon">✓</span> Real-Time Multi-User Concurrent Dispatching</li>
-          <li><span class="check-icon">✓</span> Machine Fingerprint Node Licensing</li>
-          <li><span class="check-icon">✓</span> Full Module Access Based on Staff Permissions</li>
-          <li><span class="check-icon">✓</span> Unlimited Scalability as Your Fleet Grows</li>
-        </ul>
-
-        <a href="https://neulify.com/contact" class="btn btn-outline">Add Extra Terminals</a>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- Features Grid -->
-  <section class="features-section" id="features">
-    <div class="section-title">
+  <!-- FEATURES -->
+  <section id="features" class="features">
+    <div class="section-header">
       <h2>Engineered for Freight Operations</h2>
-      <p>Built from the ground up for heavy hauling, inter-island cargo shipping, and fleet telemetry.</p>
+      <p>Secure, lightweight, and fully integrated desktop logistics suite.</p>
     </div>
 
     <div class="features-grid">
-      <div class="feature-item">
+      <div class="feature-card">
         <div class="feature-icon">📦</div>
-        <div class="feature-title">Dispatch &amp; RoRo Ticket Engine</div>
-        <div class="feature-description">
-          Manage full waybill lifecycles, cargo tonnage, fuel allowances, driver trip pay, and inter-island ferry passages (FastCat, 2GO, Montenegro).
-        </div>
+        <h3>Dispatch &amp; RoRo Ticket Engine</h3>
+        <p>Manage full waybill lifecycles, cargo tonnage, fuel allowances, driver trip pay, and inter-island ferry passages (FastCat, 2GO, Montenegro).</p>
       </div>
 
-      <div class="feature-item">
+      <div class="feature-card">
         <div class="feature-icon">📍</div>
-        <div class="feature-title">Live Freeform Location Checkpoints</div>
-        <div class="feature-description">
-          Log real-time truck position updates (*e.g. Batangas Port Pier 3, Mid-Sea Crossing*) with live timestamps synced directly to fleet views.
-        </div>
+        <h3>Live Freeform Location Checkpoints</h3>
+        <p>Log real-time truck position updates (e.g. Batangas Port Pier 3, Mid-Sea Crossing) with live timestamps synced directly to fleet views.</p>
       </div>
 
-      <div class="feature-item">
+      <div class="feature-card">
         <div class="feature-icon">💬</div>
-        <div class="feature-title">Dynamic SMS Broadcaster</div>
-        <div class="feature-description">
-          Automate text notifications via Semaphore, UniSMS, or PhilSMS to custom contact lists (Client Shippers, Operations Managers, Port Reps).
-        </div>
+        <h3>Dynamic SMS Broadcaster</h3>
+        <p>Automate text notifications via Semaphore, UniSMS, or PhilSMS to custom contact lists (Client Shippers, Operations Managers, Port Reps).</p>
       </div>
 
-      <div class="feature-item">
+      <div class="feature-card">
         <div class="feature-icon">📄</div>
-        <div class="feature-title">Printable Waybills &amp; Collection Vouchers</div>
-        <div class="feature-description">
-          Generate official single-page A4 Bill of Lading tickets with shipper manifests, consignee drop-off details, and Proof of Delivery (POD) signature blocks.
-        </div>
+        <h3>Printable Waybills &amp; Collection Vouchers</h3>
+        <p>Generate official single-page A4 Bill of Lading tickets with shipper manifests, consignee drop-off details, and Proof of Delivery (POD) signature blocks.</p>
       </div>
 
-      <div class="feature-item">
+      <div class="feature-card">
         <div class="feature-icon">🚚</div>
-        <div class="feature-title">Fleet Vehicles &amp; Maintenance Logs</div>
-        <div class="feature-description">
-          Track truck status (Available, In Transit, Maintenance, Decommissioned), odometer mileage, oil changes, tire replacements, and overhead expenses.
-        </div>
+        <h3>Fleet Vehicles &amp; Maintenance Logs</h3>
+        <p>Track truck status (Available, In Transit, Maintenance, Decommissioned), odometer mileage, oil changes, tire replacements, and overhead expenses.</p>
       </div>
 
-      <div class="feature-item">
+      <div class="feature-card">
         <div class="feature-icon">📊</div>
-        <div class="feature-title">Financial P&amp;L &amp; Analytics</div>
-        <div class="feature-description">
-          Real-time gross freight revenue, diesel fuel costs, RoRo ferry passage overhead, accounts receivable terms, and net operating profit margins.
+        <h3>Financial P&amp;L &amp; Analytics</h3>
+        <p>Real-time gross freight revenue, diesel fuel costs, RoRo ferry passage overhead, accounts receivable terms, and net operating profit margins.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section id="pricing" class="pricing">
+    <div class="section-header">
+      <h2>Simple, Transparent Pricing</h2>
+      <p>Flexible per-license pricing tailored to your logistics dispatch setup.</p>
+    </div>
+
+    <div class="pricing-card-wrapper">
+      <div class="pricing-card">
+        <div class="pricing-badge">Popular Choice</div>
+        <h3>Base License Installation</h3>
+        <div class="pricing-price">
+          <span class="currency">₱</span>25,000
+          <span class="period">/ base installation</span>
+        </div>
+        <p class="pricing-desc">Includes main server setup, database initialization, master dispatch console setup, and staff onboarding.</p>
+        
+        <div class="pricing-divider"></div>
+
+        <div class="pricing-addon">
+          <div class="addon-header">
+            <span class="addon-icon">🖥️</span>
+            <div>
+              <div class="addon-title">Multi-Station Terminal Add-on</div>
+              <div class="addon-price">+ ₱5,000 <span class="addon-period">per additional PC workstation license</span></div>
+            </div>
+          </div>
+          <p class="addon-desc">Connect additional dispatchers, billing cashiers, or port coordinators to the main server over LAN or Cloud PostgreSQL.</p>
+        </div>
+
+        <ul class="pricing-features">
+          <li>✓ Main Server Installation &amp; Master Dispatch Setup</li>
+          <li>✓ Unlimited Waybills, Cargo Manifests &amp; Fleet Vehicles</li>
+          <li>✓ SMS Gateway (Semaphore, UniSMS, PhilSMS, Mobile, Webhook)</li>
+          <li>✓ Dynamic Multi-Recipient SMS Dispatch Audience Targets</li>
+          <li>✓ Printable Official Waybills &amp; Collection Vouchers</li>
+          <li>✓ LAN Shared SQLite &amp; Cloud PostgreSQL Support</li>
+          <li>✓ Lifetime Hardware Fingerprint Machine License</li>
+        </ul>
+
+        <a href="#download" class="btn btn-primary btn-lg" style="width: 100%; justify-content: center; margin-top: 2rem;">Get Started Now</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- DOWNLOAD -->
+  <section id="download" class="download">
+    <div class="download-wrapper">
+      <div class="section-header">
+        <h2>Install NeuTruck Freight</h2>
+        <p>Cross-platform desktop builds available via automated CI/CD pipeline.</p>
+      </div>
+
+      <div class="download-cards">
+        <div class="download-card">
+          <div class="download-icon">🍎</div>
+          <h3>macOS</h3>
+          <p class="download-meta">Apple Silicon &amp; Intel Universal (.dmg)</p>
+          <a href="https://junrhy.github.io/static-pages/neutruck-product/downloads/neutruck-macos-universal.dmg" target="_blank" class="btn btn-outline" style="width: 100%; justify-content: center;">Download for Mac</a>
+        </div>
+
+        <div class="download-card">
+          <div class="download-icon">🪟</div>
+          <h3>Windows</h3>
+          <p class="download-meta">Windows 10 / 11 64-bit Installer (.msi)</p>
+          <a href="https://junrhy.github.io/static-pages/neutruck-product/downloads/neutruck-windows.msi" target="_blank" class="btn btn-outline" style="width: 100%; justify-content: center;">Download for Windows</a>
+        </div>
+
+        <div class="download-card">
+          <div class="download-icon">🐧</div>
+          <h3>Linux</h3>
+          <p class="download-meta">Debian Package &amp; AppImage (.deb)</p>
+          <a href="https://junrhy.github.io/static-pages/neutruck-product/downloads/neutruck-linux.deb" target="_blank" class="btn btn-outline" style="width: 100%; justify-content: center;">Download for Linux</a>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ROI Callout Banner -->
-  <section style="padding: 0 4rem;">
-    <div class="roi-banner" id="roi">
-      <div class="roi-text">
-        <h3>Why Philippine Logistics Haulers Choose NeuTruck</h3>
-        <p>
-          Unlike cloud SaaS products charging monthly recurring fees per truck, NeuTruck Freight provides 100% local database control, offline resiliency, and transparent one-time desktop licensing.
-        </p>
-      </div>
-      <a href="#download" class="btn btn-primary" style="white-space: nowrap;">
-        📥 Download Installer
-      </a>
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">NeuTruck Freight</div>
+    <div class="footer-tagline">Enterprise Desktop Logistics. Inter-Island Freight. Dynamic SMS Dispatches.</div>
+    <div style="margin-top: 1.5rem; font-size: 0.8rem; color: var(--text-muted);">
+      &copy; 2026 NeuTruck • Enterprise Fleet Logistics Systems
     </div>
-  </section>
-
-  <!-- Download App Installers Section -->
-  <section id="download" style="padding: 6rem 4rem; background: rgba(15, 23, 42, 0.6); border-top: 1px solid var(--border);">
-    <div class="section-title">
-      <h2>Install NeuTruck Freight Desktop POS</h2>
-      <p>Cross-platform native desktop installers compiled automatically via GitHub Actions CI/CD.</p>
-    </div>
-
-    <div style="max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem;">
-      <!-- macOS -->
-      <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 2rem; text-align: center; display: flex; flexDirection: column; justify-content: space-between;">
-        <div>
-          <div style="font-size: 2.8rem; margin-bottom: 0.75rem;">🍎</div>
-          <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem;">macOS Desktop</h3>
-          <p style="font-size: 0.82rem; color: var(--text-dim); margin-bottom: 1.5rem;">Apple Silicon &amp; Intel Universal Binary (.dmg)</p>
-        </div>
-        <a href="https://junrhy.github.io/static-pages/neutruck-product/downloads/neutruck-macos-universal.dmg" target="_blank" class="btn btn-outline" style="width: 100%;">
-          Download DMG (Mac)
-        </a>
-      </div>
-
-      <!-- Windows -->
-      <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 2rem; text-align: center; display: flex; flexDirection: column; justify-content: space-between;">
-        <div>
-          <div style="font-size: 2.8rem; margin-bottom: 0.75rem;">🪟</div>
-          <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem;">Windows OS</h3>
-          <p style="font-size: 0.82rem; color: var(--text-dim); margin-bottom: 1.5rem;">Windows 10 / 11 64-bit Installer (.msi)</p>
-        </div>
-        <a href="https://junrhy.github.io/static-pages/neutruck-product/downloads/neutruck-windows.msi" target="_blank" class="btn btn-outline" style="width: 100%;">
-          Download MSI (Windows)
-        </a>
-      </div>
-
-      <!-- Linux -->
-      <div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 2rem; text-align: center; display: flex; flexDirection: column; justify-content: space-between;">
-        <div>
-          <div style="font-size: 2.8rem; margin-bottom: 0.75rem;">🐧</div>
-          <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem;">Linux Distribution</h3>
-          <p style="font-size: 0.82rem; color: var(--text-dim); margin-bottom: 1.5rem;">Debian / Ubuntu Package (.deb)</p>
-        </div>
-        <a href="https://junrhy.github.io/static-pages/neutruck-product/downloads/neutruck-linux.deb" target="_blank" class="btn btn-outline" style="width: 100%;">
-          Download DEB (Linux)
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="footer">
-    <div style="margin-bottom: 1rem; font-weight: 700; color: var(--text-main);">
-      NeuTruck Freight Engine — Enterprise Desktop Logistics
-    </div>
-    <p>© 2026 NeuTruck Freight Systems. All rights reserved. Developed by Neulify Technology Solutions.</p>
   </footer>
 
 </body>
