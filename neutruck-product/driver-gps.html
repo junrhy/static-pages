@@ -371,10 +371,16 @@
 
     function copyEndpointUrl() {
       const plate = encodeURIComponent(truckPlateInput.value || 'DEFAULT');
-      const baseUrl = window.location.href.split('?')[0].replace('driver-gps.html', 'api/telematics.json');
+      let baseUrl = window.location.href.split('?')[0].replace('driver-gps.html', 'api/telematics.json');
+      
+      // If running on local disk file:// protocol, suggest local backend port 3456
+      if (window.location.protocol === 'file:') {
+        baseUrl = `http://localhost:3456/api/telematics`;
+      }
+
       const url = `${baseUrl}?plate=${plate}`;
       navigator.clipboard.writeText(url);
-      alert("NeuTruck GET Endpoint copied to clipboard!");
+      alert(`NeuTruck GET Endpoint copied to clipboard!\n\n${url}`);
     }
   </script>
 </body>
