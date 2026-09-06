@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NeuGate Enterprise — Employee Access &amp; Timekeeping System</title>
+  <meta name="description" content="NeuGate Enterprise is a modern employee access control and timekeeping platform for corporate offices. Track real-time RFID check-ins, employee attendance, and send automated manager SMS notifications." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 0.4rem;">
+        <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+        <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+      </svg>Neu<span>Gate Enterprise</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#features">Features</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#download">Download</a></li>
+    </ul>
+    <a href="#download" class="btn btn-primary">Get App</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <span class="badge">✨ A Product of Neulify</span>
+    <h1><span>Corporate Access Control</span> &amp; Timekeeping System</h1>
+    <p class="lead">
+      Streamline office security with instant RFID card check-ins, automated direct manager SMS notifications, and real-time employee attendance tracking.
+    </p>
+    <div class="hero-ctas">
+      <a href="#download" class="btn btn-primary btn-lg">Download App</a>
+      <a href="#features" class="btn btn-outline btn-lg">Explore Features</a>
+    </div>
+    
+    <div class="hero-showcase">
+      <img src="public/neugate_hero_showcase.png" alt="NeuGate Enterprise Interface Dashboard Mockup" />
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section id="features" class="features">
+    <div class="section-header">
+      <h2>Engineered for Corporate Office Security</h2>
+      <p>Secure, lightweight, and fully integrated desktop access &amp; timekeeping suite.</p>
+    </div>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🪪</div>
+        <h3>RFID / Biometric / QR Readers</h3>
+        <p>Works out-of-the-box with standard USB keyboard-emulating RFID readers, barcode scanners, and USB fingerprint scanners.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">💬</div>
+        <h3>Direct Manager Alerts</h3>
+        <p>Automatically dispatch SMS notifications or custom JSON webhooks to direct managers or HR upon employee entry/exit check-ins.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">💾</div>
+        <h3>Secure Persistence</h3>
+        <p>All employee profiles, turnstile check-ins, and timekeeping logs are kept securely in a local or cloud database.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">⚙️</div>
+        <h3>Custom Corporate Branding</h3>
+        <p>Customize company titles, upload corporate logos, configure turnstile locations, and switch between light and dark themes.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">📥</div>
+        <h3>CSV Import / Export</h3>
+        <p>Bulk import employee directories by department or export timekeeping logs directly to CSV spreadsheets.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🔒</div>
+        <h3>Hardware Key Protection</h3>
+        <p>Authorized workspace protection. Run applications secured behind machine fingerprint hardware locks.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section id="pricing" class="pricing">
+    <div class="section-header">
+      <h2>Simple, Transparent Pricing</h2>
+      <p>Flexible licensing tailored to your office turnstile and door gate setup.</p>
+    </div>
+
+    <div class="pricing-card-wrapper">
+      <div class="pricing-card">
+        <div class="pricing-badge">Popular Choice</div>
+        <h3>Base Corporate Installation</h3>
+        <div class="pricing-price">
+          <span class="currency">₱</span>25,000
+          <span class="period">/ base installation</span>
+        </div>
+        <p class="pricing-desc">Includes main server setup, employee database initialization, master timekeeping console, and onboarding.</p>
+        
+        <div class="pricing-divider"></div>
+
+        <div class="pricing-addon">
+          <div class="addon-header">
+            <span class="addon-icon">🖥️</span>
+            <div>
+              <div class="addon-title">Multi-Turnstile Add-on</div>
+              <div class="addon-price">+ ₱5,000 <span class="addon-period">per additional turnstile / door station</span></div>
+            </div>
+          </div>
+          <p class="addon-desc">Connect additional lobby turnstiles, executive wing gates, or RFID scanners to the main server over LAN or Cloud.</p>
+        </div>
+
+        <ul class="pricing-features">
+          <li>✓ Main Server Installation &amp; Setup</li>
+          <li>✓ Unlimited Employee &amp; Manager Registrations</li>
+          <li>✓ SMS Gateway (Webhook, Semaphore, UniSMS, PhilSMS, Mobile)</li>
+          <li>✓ Real-time Turnstile Gate Activity Console &amp; Audio Alerts</li>
+          <li>✓ CSV Employee Import &amp; Timekeeping Log Exports</li>
+          <li>✓ LAN Shared SQLite &amp; Cloud PostgreSQL Support</li>
+          <li>✓ Lifetime Hardware Fingerprint License</li>
+        </ul>
+
+        <a href="#download" class="btn btn-primary btn-lg" style="width: 100%; justify-content: center; margin-top: 2rem;">Get Started Now</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- DOWNLOAD -->
+  <section id="download" class="download">
+    <div class="download-wrapper">
+      <div class="section-header">
+        <h2>Install NeuGate Enterprise</h2>
+        <p>Cross-platform desktop builds available for company workstations.</p>
+      </div>
+
+      <div class="download-cards">
+        <div class="download-card">
+          <div class="download-icon">🍎</div>
+          <h3>macOS</h3>
+          <p class="download-meta">Apple Silicon &amp; Intel Universal (.dmg)</p>
+          <a href="https://junrhy.github.io/static-pages/neugate-enterprise-product/downloads/neugate-enterprise-macos-universal.dmg" target="_blank" class="btn btn-outline" style="width: 100%; justify-content: center;">Download for Mac</a>
+        </div>
+
+        <div class="download-card">
+          <div class="download-icon">🪟</div>
+          <h3>Windows</h3>
+          <p class="download-meta">Windows 10 / 11 64-bit Installer (.msi)</p>
+          <a href="https://junrhy.github.io/static-pages/neugate-enterprise-product/downloads/neugate-enterprise-windows.msi" target="_blank" class="btn btn-outline" style="width: 100%; justify-content: center;">Download for Windows</a>
+        </div>
+
+        <div class="download-card">
+          <div class="download-icon">🐧</div>
+          <h3>Linux</h3>
+          <p class="download-meta">Debian Package &amp; AppImage (.deb)</p>
+          <a href="https://junrhy.github.io/static-pages/neugate-enterprise-product/downloads/neugate-enterprise-linux.deb" target="_blank" class="btn btn-outline" style="width: 100%; justify-content: center;">Download for Linux</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">NeuGate Enterprise</div>
+    <div class="footer-tagline">Corporate Access Control &amp; Timekeeping System • A Product of <a href="https://neulify.com" target="_blank" style="color: var(--primary); text-decoration: none; font-weight: 700;">Neulify</a></div>
+    <div style="margin-top: 1.5rem; font-size: 0.8rem; color: var(--text-muted);">
+      &copy; 2026 NeuGate Enterprise • Neulify Enterprise Systems
+    </div>
+  </footer>
+
+</body>
+</html>
