@@ -8,7 +8,6 @@
   <meta name="description"
     content="Driver location check-in companion PWA for NeuTruck Freight POS & Logistics Engine." />
   <meta name="theme-color" content="#0a0e1a" />
-  <link rel="manifest" href="manifest.json" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
@@ -151,11 +150,18 @@
   </div>
 
   <script>
-    // PWA Service Worker (Only register on http/https web server)
-    if ('serviceWorker' in navigator && window.location.protocol.startsWith('http')) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js').catch(() => { });
-      });
+    // PWA Service Worker & Manifest (Only register when hosted on http/https web server)
+    if (window.location.protocol.startsWith('http')) {
+      const link = document.createElement('link');
+      link.rel = 'manifest';
+      link.href = 'manifest.json';
+      document.head.appendChild(link);
+
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('./sw.js').catch(() => { });
+        });
+      }
     }
 
     const truckPlateInput = document.getElementById('truckPlateInput');
