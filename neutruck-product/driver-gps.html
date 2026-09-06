@@ -210,10 +210,10 @@
               const province = data.address.state || data.address.region || "";
               const fullLoc = province ? `${city}, ${province}` : city;
 
-              showResults(fullLoc, `${lat}° N, ${lng}° E`);
+              showResults(fullLoc, `${lat}° N, ${lng}° E`, parseFloat(lat), parseFloat(lng));
             })
             .catch(() => {
-              showResults(`GPS Position (${lat}, ${lng})`, `${lat}° N, ${lng}° E`);
+              showResults(`GPS Position (${lat}, ${lng})`, `${lat}° N, ${lng}° E`, parseFloat(lat), parseFloat(lng));
             });
         },
         (error) => {
@@ -225,7 +225,7 @@
       );
     }
 
-    function showResults(locationName, coordsStr) {
+    function showResults(locationName, coordsStr, latNum, lngNum) {
       const btn = document.getElementById('btnGeolocate');
       const gpsStatusContainer = document.getElementById('gpsStatusContainer');
       const locationNameDisplay = document.getElementById('locationNameDisplay');
@@ -239,6 +239,21 @@
 
       btn.disabled = false;
       btn.innerHTML = `<span>Update GPS Position</span>`;
+
+      // Save latest location payload to localStorage for API endpoint sync
+      const plate = truckPlateInput.value || 'DEFAULT';
+      const payload = {
+        status: "success",
+        truckPlate: plate,
+        locationName: locationName,
+        location: locationName,
+        address: locationName,
+        latitude: latNum || 14.5995,
+        longitude: lngNum || 120.9842,
+        updatedAt: new Date().toISOString()
+      };
+      localStorage.setItem(`neutruck_telematics_${plate.toUpperCase()}`, JSON.stringify(payload));
+      localStorage.setItem('neutruck_latest_telematics', JSON.stringify(payload));
     }
 
     function copyEndpointUrl() {
