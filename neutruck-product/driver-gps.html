@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>NeuTruck Driver — GPS Check-in & Live Telematics</title>
+  <meta name="description" content="Driver location check-in companion PWA for NeuTruck Freight POS & Logistics Engine." />
+  <meta name="theme-color" content="#0a0e1a" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    body {
+      padding-bottom: 3rem;
+    }
+    .driver-container {
+      max-width: 540px;
+      margin: 0 auto;
+      padding: 1.5rem 1rem;
+    }
+    .driver-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin-bottom: 1.25rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    }
+    .badge-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+    .badge-active {
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: #10b981;
+    }
+    .badge-warning {
+      background: rgba(245, 158, 11, 0.15);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      color: #f59e0b;
+    }
+    .form-group {
+      margin-bottom: 1.1rem;
+    }
+    .form-label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-bottom: 0.4rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .form-input, .form-select {
+      width: 100%;
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.75rem 0.9rem;
+      color: #fff;
+      font-family: inherit;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .form-input:focus, .form-select:focus {
+      border-color: var(--primary);
+    }
+    .btn-checkin {
+      width: 100%;
+      padding: 1.1rem;
+      font-size: 1.1rem;
+      font-weight: 800;
+      border-radius: 14px;
+      justify-content: center;
+      box-shadow: 0 6px 24px var(--primary-glow);
+    }
+    .gps-display {
+      background: rgba(0, 212, 255, 0.04);
+      border: 1px dashed rgba(0, 212, 255, 0.25);
+      border-radius: 12px;
+      padding: 1rem;
+      margin-top: 1rem;
+      text-align: center;
+    }
+    .gps-coords {
+      font-family: monospace;
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--primary);
+      margin-top: 0.2rem;
+    }
+    .history-item {
+      padding: 0.75rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.85rem;
+    }
+    .history-item:last-child {
+      border-bottom: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav style="position: relative; padding: 1rem 1.25rem;">
+    <a href="index.html" class="nav-logo">
+      <img src="public/logo.png" alt="NeuTruck Logo" />
+      Neu<span>Truck</span> Driver
+    </a>
+    <span class="badge-status badge-active" id="pwaStatusBadge">📲 PWA Ready</span>
+  </nav>
+
+  <div class="driver-container">
+
+    <!-- HEADER / INTRO CARD -->
+    <div class="driver-card">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.75rem;">
+        <div>
+          <h2 style="font-size: 1.3rem; font-weight: 800;">🛰️ Driver Telematics Broadcast</h2>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.2rem;">
+            Press the location button to resolve your current GPS position or select a Philippine Municipality.
+          </p>
+        </div>
+      </div>
+
+      <!-- TRUCK IDENTITY SETUP -->
+      <div class="form-group" style="margin-top: 1.2rem;">
+        <label class="form-label">Truck License Plate / Vehicle ID</label>
+        <input type="text" id="truckPlateInput" class="form-input" placeholder="e.g. NAK-8892 or TRK-01" />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Driver / Helper Name</label>
+        <input type="text" id="driverNameInput" class="form-input" placeholder="e.g. Junrhy Crodua" />
+      </div>
+    </div>
+
+    <!-- MAIN CHECK-IN ACTION CARD -->
+    <div class="driver-card">
+      <h3 style="font-size: 1.05rem; font-weight: 800; margin-bottom: 1rem;">📍 Check-In Current Location</h3>
+
+      <button type="button" id="btnGeolocate" class="btn btn-primary btn-checkin" onclick="acquireDeviceLocation()">
+        <span>📡 Press to Check Current GPS Position</span>
+      </button>
+
+      <div id="gpsStatusContainer" class="gps-display" style="display: none;">
+        <div style="font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700;">Detected Location</div>
+        <div id="locationNameDisplay" style="font-size: 1.2rem; font-weight: 900; color: #fff; margin: 0.2rem 0;">Manila Port Area</div>
+        <div id="gpsCoordsDisplay" class="gps-coords">14.5995° N, 120.9842° E</div>
+        <div id="gpsAccuracyDisplay" style="font-size: 0.72rem; color: var(--text-muted); margin-top: 0.2rem;">Accuracy: ±15 meters</div>
+      </div>
+
+      <div style="margin: 1.25rem 0 0.75rem 0; text-align: center; position: relative;">
+        <hr style="border: none; border-top: 1px solid var(--border);" />
+        <span style="position: absolute; top: -10px; left: 50%; transform: translateX(-50%); background: var(--bg-card); padding: 0 0.75rem; font-size: 0.75rem; color: var(--text-muted); font-weight: 700;">OR MANUAL SELECT</span>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Select Philippine Port / City / Town</label>
+        <select id="locationSelect" class="form-select" onchange="handleManualLocationSelect(this.value)">
+          <option value="">-- Choose Key Port or Municipality --</option>
+          <option value="Manila South Harbor Pier 3">Manila South Harbor (Pier 3)</option>
+          <option value="Batangas International Port">Batangas International Port</option>
+          <option value="Calapan Port, Oriental Mindoro">Calapan Port, Oriental Mindoro</option>
+          <option value="Lucena City Port, Quezon">Lucena City Port, Quezon</option>
+          <option value="Matnog Port, Sorsogon">Matnog Port, Sorsogon</option>
+          <option value="Allen Port, Northern Samar">Allen Port, Northern Samar</option>
+          <option value="Liloan Ferry Terminal, Southern Leyte">Liloan Ferry Terminal, Southern Leyte</option>
+          <option value="Lipata Ferry Terminal, Surigao City">Lipata Ferry Terminal, Surigao City</option>
+          <option value="Cebu Port Authority (Pier 1)">Cebu Port Authority (Pier 1)</option>
+          <option value="Bacolod City Real-Estate Depot">Bacolod City Depot</option>
+          <option value="Iloilo International Port">Iloilo International Port</option>
+          <option value="Cagayan de Oro Port (CDO)">Cagayan de Oro Port (CDO)</option>
+          <option value="Davao Sasa International Port">Davao Sasa International Port</option>
+          <option value="General Santos City Port">General Santos City Port</option>
+          <option value="Zamboanga City Port">Zamboanga City Port</option>
+        </select>
+      </div>
+
+      <!-- GENERATED TELEMATICS ENDPOINT / SHARE LINK -->
+      <div id="endpointContainer" style="margin-top: 1.25rem; background: rgba(0,0,0,0.4); border: 1px solid var(--border); border-radius: 12px; padding: 1rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem;">
+          <span style="font-size: 0.78rem; font-weight: 800; color: var(--primary);">🔗 NeuTruck POS Live Endpoint</span>
+          <button type="button" class="btn btn-outline" style="font-size: 0.7rem; padding: 0.2rem 0.5rem;" onclick="copyEndpointUrl()">📋 Copy URL</button>
+        </div>
+        <div id="endpointUrlText" style="font-family: monospace; font-size: 0.76rem; word-break: break-all; color: var(--text-muted); background: #000; padding: 0.5rem; border-radius: 6px;">
+          https://junrhy.github.io/static-pages/neutruck-product/api/telematics.json
+        </div>
+        <p style="font-size: 0.72rem; color: var(--text-muted); margin-top: 0.4rem; line-height: 1.4;">
+          Paste this endpoint URL into <strong>NeuTruck POS Settings &rarr; Fleet Vehicles &rarr; Advanced Options</strong> to automatically sync your truck's location into the dispatcher map.
+        </p>
+      </div>
+    </div>
+
+    <!-- RECENT CHECK-IN HISTORY -->
+    <div class="driver-card">
+      <h3 style="font-size: 0.95rem; font-weight: 800; margin-bottom: 0.75rem;">📋 Local Check-in Log</h3>
+      <div id="checkinHistoryList">
+        <div style="font-size: 0.8rem; color: var(--text-muted); text-align: center; padding: 1rem;">No check-ins logged yet today.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // PWA Service Worker Registration
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+          .then(reg => console.log('Driver PWA SW registered:', reg.scope))
+          .catch(err => console.warn('SW registration failed:', err));
+      });
+    }
+
+    // Local Storage State Restoration
+    const truckPlateInput = document.getElementById('truckPlateInput');
+    const driverNameInput = document.getElementById('driverNameInput');
+    const checkinHistoryList = document.getElementById('checkinHistoryList');
+    const endpointUrlText = document.getElementById('endpointUrlText');
+
+    truckPlateInput.value = localStorage.getItem('neutruck_driver_plate') || 'NAK-8892';
+    driverNameInput.value = localStorage.getItem('neutruck_driver_name') || 'Junrhy Crodua';
+
+    function saveDriverInfo() {
+      localStorage.setItem('neutruck_driver_plate', truckPlateInput.value);
+      localStorage.setItem('neutruck_driver_name', driverNameInput.value);
+      updateEndpointUrl();
+    }
+
+    truckPlateInput.addEventListener('input', saveDriverInfo);
+    driverNameInput.addEventListener('input', saveDriverInfo);
+
+    function updateEndpointUrl() {
+      const plate = encodeURIComponent(truckPlateInput.value || 'DEFAULT');
+      const baseUrl = window.location.href.split('?')[0].replace('driver-gps.html', 'api/telematics.json');
+      endpointUrlText.textContent = `${baseUrl}?plate=${plate}`;
+    }
+    updateEndpointUrl();
+
+    let historyItems = JSON.parse(localStorage.getItem('neutruck_gps_history') || '[]');
+    renderHistory();
+
+    function renderHistory() {
+      if (historyItems.length === 0) {
+        checkinHistoryList.innerHTML = `<div style="font-size: 0.8rem; color: var(--text-muted); text-align: center; padding: 1rem;">No check-ins logged yet today.</div>`;
+        return;
+      }
+      checkinHistoryList.innerHTML = historyItems.map(item => `
+        <div class="history-item">
+          <div>
+            <div style="font-weight: 700; color: #fff;">${item.location}</div>
+            <div style="font-size: 0.72rem; color: var(--text-muted);">${item.plate} • ${item.coords}</div>
+          </div>
+          <div style="font-size: 0.75rem; color: var(--primary); font-weight: 700;">${item.time}</div>
+        </div>
+      `).join('');
+    }
+
+    // Acquire GPS Position via W3C Geolocation API
+    function acquireDeviceLocation() {
+      const btn = document.getElementById('btnGeolocate');
+      const gpsStatusContainer = document.getElementById('gpsStatusContainer');
+      const locationNameDisplay = document.getElementById('locationNameDisplay');
+      const gpsCoordsDisplay = document.getElementById('gpsCoordsDisplay');
+      const gpsAccuracyDisplay = document.getElementById('gpsAccuracyDisplay');
+
+      btn.disabled = true;
+      btn.innerHTML = `<span>⏳ Acquiring Satellites...</span>`;
+
+      if (!navigator.geolocation) {
+        alert("Geolocation is not supported by your browser or device.");
+        btn.disabled = false;
+        btn.innerHTML = `<span>📡 Press to Check Current GPS Position</span>`;
+        return;
+      }
+
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const lat = position.coords.latitude.toFixed(4);
+          const lng = position.coords.longitude.toFixed(4);
+          const accuracy = Math.round(position.coords.accuracy);
+
+          // Reverse Geocode or Fallback to Coordinates string
+          fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`)
+            .then(res => res.json())
+            .then(data => {
+              const city = data.address.city || data.address.town || data.address.municipality || data.address.county || "Philippine Highway Crossing";
+              const province = data.address.state || data.address.region || "";
+              const fullLoc = province ? `${city}, ${province}` : city;
+              
+              recordCheckin(fullLoc, `${lat}° N, ${lng}° E`, accuracy);
+            })
+            .catch(() => {
+              recordCheckin(`GPS Position (${lat}, ${lng})`, `${lat}° N, ${lng}° E`, accuracy);
+            });
+        },
+        (error) => {
+          alert(`GPS Error (${error.code}): ${error.message}. You can manually pick a location from the dropdown.`);
+          btn.disabled = false;
+          btn.innerHTML = `<span>📡 Press to Check Current GPS Position</span>`;
+        },
+        { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 }
+      );
+    }
+
+    function handleManualLocationSelect(val) {
+      if (!val) return;
+      recordCheckin(val, "Manual Selection", 0);
+    }
+
+    function recordCheckin(locationName, coordsStr, accuracy) {
+      const btn = document.getElementById('btnGeolocate');
+      const gpsStatusContainer = document.getElementById('gpsStatusContainer');
+      const locationNameDisplay = document.getElementById('locationNameDisplay');
+      const gpsCoordsDisplay = document.getElementById('gpsCoordsDisplay');
+      const gpsAccuracyDisplay = document.getElementById('gpsAccuracyDisplay');
+
+      locationNameDisplay.textContent = locationName;
+      gpsCoordsDisplay.textContent = coordsStr;
+      gpsAccuracyDisplay.textContent = accuracy > 0 ? `Accuracy: ±${accuracy} meters` : "Manual Location Check-in";
+      gpsStatusContainer.style.display = "block";
+
+      btn.disabled = false;
+      btn.innerHTML = `<span>✅ Position Updated! Press to Re-check</span>`;
+
+      const now = new Date();
+      const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      
+      const newEntry = {
+        location: locationName,
+        coords: coordsStr,
+        plate: truckPlateInput.value || 'NAK-8892',
+        time: timeStr
+      };
+
+      historyItems.unshift(newEntry);
+      if (historyItems.length > 8) historyItems.pop();
+      localStorage.setItem('neutruck_gps_history', JSON.stringify(historyItems));
+      renderHistory();
+    }
+
+    function copyEndpointUrl() {
+      navigator.clipboard.writeText(endpointUrlText.textContent.trim());
+      alert("NeuTruck GET Endpoint copied to clipboard!");
+    }
+  </script>
+</body>
+</html>
