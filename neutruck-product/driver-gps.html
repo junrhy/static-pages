@@ -151,8 +151,8 @@
   </div>
 
   <script>
-    // PWA Service Worker
-    if ('serviceWorker' in navigator) {
+    // PWA Service Worker (Only register on http/https web server)
+    if ('serviceWorker' in navigator && window.location.protocol.startsWith('http')) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('./sw.js').catch(() => { });
       });
