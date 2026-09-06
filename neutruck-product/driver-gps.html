@@ -165,7 +165,17 @@
     }
 
     const truckPlateInput = document.getElementById('truckPlateInput');
-    truckPlateInput.value = localStorage.getItem('neutruck_driver_plate') || '';
+
+    // Parse URL query parameters (e.g. ?plate=NAK-8892 or ?truck=NAK-8892)
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlPlate = urlParams.get('plate') || urlParams.get('truck') || urlParams.get('id') || urlParams.get('plateNumber');
+
+    if (urlPlate) {
+      truckPlateInput.value = urlPlate.toUpperCase();
+      localStorage.setItem('neutruck_driver_plate', truckPlateInput.value);
+    } else {
+      truckPlateInput.value = localStorage.getItem('neutruck_driver_plate') || '';
+    }
 
     truckPlateInput.addEventListener('input', () => {
       localStorage.setItem('neutruck_driver_plate', truckPlateInput.value);
