@@ -130,20 +130,15 @@
         <div>
           <h2 style="font-size: 1.3rem; font-weight: 800;">🛰️ Driver Telematics Broadcast</h2>
           <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.2rem;">
-            Press the location button to resolve your current GPS position or select a Philippine Municipality.
+            Enter your truck license plate and press the button below to check and update your current GPS location.
           </p>
         </div>
       </div>
 
       <!-- TRUCK IDENTITY SETUP -->
-      <div class="form-group" style="margin-top: 1.2rem;">
+      <div class="form-group" style="margin-top: 1.2rem; margin-bottom: 0;">
         <label class="form-label">Truck License Plate / Vehicle ID</label>
         <input type="text" id="truckPlateInput" class="form-input" placeholder="e.g. NAK-8892 or TRK-01" />
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">Driver / Helper Name</label>
-        <input type="text" id="driverNameInput" class="form-input" placeholder="e.g. Junrhy Crodua" />
       </div>
     </div>
 
@@ -201,21 +196,17 @@
 
     // Local Storage State Restoration
     const truckPlateInput = document.getElementById('truckPlateInput');
-    const driverNameInput = document.getElementById('driverNameInput');
     const checkinHistoryList = document.getElementById('checkinHistoryList');
     const endpointUrlText = document.getElementById('endpointUrlText');
 
     truckPlateInput.value = localStorage.getItem('neutruck_driver_plate') || 'NAK-8892';
-    driverNameInput.value = localStorage.getItem('neutruck_driver_name') || 'Junrhy Crodua';
 
     function saveDriverInfo() {
       localStorage.setItem('neutruck_driver_plate', truckPlateInput.value);
-      localStorage.setItem('neutruck_driver_name', driverNameInput.value);
       updateEndpointUrl();
     }
 
     truckPlateInput.addEventListener('input', saveDriverInfo);
-    driverNameInput.addEventListener('input', saveDriverInfo);
 
     function updateEndpointUrl() {
       const plate = encodeURIComponent(truckPlateInput.value || 'DEFAULT');
