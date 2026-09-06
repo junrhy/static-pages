@@ -162,32 +162,7 @@
         <div id="gpsAccuracyDisplay" style="font-size: 0.72rem; color: var(--text-muted); margin-top: 0.2rem;">Accuracy: ±15 meters</div>
       </div>
 
-      <div style="margin: 1.25rem 0 0.75rem 0; text-align: center; position: relative;">
-        <hr style="border: none; border-top: 1px solid var(--border);" />
-        <span style="position: absolute; top: -10px; left: 50%; transform: translateX(-50%); background: var(--bg-card); padding: 0 0.75rem; font-size: 0.75rem; color: var(--text-muted); font-weight: 700;">OR MANUAL SELECT</span>
-      </div>
 
-      <div class="form-group">
-        <label class="form-label">Select Philippine Port / City / Town</label>
-        <select id="locationSelect" class="form-select" onchange="handleManualLocationSelect(this.value)">
-          <option value="">-- Choose Key Port or Municipality --</option>
-          <option value="Manila South Harbor Pier 3">Manila South Harbor (Pier 3)</option>
-          <option value="Batangas International Port">Batangas International Port</option>
-          <option value="Calapan Port, Oriental Mindoro">Calapan Port, Oriental Mindoro</option>
-          <option value="Lucena City Port, Quezon">Lucena City Port, Quezon</option>
-          <option value="Matnog Port, Sorsogon">Matnog Port, Sorsogon</option>
-          <option value="Allen Port, Northern Samar">Allen Port, Northern Samar</option>
-          <option value="Liloan Ferry Terminal, Southern Leyte">Liloan Ferry Terminal, Southern Leyte</option>
-          <option value="Lipata Ferry Terminal, Surigao City">Lipata Ferry Terminal, Surigao City</option>
-          <option value="Cebu Port Authority (Pier 1)">Cebu Port Authority (Pier 1)</option>
-          <option value="Bacolod City Real-Estate Depot">Bacolod City Depot</option>
-          <option value="Iloilo International Port">Iloilo International Port</option>
-          <option value="Cagayan de Oro Port (CDO)">Cagayan de Oro Port (CDO)</option>
-          <option value="Davao Sasa International Port">Davao Sasa International Port</option>
-          <option value="General Santos City Port">General Santos City Port</option>
-          <option value="Zamboanga City Port">Zamboanga City Port</option>
-        </select>
-      </div>
 
       <!-- GENERATED TELEMATICS ENDPOINT / SHARE LINK -->
       <div id="endpointContainer" style="margin-top: 1.25rem; background: rgba(0,0,0,0.4); border: 1px solid var(--border); border-radius: 12px; padding: 1rem;">
@@ -307,17 +282,12 @@
             });
         },
         (error) => {
-          alert(`GPS Error (${error.code}): ${error.message}. You can manually pick a location from the dropdown.`);
+          alert(`GPS Error (${error.code}): ${error.message}`);
           btn.disabled = false;
           btn.innerHTML = `<span>📡 Press to Check Current GPS Position</span>`;
         },
         { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 }
       );
-    }
-
-    function handleManualLocationSelect(val) {
-      if (!val) return;
-      recordCheckin(val, "Manual Selection", 0);
     }
 
     function recordCheckin(locationName, coordsStr, accuracy) {
