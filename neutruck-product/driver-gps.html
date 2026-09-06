@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>NeuTruck Driver — GPS Location Check-in</title>
-  <meta name="description" content="Driver location check-in companion PWA for NeuTruck Freight POS & Logistics Engine." />
+  <meta name="description"
+    content="Driver location check-in companion PWA for NeuTruck Freight POS & Logistics Engine." />
   <meta name="theme-color" content="#0a0e1a" />
   <link rel="manifest" href="manifest.json" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -16,11 +18,13 @@
       padding-bottom: 2rem;
       background: #0a0e1a;
     }
+
     .driver-container {
       max-width: 440px;
       margin: 0 auto;
       padding: 1.25rem 1rem;
     }
+
     .driver-card {
       background: var(--bg-card);
       border: 1px solid var(--border);
@@ -28,6 +32,7 @@
       padding: 1.5rem;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
     }
+
     .form-label {
       display: block;
       font-size: 0.8rem;
@@ -37,6 +42,7 @@
       text-transform: uppercase;
       letter-spacing: 0.05em;
     }
+
     .form-input {
       width: 100%;
       background: rgba(0, 0, 0, 0.4);
@@ -53,9 +59,11 @@
       outline: none;
       transition: border-color 0.2s;
     }
+
     .form-input:focus {
       border-color: var(--primary);
     }
+
     .btn-checkin {
       width: 100%;
       padding: 1.25rem 1rem;
@@ -66,6 +74,7 @@
       margin-top: 1.25rem;
       box-shadow: 0 8px 24px var(--primary-glow);
     }
+
     .gps-display {
       background: rgba(0, 212, 255, 0.05);
       border: 1px solid rgba(0, 212, 255, 0.3);
@@ -74,6 +83,7 @@
       margin-top: 1.25rem;
       text-align: center;
     }
+
     .endpoint-details {
       margin-top: 1rem;
       background: rgba(0, 0, 0, 0.3);
@@ -85,6 +95,7 @@
     }
   </style>
 </head>
+
 <body>
 
   <!-- NAV HEADER -->
@@ -99,7 +110,7 @@
 
     <div class="driver-card">
       <div style="text-align: center; margin-bottom: 1.25rem;">
-        <h2 style="font-size: 1.35rem; font-weight: 900;">📍 Update Location</h2>
+        <h2 style="font-size: 1.35rem; font-weight: 900;">Update Location</h2>
         <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 0.25rem;">
           Enter your truck plate number and tap the button to broadcast your current GPS position.
         </p>
@@ -113,21 +124,28 @@
 
       <!-- MAIN ACTION BUTTON -->
       <button type="button" id="btnGeolocate" class="btn btn-primary btn-checkin" onclick="acquireDeviceLocation()">
-        <span>📡 Check Current GPS Position</span>
+        <span>Send Location</span>
       </button>
 
       <!-- RESULTS DISPLAY -->
       <div id="gpsStatusContainer" class="gps-display" style="display: none;">
-        <div style="font-size: 0.72rem; text-transform: uppercase; color: var(--text-muted); font-weight: 800; letter-spacing: 0.05em;">Current Position</div>
-        <div id="locationNameDisplay" style="font-size: 1.3rem; font-weight: 900; color: #fff; margin: 0.25rem 0;">Manila Port Area</div>
-        <div id="gpsCoordsDisplay" style="font-family: monospace; font-size: 0.95rem; font-weight: 800; color: var(--primary);">14.5995° N, 120.9842° E</div>
-        <div id="lastUpdatedTime" style="font-size: 0.72rem; color: #10b981; font-weight: 700; margin-top: 0.3rem;">Updated just now</div>
+        <div
+          style="font-size: 0.72rem; text-transform: uppercase; color: var(--text-muted); font-weight: 800; letter-spacing: 0.05em;">
+          Current Position</div>
+        <div id="locationNameDisplay" style="font-size: 1.3rem; font-weight: 900; color: #fff; margin: 0.25rem 0;">
+          Manila Port Area</div>
+        <div id="gpsCoordsDisplay"
+          style="font-family: monospace; font-size: 0.95rem; font-weight: 800; color: var(--primary);">14.5995° N,
+          120.9842° E</div>
+        <div id="lastUpdatedTime" style="font-size: 0.72rem; color: #10b981; font-weight: 700; margin-top: 0.3rem;">
+          Updated just now</div>
       </div>
 
       <!-- DISPATCH SETUP COLLAPSIBLE / SMALL HELP LINK -->
       <div class="endpoint-details">
         <span style="font-size: 0.75rem; color: var(--text-muted);">NeuTruck Endpoint</span>
-        <button type="button" class="btn btn-outline" style="font-size: 0.7rem; padding: 0.2rem 0.55rem;" onclick="copyEndpointUrl()">📋 Copy URL</button>
+        <button type="button" class="btn btn-outline" style="font-size: 0.7rem; padding: 0.2rem 0.55rem;"
+          onclick="copyEndpointUrl()">Copy URL</button>
       </div>
     </div>
 
@@ -137,7 +155,7 @@
     // PWA Service Worker
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js').catch(() => {});
+        navigator.serviceWorker.register('./sw.js').catch(() => { });
       });
     }
 
@@ -156,12 +174,12 @@
       const lastUpdatedTime = document.getElementById('lastUpdatedTime');
 
       btn.disabled = true;
-      btn.innerHTML = `<span>⏳ Acquiring GPS...</span>`;
+      btn.innerHTML = `<span>Acquiring GPS...</span>`;
 
       if (!navigator.geolocation) {
         alert("Geolocation is not supported on this device.");
         btn.disabled = false;
-        btn.innerHTML = `<span>📡 Check Current GPS Position</span>`;
+        btn.innerHTML = `<span>Check Current GPS Position</span>`;
         return;
       }
 
@@ -176,7 +194,7 @@
               const city = data.address.city || data.address.town || data.address.municipality || data.address.county || "Highway Crossing";
               const province = data.address.state || data.address.region || "";
               const fullLoc = province ? `${city}, ${province}` : city;
-              
+
               showResults(fullLoc, `${lat}° N, ${lng}° E`);
             })
             .catch(() => {
@@ -186,7 +204,7 @@
         (error) => {
           alert(`GPS Error: ${error.message}`);
           btn.disabled = false;
-          btn.innerHTML = `<span>📡 Check Current GPS Position</span>`;
+          btn.innerHTML = `<span>Check Current GPS Position</span>`;
         },
         { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 }
       );
@@ -205,7 +223,7 @@
       gpsStatusContainer.style.display = "block";
 
       btn.disabled = false;
-      btn.innerHTML = `<span>✅ Update GPS Position</span>`;
+      btn.innerHTML = `<span>Update GPS Position</span>`;
     }
 
     function copyEndpointUrl() {
@@ -217,4 +235,5 @@
     }
   </script>
 </body>
+
 </html>
