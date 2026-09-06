@@ -101,8 +101,7 @@
   <!-- NAV HEADER -->
   <nav style="position: relative; padding: 0.85rem 1.25rem; justify-content: center;">
     <a href="index.html" class="nav-logo" style="font-size: 1.15rem;">
-      <img src="public/logo.png" alt="NeuTruck Logo" style="width: 28px; height: 28px;" />
-      Neu<span>Truck</span> Driver
+      <span>Driver</span>
     </a>
   </nav>
 
@@ -112,7 +111,7 @@
       <div style="text-align: center; margin-bottom: 1.25rem;">
         <h2 style="font-size: 1.35rem; font-weight: 900;">Update Location</h2>
         <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 0.25rem;">
-          Enter your truck plate number and tap the button to broadcast your current GPS position.
+          Enter truck plate number and tap button.
         </p>
       </div>
 
@@ -160,7 +159,7 @@
     }
 
     const truckPlateInput = document.getElementById('truckPlateInput');
-    truckPlateInput.value = localStorage.getItem('neutruck_driver_plate') || 'NAK-8892';
+    truckPlateInput.value = localStorage.getItem('neutruck_driver_plate') || '';
 
     truckPlateInput.addEventListener('input', () => {
       localStorage.setItem('neutruck_driver_plate', truckPlateInput.value);
