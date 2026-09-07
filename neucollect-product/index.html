@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NeuCollect — Microfinance & Automated Debt Collection Desktop App</title>
+  <meta name="description"
+    content="NeuCollect is an offline-first microfinance and debt collection desktop app for Mac, Windows, and Linux. Track loans, installments, collections, and automatically dispatch SMS payment reminders." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+        <defs>
+          <linearGradient id="nc" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#00d4ff" />
+            <stop offset="100%" stop-color="#0284c7" />
+          </linearGradient>
+        </defs>
+        <rect x="3" y="3" width="18" height="18" rx="5" stroke="url(#nc)" stroke-width="2.5" />
+        <path d="M7 12h10M12 7v10" stroke="url(#nc)" stroke-width="2.5" stroke-linecap="round" />
+      </svg>
+      NeuCollect
+    </a>
+    <ul class="nav-links">
+      <li><a href="#features">Features</a></li>
+      <li><a href="#sms">Auto-SMS Gateway</a></li>
+      <li><a href="#offline">Offline First</a></li>
+      <li><a href="#request-license">Get License</a></li>
+      <li><a href="#download">Download</a></li>
+    </ul>
+    <a href="#download" class="btn btn-primary">Get NeuCollect</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="badge fade-up">
+      <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor">
+        <circle cx="5" cy="5" r="5" />
+      </svg>
+      Microfinance &amp; Lending System · Mac, Windows &amp; Linux
+    </div>
+
+    <h1 class="fade-up delay-1">
+      Automated Debt Collection<br>
+      <span class="gradient-text">&amp; SMS Reminders system.</span>
+    </h1>
+
+    <p class="fade-up delay-2">
+      NeuCollect is a desktop lending and debt collection management app. Track customer balances, manage loan installment schedules, record collection receipts, and automatically dispatch SMS notifications via UniSMS, Semaphore, or custom webhooks — all with a one-time license.
+    </p>
+
+    <div class="hero-actions fade-up delay-3">
+      <a href="#download" class="btn btn-primary btn-lg">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
+          <polyline points="7 10 12 15 17 10" />
+          <line x1="12" y1="15" x2="12" y2="3" />
+        </svg>
+        Download NeuCollect
+      </a>
+      <a href="#features" class="btn btn-outline btn-lg">See Features</a>
+    </div>
+
+    <div class="platform-note fade-up delay-3">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="3" width="20" height="14" rx="2" />
+        <path d="M8 21h8M12 17v4" />
+      </svg>
+      Available for Mac, Windows, and Linux computers
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-value">100%</div>
+      <div class="stat-label">Automated SMS Reminders</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">Multi-Gateway</div>
+      <div class="stat-label">UniSMS, Semaphore &amp; Webhooks</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">Offline</div>
+      <div class="stat-label">Works Without Cloud Servers</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">Yours</div>
+      <div class="stat-label">One-Time License Fee</div>
+    </div>
+  </div>
+
+  <!-- FEATURES -->
+  <section id="features">
+    <div class="container">
+      <div class="features-header">
+        <div class="section-label">Lending &amp; Microfinance Suite</div>
+        <h2 class="section-title">Complete debt recovery &amp;<br>accountability system.</h2>
+      </div>
+      <div class="features-grid">
+
+        <div class="feature-card">
+          <div class="feature-icon">👥</div>
+          <div class="feature-title">Debtor Directory</div>
+          <div class="feature-desc">Maintain comprehensive records of borrower accounts, contact information, credit limits, and current debt status in one centralized directory.</div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">📄</div>
+          <div class="feature-title">Loan &amp; Installment Tracker</div>
+          <div class="feature-desc">Create custom loan accounts with principal amounts, interest rates, installment frequency (weekly/monthly), and due dates.</div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">💰</div>
+          <div class="feature-title">Collections Ledger</div>
+          <div class="feature-desc">Record full or partial payment transactions, issue digital receipt numbers, and automatically recalculate remaining balances.</div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">📱</div>
+          <div class="feature-title">Auto-SMS Reminders</div>
+          <div class="feature-desc">Automatically trigger upcoming installment reminder SMS prior to due dates, and repeat collection notices for overdue accounts.</div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">🔒</div>
+          <div class="feature-title">Role-Based Access Control</div>
+          <div class="feature-desc">Secure collector actions with granular RBAC permissions. Restrict financial modifications, loan approvals, and settings access to admins.</div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">⚙️</div>
+          <div class="feature-title">Multi-Gateway Support</div>
+          <div class="feature-desc">Integrate effortlessly with UniSMS (PH), Semaphore, PhilSMS, Custom JSON Webhooks, or Android/iPhone Mobile SMS Gateways.</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- SMS GATEWAYS -->
+  <section id="sms" class="payment-section">
+    <div class="container">
+      <div class="features-header">
+        <div class="section-label">Supported Gateways</div>
+        <h2 class="section-title">Seamless SMS Dispatch.</h2>
+      </div>
+      <div class="payment-grid">
+        <div class="payment-card">
+          <div class="payment-icon">⚡</div>
+          <div class="payment-name">UniSMS</div>
+          <div class="payment-detail">Official PH Gateway API</div>
+        </div>
+        <div class="payment-card">
+          <div class="payment-icon">📡</div>
+          <div class="payment-name">Semaphore</div>
+          <div class="payment-detail">Semaphore.co API</div>
+        </div>
+        <div class="payment-card">
+          <div class="payment-icon">🔌</div>
+          <div class="payment-name">Custom Webhook</div>
+          <div class="payment-detail">JSON POST Integration</div>
+        </div>
+        <div class="payment-card">
+          <div class="payment-icon">📱</div>
+          <div class="payment-name">Mobile Gateway</div>
+          <div class="payment-detail">Android &amp; iPhone Local Wi-Fi</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OFFLINE SECTION -->
+  <section id="offline">
+    <div class="offline-inner">
+      <div class="section-label">Secure &amp; Independent</div>
+      <h2>Runs completely<br><span class="gradient-text">offline on your PC.</span></h2>
+      <p>
+        NeuCollect stores all borrower records, loan contracts, and transaction ledgers locally in an encrypted SQLite database on your computer.
+      </p>
+
+      <div class="offline-bullets">
+        <div class="offline-bullet">
+          <div class="offline-bullet-icon">✓</div>
+          All loan records stored locally on your desktop workstation
+        </div>
+        <div class="offline-bullet">
+          <div class="offline-bullet-icon">✓</div>
+          LAN Shared Database option to sync multiple collection collectors over local Wi-Fi
+        </div>
+        <div class="offline-bullet">
+          <div class="offline-bullet-icon">✓</div>
+          Zero monthly cloud subscription fees or per-user seat charges
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REQUEST LICENSE -->
+  <section id="request-license">
+    <div class="license-inner">
+      <div class="section-label">One-Time License</div>
+      <h2>Pay Once.<br><span class="gradient-text">Use NeuCollect Forever.</span></h2>
+      <p>
+        NeuCollect uses node-locked machine hardware licensing. Pay once, obtain your key, and run your collection office perpetually.
+      </p>
+
+      <div class="license-box">
+        <div class="license-contact-row">
+          <div class="license-contact-icon">📧</div>
+          <div>
+            <div class="license-contact-label">Send your request to</div>
+            <div class="license-contact-value">hello@neulify.com</div>
+          </div>
+        </div>
+        <div class="license-contact-row">
+          <div class="license-contact-icon">🔑</div>
+          <div>
+            <div class="license-contact-label">Hardware Fingerprint</div>
+            <div class="license-contact-value">Obtain your Machine Fingerprint UUID on the Settings screen</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DOWNLOAD -->
+  <section id="download">
+    <div class="download-wrapper">
+      <div class="section-header">
+        <h2>Download NeuCollect</h2>
+        <p>Install NeuCollect on your desktop operating system.</p>
+      </div>
+
+      <div class="download-cards">
+        <!-- Mac -->
+        <div class="download-card">
+          <div class="download-info">
+            <div class="download-tags">
+              <span class="download-tag">macOS</span>
+              <span class="download-tag">Version 0.1</span>
+            </div>
+            <div class="download-name" style="margin-top:0.75rem;">
+              NeuCollect for Mac
+            </div>
+            <div class="download-meta">macOS Ventura or later (Apple Silicon &amp; Intel)</div>
+          </div>
+          <a href="downloads/neucollect-macos.dmg" class="btn btn-primary" style="width:100%;justify-content:center;">
+            Download for Mac
+          </a>
+        </div>
+
+        <!-- Windows -->
+        <div class="download-card">
+          <div class="download-info">
+            <div class="download-tags">
+              <span class="download-tag">Windows</span>
+              <span class="download-tag">Version 0.1</span>
+            </div>
+            <div class="download-name" style="margin-top:0.75rem;">
+              NeuCollect for Windows
+            </div>
+            <div class="download-meta">Windows 10 &amp; Windows 11 (64-bit)</div>
+          </div>
+          <a href="downloads/neucollect-windows.msi" class="btn btn-primary" style="width:100%;justify-content:center;">
+            Download for Windows
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">NeuCollect</div>
+    <div class="footer-tagline">Microfinance &amp; Automated Debt Collection Desktop System.</div>
+    <div style="margin-top: 1.5rem; font-size: 0.8rem; color: var(--text-muted);">
+      &copy; 2026 NeuCollect &bull; Powered by Neulify Desktop
+    </div>
+  </footer>
+
+</body>
+
+</html>
