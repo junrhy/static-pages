@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Support & Installation Guide — NeuTruck Freight</title>
+  <meta name="description" content="Official NeuTruck Freight support center. Step-by-step guide on how to download, install, troubleshoot, and bypass macOS Gatekeeper unverified developer warnings." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .page-header {
+      padding: 9rem 1.5rem 4rem;
+      text-align: center;
+      background: radial-gradient(ellipse at top, rgba(245, 158, 11, 0.12) 0%, transparent 70%);
+      border-bottom: 1px solid var(--border);
+    }
+    .guide-container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 5rem 1.5rem;
+    }
+    .guide-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2.5rem;
+      margin-bottom: 2.5rem;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+    }
+    .guide-card h2 {
+      font-size: 1.6rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .guide-badge {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .badge-mac {
+      background: rgba(245, 158, 11, 0.15);
+      color: #f59e0b;
+      border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+    .step-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+    .step-item {
+      display: flex;
+      gap: 1.25rem;
+      align-items: flex-start;
+    }
+    .step-number {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      color: #000;
+      font-weight: 800;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .step-content h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.35rem;
+      color: #fff;
+    }
+    .step-content p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+    .step-content strong {
+      color: #f59e0b;
+    }
+    .code-box {
+      background: #070a12;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1rem 1.25rem;
+      font-family: monospace;
+      font-size: 0.9rem;
+      color: #f59e0b;
+      margin-top: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      overflow-x: auto;
+    }
+    .alert-box {
+      background: rgba(245, 158, 11, 0.05);
+      border-left: 4px solid #f59e0b;
+      padding: 1.25rem;
+      border-radius: 8px;
+      margin-top: 1.5rem;
+      font-size: 0.9rem;
+      color: var(--text);
+    }
+    .alert-box h4 {
+      font-weight: 700;
+      color: #f59e0b;
+      margin-bottom: 0.25rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="index.html" class="nav-logo">
+      <img src="public/logo.png" alt="NeuTruck Logo" />
+      Neu<span>Truck</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html#features">Features</a></li>
+      <li><a href="support.html" style="color: #f59e0b; font-weight: 700;">Support</a></li>
+      <li><a href="index.html#pricing">Pricing</a></li>
+      <li><a href="index.html#download">Download</a></li>
+    </ul>
+    <div style="display: flex; gap: 0.5rem; align-items: center;">
+      <a href="driver-gps.html" target="_blank" class="btn btn-outline" style="font-size: 0.8rem; padding: 0.5rem 0.9rem;">📱 Driver Check-in</a>
+      <a href="index.html#download" class="btn btn-primary">Get App</a>
+    </div>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <header class="page-header">
+    <span class="badge" style="color: #f59e0b; border-color: rgba(245, 158, 11, 0.3);">💬 Official Fleet Help &amp; Support</span>
+    <h1 style="font-size: 2.8rem; font-weight: 900; margin-top: 0.5rem; letter-spacing: -0.02em;">NeuTruck Support</h1>
+    <p style="color: var(--text-muted); max-width: 640px; margin: 1rem auto 0; font-size: 1.1rem;">
+      Step-by-step installation guides, security verification, and telematics setup for dispatch workstations.
+    </p>
+  </header>
+
+  <!-- GUIDE CONTENT -->
+  <main class="guide-container">
+
+    <!-- macOS Installation & Security Fix -->
+    <div class="guide-card">
+      <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem;">
+        <h2>🍎 macOS Gatekeeper Verification Guide</h2>
+        <span class="guide-badge badge-mac">macOS Security Fix</span>
+      </div>
+      <p style="color: var(--text-muted); margin-top: 0.5rem; font-size: 0.95rem;">
+        When launching NeuTruck Freight for the first time on macOS, you may encounter an alert stating: <em>"NeuTruck Freight cannot be opened because the developer cannot be verified"</em>. Follow Method 1 (System Settings) or Method 2 (Right-Click) to open the app safely.
+      </p>
+
+      <div class="alert-box">
+        <h4>🔒 Why does macOS show this warning?</h4>
+        macOS Gatekeeper protects users by default when launching applications downloaded directly from the web that are not yet notarized via the Mac App Store. NeuTruck Freight is 100% safe to run.
+      </div>
+
+      <h3 style="margin-top: 2rem; font-size: 1.2rem; font-weight: 800; color: #fff;">Method 1: Override via System Settings (Recommended)</h3>
+      <ol class="step-list">
+        <li class="step-item">
+          <div class="step-number">1</div>
+          <div class="step-content">
+            <h3>Try Opening NeuTruck Freight</h3>
+            <p>Double-click <strong>NeuTruck Freight.app</strong> (or mount the downloaded <code>.dmg</code> file and drag it into your Applications folder). Click <strong>Done</strong> or <strong>Cancel</strong> when the prompt appears.</p>
+          </div>
+        </li>
+        <li class="step-item">
+          <div class="step-number">2</div>
+          <div class="step-content">
+            <h3>Open System Settings</h3>
+            <p>Open <strong>System Settings</strong> (or <em>System Preferences</em> on older macOS versions) from your Apple Menu () at the top left of your screen.</p>
+          </div>
+        </li>
+        <li class="step-item">
+          <div class="step-number">3</div>
+          <div class="step-content">
+            <h3>Navigate to Privacy &amp; Security</h3>
+            <p>Click <strong>Privacy &amp; Security</strong> on the left sidebar and scroll down to the <strong>Security</strong> section.</p>
+          </div>
+        </li>
+        <li class="step-item">
+          <div class="step-number">4</div>
+          <div class="step-content">
+            <h3>Click "Open Anyway"</h3>
+            <p>You will see a notification stating: <em>"NeuTruck Freight was blocked from use because it is not from an identified developer."</em> Click the <strong>Open Anyway</strong> button next to it.</p>
+          </div>
+        </li>
+        <li class="step-item">
+          <div class="step-number">5</div>
+          <div class="step-content">
+            <h3>Confirm Launch</h3>
+            <p>Enter your Mac administrator password or use Touch ID, then click <strong>Open</strong> in the final dialog to launch NeuTruck Freight.</p>
+          </div>
+        </li>
+      </ol>
+
+      <div style="height: 1px; background: var(--border); margin: 2.5rem 0;"></div>
+
+      <h3 style="font-size: 1.2rem; font-weight: 800; color: #fff;">Method 2: Quick Right-Click Shortcut</h3>
+      <ol class="step-list">
+        <li class="step-item">
+          <div class="step-number">1</div>
+          <div class="step-content">
+            <h3>Locate NeuTruck Freight in Finder</h3>
+            <p>Open <strong>Finder</strong> and navigate to your <strong>Applications</strong> folder where NeuTruck Freight is saved.</p>
+          </div>
+        </li>
+        <li class="step-item">
+          <div class="step-number">2</div>
+          <div class="step-content">
+            <h3>Right-Click and Select Open</h3>
+            <p>Press and hold the <strong>Control (⌃)</strong> key and click the <strong>NeuTruck Freight</strong> icon (or right-click with your mouse/trackpad), then select <strong>Open</strong> from the context menu.</p>
+          </div>
+        </li>
+        <li class="step-item">
+          <div class="step-number">3</div>
+          <div class="step-content">
+            <h3>Confirm Open</h3>
+            <p>Click <strong>Open</strong> in the prompt window. NeuTruck Freight will save an exception for your user account and launch normally every time hereafter.</p>
+          </div>
+        </li>
+      </ol>
+
+      <div style="height: 1px; background: var(--border); margin: 2.5rem 0;"></div>
+
+      <h3 style="font-size: 1.2rem; font-weight: 800; color: #fff;">Method 3: Terminal Command (For IT Administrators)</h3>
+      <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 0.5rem;">
+        If you are configuring multiple dispatch terminals, you can instantly strip the quarantine attribute using Terminal:
+      </p>
+      <div class="code-box">
+        xattr -cr "/Applications/NeuTruck Freight.app"
+      </div>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">NeuTruck Freight</div>
+    <div class="footer-tagline">Enterprise Desktop Logistics. Inter-Island Freight. Dynamic SMS Dispatches.</div>
+    <div style="margin-top: 1.5rem; font-size: 0.8rem; color: var(--text-muted);">
+      &copy; 2026 NeuTruck • Enterprise Fleet Logistics Systems
+    </div>
+  </footer>
+
+</body>
+</html>
