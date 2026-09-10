@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>NeuGate Parent App — Real-Time Campus Gate Notifications</title>
+  <meta name="description"
+    content="Light mode mobile app parent portal for NeuGate RFID Gate Entrance. Receive real-time student check-in and checkout notifications." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap"
+    rel="stylesheet" />
+  <!-- Pusher JS Library -->
+  <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
+  <style>
+    :root {
+      --bg-mobile: #f4f6fb;
+      --card-bg: #ffffff;
+      --text-main: #0f172a;
+      --text-sub: #64748b;
+      --primary: #0284c7;
+      --primary-light: #e0f2fe;
+      --success: #10b981;
+      --success-light: #d1fae5;
+      --warning: #f59e0b;
+      --warning-light: #fef3c7;
+      --danger: #ef4444;
+      --border-light: #e2e8f0;
+      --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.04);
+      --shadow-md: 0 8px 24px rgba(15, 23, 42, 0.08);
+      --shadow-lg: 0 12px 32px rgba(15, 23, 42, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: #e2e8f0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: var(--text-main);
+    }
+
+    /* Mobile First Container */
+    .mobile-wrapper {
+      width: 100%;
+      max-width: 500px;
+      min-height: 100vh;
+      background: var(--bg-mobile);
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.06);
+    }
+
+    @media (min-width: 501px) {
+      body {
+        padding: 1.5rem 0;
+      }
+
+      .mobile-wrapper {
+        min-height: 840px;
+        max-height: 900px;
+        border-radius: 28px;
+        border: 1px solid #cbd5e1;
+        overflow: hidden;
+      }
+    }
+
+    /* Status Bar Header */
+    .status-bar {
+      height: 44px;
+      background: #ffffff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 1.25rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-main);
+      border-bottom: 1px solid rgba(226, 232, 240, 0.6);
+      flex-shrink: 0;
+    }
+
+    .app-header {
+      background: #ffffff;
+      padding: 0.85rem 1.25rem 1rem 1.25rem;
+      border-bottom: 1px solid var(--border-light);
+      flex-shrink: 0;
+    }
+
+    .app-title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+    }
+
+    .app-branding {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .app-icon {
+      width: 38px;
+      height: 38px;
+      background: linear-gradient(135deg, #0284c7, #0369a1);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      font-size: 1.2rem;
+      box-shadow: 0 4px 12px rgba(2, 132, 199, 0.25);
+    }
+
+    .app-name {
+      font-weight: 800;
+      font-size: 1.1rem;
+      letter-spacing: -0.3px;
+    }
+
+    .app-tag {
+      font-size: 0.7rem;
+      color: var(--text-sub);
+      font-weight: 600;
+    }
+
+    .connection-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.3rem 0.65rem;
+      border-radius: 20px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      background: var(--success-light);
+      color: #047857;
+      transition: all 0.3s ease;
+    }
+
+    .connection-badge.connecting {
+      background: var(--warning-light);
+      color: #b45309;
+    }
+
+    .connection-badge.disconnected {
+      background: #fee2e2;
+      color: #b91c1c;
+    }
+
+    .pulse-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    /* Search & Audio Bar */
+    .search-box {
+      display: flex;
+      gap: 0.6rem;
+      align-items: center;
+    }
+
+    .input-wrapper {
+      flex: 1;
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .input-wrapper span {
+      position: absolute;
+      left: 0.75rem;
+      font-size: 0.9rem;
+      color: var(--text-sub);
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 0.55rem 0.75rem 0.55rem 2.2rem;
+      border-radius: 10px;
+      border: 1px solid var(--border-light);
+      background: #f8fafc;
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--text-main);
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .search-input:focus {
+      background: #ffffff;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.12);
+    }
+
+    .sound-btn {
+      padding: 0.55rem 0.75rem;
+      border-radius: 10px;
+      border: 1px solid var(--border-light);
+      background: #f8fafc;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text-sub);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: all 0.2s ease;
+    }
+
+    .sound-btn.active {
+      background: var(--primary-light);
+      border-color: rgba(2, 132, 199, 0.4);
+      color: var(--primary);
+    }
+
+    /* Content Feed */
+    .feed-container {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    /* Notification Cards */
+    .noti-card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 1rem 1.1rem;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid rgba(226, 232, 240, 0.8);
+      display: flex;
+      gap: 0.9rem;
+      align-items: center;
+      animation: popIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .noti-card:active {
+      transform: scale(0.98);
+    }
+
+    @keyframes popIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px) scale(0.97);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .avatar-wrapper {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      background: #f1f5f9;
+      border: 1px solid var(--border-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .avatar-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .noti-info {
+      flex: 1;
+    }
+
+    .noti-student {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 0.15rem;
+    }
+
+    .noti-meta {
+      font-size: 0.76rem;
+      color: var(--text-sub);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+    }
+
+    .noti-pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.25rem 0.6rem;
+      border-radius: 8px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.3px;
+    }
+
+    .noti-pill.in {
+      background: var(--success-light);
+      color: #047857;
+    }
+
+    .noti-pill.out {
+      background: var(--warning-light);
+      color: #b45309;
+    }
+
+    /* Empty state */
+    .empty-card {
+      text-align: center;
+      padding: 3rem 1.5rem;
+      background: #ffffff;
+      border-radius: 20px;
+      border: 1px dashed var(--border-light);
+      color: var(--text-sub);
+      margin-top: 1rem;
+    }
+
+    .empty-icon {
+      font-size: 3rem;
+      margin-bottom: 0.75rem;
+      opacity: 0.8;
+    }
+
+    .empty-card h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 0.35rem;
+    }
+
+    /* Modal Styles */
+    .modal-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(15, 23, 42, 0.45);
+      backdrop-filter: blur(4px);
+      z-index: 100;
+      display: flex;
+      align-items: flex-end;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+
+    .modal-overlay.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-card {
+      width: 100%;
+      background: #ffffff;
+      border-top-left-radius: 24px;
+      border-top-right-radius: 24px;
+      padding: 1.5rem;
+      box-shadow: 0 -10px 32px rgba(0, 0, 0, 0.15);
+      transform: translateY(100%);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .modal-overlay.open .modal-card {
+      transform: translateY(0);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.25rem;
+    }
+
+    .modal-title {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .close-btn {
+      background: #f1f5f9;
+      border: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      font-size: 1.1rem;
+      color: var(--text-sub);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--text-sub);
+      margin-bottom: 0.35rem;
+    }
+
+    .modal-input {
+      width: 100%;
+      padding: 0.65rem 0.85rem;
+      border-radius: 10px;
+      border: 1px solid var(--border-light);
+      background: #f8fafc;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-main);
+      outline: none;
+    }
+
+    .modal-input:focus {
+      background: #ffffff;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.12);
+    }
+
+    .gear-btn {
+      background: #f8fafc;
+      border: 1px solid var(--border-light);
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      font-size: 1.05rem;
+      color: var(--text-sub);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+
+    .gear-btn:active {
+      transform: scale(0.92);
+      background: #f1f5f9;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="mobile-wrapper">
+    <!-- App Header -->
+    <header class="app-header">
+      <div class="app-title-row">
+        <div class="app-branding">
+          <div class="app-icon">❤️</div>
+          <div>
+            <div class="app-name">Child Safety Monitor</div>
+            <div class="app-tag">Peace of Mind for Parents</div>
+          </div>
+        </div>
+        <button id="openSettingsBtn" class="gear-btn" title="Pusher Settings">
+          ⚙️
+        </button>
+      </div>
+
+      <div id="statusBadge" class="connection-badge connecting"
+        style="margin-bottom: 0.75rem; width: 100%; justify-content: center; padding: 0.4rem 0.75rem;">
+        <span class="pulse-dot"></span>
+        <span id="statusText">Connecting for your peace of mind</span>
+      </div>
+
+      <div class="search-box">
+        <div class="input-wrapper">
+          <span>📱</span>
+          <input type="tel" id="phoneFilter" class="search-input" placeholder="Enter mobile number (e.g. 09171234567)"
+            maxlength="13" />
+        </div>
+        <button id="enablePushBtn" class="sound-btn">
+          <span>🔔</span> Alerts
+        </button>
+      </div>
+      <div id="phoneError"
+        style="display: none; font-size: 0.75rem; color: #ef4444; font-weight: 600; margin-top: 0.4rem; padding-left: 0.2rem;">
+        ⚠️ Please enter a valid 11-digit mobile number starting with 09 (e.g., 09171234567)
+      </div>
+    </header>
+
+    <!-- Notification Feed Area -->
+    <main id="feedList" class="feed-container">
+      <div class="empty-card">
+        <div class="empty-icon">🛡️</div>
+        <h3>Connect Your Mobile Number</h3>
+        <p>Type your 11-digit mobile number (e.g. 09171234567) above to link your child's instant arrival and dismissal alerts right to this screen.</p>
+      </div>
+    </main>
+
+    <!-- Settings Modal -->
+    <div id="settingsModal" class="modal-overlay">
+      <div class="modal-card">
+        <div class="modal-header">
+          <div>
+            <div class="modal-title">⚙️ School Channel Setup</div>
+            <p style="font-size: 0.76rem; color: var(--text-sub); margin-top: 0.15rem;">Connect to your school's live
+              notification feed</p>
+          </div>
+          <button id="closeSettingsBtn" class="close-btn">&times;</button>
+        </div>
+
+        <form id="settingsForm">
+          <div class="form-group">
+            <label class="form-label">School Security Key</label>
+            <input type="text" id="modalPusherKey" class="modal-input" placeholder="e.g. ee61d1c72a80396bb7b6"
+              spellcheck="false" />
+            <span style="font-size: 0.7rem; color: var(--text-sub); margin-top: 0.2rem; display: block;">
+              Provided by your school administrator to link your phone.
+            </span>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Server Region</label>
+            <input type="text" id="modalPusherCluster" class="modal-input" placeholder="e.g. ap1" spellcheck="false" />
+          </div>
+
+          <div style="display: flex; gap: 0.5rem; margin-top: 1.25rem;">
+            <button type="button" id="resetPusherBtn"
+              style="flex: 1; padding: 0.65rem; border-radius: 10px; border: 1px solid var(--border-light); background: #f8fafc; font-size: 0.8rem; font-weight: 700; color: var(--text-sub); cursor: pointer;">
+              Reset
+            </button>
+            <button type="submit"
+              style="flex: 2; padding: 0.65rem; border-radius: 10px; border: none; background: var(--primary); font-size: 0.8rem; font-weight: 700; color: #ffffff; cursor: pointer;">
+              Save &amp; Connect
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Dynamic Pusher Configuration
+    const DEFAULT_PUSHER_KEY = 'ee61d1c72a80396bb7b6';
+    const DEFAULT_PUSHER_CLUSTER = 'ap1';
+
+    let activePusherKey = localStorage.getItem('neugate_portal_pusher_key') || DEFAULT_PUSHER_KEY;
+    let activePusherCluster = localStorage.getItem('neugate_portal_pusher_cluster') || DEFAULT_PUSHER_CLUSTER;
+
+    let pusher = null;
+    let channel = null;
+
+    const statusBadge = document.getElementById('statusBadge');
+    const statusText = document.getElementById('statusText');
+    const feedList = document.getElementById('feedList');
+    const phoneFilter = document.getElementById('phoneFilter');
+    const enablePushBtn = document.getElementById('enablePushBtn');
+
+    // Settings Modal Elements
+    const openSettingsBtn = document.getElementById('openSettingsBtn');
+    const closeSettingsBtn = document.getElementById('closeSettingsBtn');
+    const settingsModal = document.getElementById('settingsModal');
+    const settingsForm = document.getElementById('settingsForm');
+    const modalPusherKey = document.getElementById('modalPusherKey');
+    const modalPusherCluster = document.getElementById('modalPusherCluster');
+    const resetPusherBtn = document.getElementById('resetPusherBtn');
+
+    // Open Modal
+    openSettingsBtn.addEventListener('click', () => {
+      modalPusherKey.value = activePusherKey;
+      modalPusherCluster.value = activePusherCluster;
+      settingsModal.classList.add('open');
+    });
+
+    // Close Modal
+    closeSettingsBtn.addEventListener('click', () => settingsModal.classList.remove('open'));
+    settingsModal.addEventListener('click', (e) => {
+      if (e.target === settingsModal) settingsModal.classList.remove('open');
+    });
+
+    // Reset Defaults
+    resetPusherBtn.addEventListener('click', () => {
+      localStorage.removeItem('neugate_portal_pusher_key');
+      localStorage.removeItem('neugate_portal_pusher_cluster');
+      activePusherKey = DEFAULT_PUSHER_KEY;
+      activePusherCluster = DEFAULT_PUSHER_CLUSTER;
+      modalPusherKey.value = DEFAULT_PUSHER_KEY;
+      modalPusherCluster.value = DEFAULT_PUSHER_CLUSTER;
+      initPusherClient();
+      settingsModal.classList.remove('open');
+    });
+
+    // Save Settings Form
+    settingsForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const newKey = modalPusherKey.value.trim() || DEFAULT_PUSHER_KEY;
+      const newCluster = modalPusherCluster.value.trim() || DEFAULT_PUSHER_CLUSTER;
+
+      localStorage.setItem('neugate_portal_pusher_key', newKey);
+      localStorage.setItem('neugate_portal_pusher_cluster', newCluster);
+
+      activePusherKey = newKey;
+      activePusherCluster = newCluster;
+
+      initPusherClient();
+      settingsModal.classList.remove('open');
+    });
+
+    // Check existing push notification permission status
+    if ('Notification' in window) {
+      if (Notification.permission === 'granted') {
+        enablePushBtn.classList.add('active');
+        enablePushBtn.innerHTML = '<span>🔔</span> On';
+      } else if (Notification.permission === 'denied') {
+        enablePushBtn.innerHTML = '<span>🔕</span> Blocked';
+      }
+    }
+
+    enablePushBtn.addEventListener('click', async () => {
+      if (!('Notification' in window)) {
+        alert('Push notifications are not supported on this browser.');
+        return;
+      }
+      try {
+        const permission = await Notification.requestPermission();
+        if (permission === 'granted') {
+          enablePushBtn.classList.add('active');
+          enablePushBtn.innerHTML = '<span>🔔</span> On';
+          new Notification('Child Safety Monitor', {
+            body: '✅ Live arrival & dismissal alerts are now enabled on your phone!',
+            icon: 'public/neugate_hero_showcase.png'
+          });
+        } else {
+          enablePushBtn.classList.remove('active');
+          enablePushBtn.innerHTML = '<span>🔕</span> Blocked';
+        }
+      } catch (err) {
+        console.error('Notification permission error:', err);
+      }
+    });
+
+    function initPusherClient() {
+      if (pusher) {
+        pusher.disconnect();
+      }
+
+      statusBadge.className = 'connection-badge connecting';
+      statusText.innerText = 'Connecting...';
+
+      pusher = new Pusher(activePusherKey, {
+        cluster: activePusherCluster,
+      });
+
+      pusher.connection.bind('state_change', function (states) {
+        if (states.current === 'connected') {
+          statusBadge.className = 'connection-badge';
+          statusText.innerText = 'Connected & Protecting';
+        } else if (states.current === 'connecting') {
+          statusBadge.className = 'connection-badge connecting';
+          statusText.innerText = 'Connecting...';
+        } else {
+          statusBadge.className = 'connection-badge disconnected';
+          statusText.innerText = 'Reconnecting safely...';
+        }
+      });
+
+      channel = pusher.subscribe('neugate-notifications');
+
+      channel.bind('gate-scan', function (data) {
+        console.log('⚡ Pusher Gate Event:', data);
+
+        let parsed = data;
+        if (typeof data === 'string') {
+          try { parsed = JSON.parse(data); } catch (e) { }
+        }
+
+        logs.unshift(parsed);
+        if (logs.length > 100) logs = logs.slice(0, 100);
+        try {
+          localStorage.setItem('neugate_alert_history', JSON.stringify(logs));
+        } catch (e) { }
+
+        renderFeed();
+
+        // Send System Push Notification to phone lock screen/status bar
+        const cleanVal = phoneFilter.value.trim().replace(/[^0-9]/g, '');
+        const cleanParentPhone = (parsed.parent_phone || '').replace(/[^0-9]/g, '');
+
+        const isMatch = !cleanVal || (cleanParentPhone && cleanParentPhone.includes(cleanVal));
+
+        if (isMatch && 'Notification' in window && Notification.permission === 'granted') {
+          const title = parsed.type === 'IN'
+            ? `🟢 ${parsed.student_name || 'Your child'} has safely arrived!`
+            : `🟡 ${parsed.student_name || 'Your child'} is heading home!`;
+
+          const body = parsed.message || `Recorded at ${parsed.location || 'Main Gate'} at ${parsed.timestamp || new Date().toLocaleTimeString()}`;
+
+          new Notification(title, {
+            body,
+            tag: `gate-${parsed.student_id || Date.now()}`,
+          });
+        }
+      });
+    }
+
+    // Load saved phone number & alert history from localStorage so history survives page reloads
+    const savedPhone = localStorage.getItem('neugate_parent_phone') || '';
+    if (savedPhone) {
+      phoneFilter.value = savedPhone;
+    }
+
+    let logs = [];
+    try {
+      const savedLogs = localStorage.getItem('neugate_alert_history');
+      if (savedLogs) {
+        logs = JSON.parse(savedLogs);
+      }
+    } catch (e) {
+      logs = [];
+    }
+
+    // Save phone filter to localStorage on change
+    phoneFilter.addEventListener('input', () => {
+      localStorage.setItem('neugate_parent_phone', phoneFilter.value.trim());
+      renderFeed();
+    });
+
+    const phoneError = document.getElementById('phoneError');
+
+    function isValidPHMobile(phoneStr) {
+      const clean = phoneStr.replace(/[^0-9]/g, '');
+      // Valid if starts with 09 and is 11 digits, OR starts with 639 and is 12 digits
+      return /^09\d{9}$/.test(clean) || /^639\d{9}$/.test(clean);
+    }
+
+    function renderFeed() {
+      const rawVal = phoneFilter.value.trim();
+      const cleanVal = rawVal.replace(/[^0-9]/g, '');
+
+      // Show validation feedback if user has typed something that isn't a complete valid phone number
+      if (rawVal.length > 0 && !isValidPHMobile(rawVal)) {
+        if (cleanVal.length < 11) {
+          phoneError.style.display = 'block';
+          phoneError.innerText = '⚠️ Please enter a valid 11-digit mobile number starting with 09 (e.g., 09171234567)';
+        } else {
+          phoneError.style.display = 'block';
+          phoneError.innerText = '⚠️ Mobile number must start with 09 (e.g., 09171234567)';
+        }
+      } else {
+        phoneError.style.display = 'none';
+      }
+
+      const filterVal = rawVal.toLowerCase();
+      const filtered = logs.filter(l => {
+        if (!filterVal) return true;
+        const cleanParentPhone = (l.parent_phone || '').replace(/[^0-9]/g, '');
+        return (cleanParentPhone && cleanParentPhone.includes(cleanVal)) ||
+          (l.student_name && l.student_name.toLowerCase().includes(filterVal)) ||
+          (l.student_id && l.student_id.toLowerCase().includes(filterVal));
+      });
+
+      if (filtered.length === 0) {
+        if (isValidPHMobile(rawVal)) {
+          feedList.innerHTML = `
+            <div class="empty-card">
+              <div class="empty-icon">📱</div>
+              <h3>Connected to ${rawVal}</h3>
+              <p>Your phone number is ready! As soon as your child arrives at school or heads home, instant alerts will pop up right here.</p>
+            </div>`;
+        } else {
+          feedList.innerHTML = `
+            <div class="empty-card">
+              <div class="empty-icon">🛡️</div>
+              <h3>Connect Your Mobile Number</h3>
+              <p>Type your 11-digit mobile number (e.g. 09171234567) above to link your child's instant arrival and dismissal alerts right to this screen.</p>
+            </div>`;
+        }
+        return;
+      }
+
+      feedList.innerHTML = filtered.map(log => `
+        <div class="noti-card">
+          <div class="avatar-wrapper">
+            ${log.photo && log.photo.startsWith('data:') ? `<img src="${log.photo}" alt="${log.student_name}" />` : '👧'}
+          </div>
+          <div class="noti-info">
+            <div class="noti-student">${log.student_name || 'Your Child'}</div>
+            <div class="noti-meta">
+              <span>📍 ${log.location || 'Main Gate'}</span>
+              <span>•</span>
+              <span>🏫 ${log.grade_section || 'Campus'}</span>
+              <span>•</span>
+              <span style="font-family: 'JetBrains Mono', monospace; font-weight: 700;">${log.timestamp || new Date().toLocaleTimeString()}</span>
+            </div>
+          </div>
+          <div class="noti-pill ${log.type ? log.type.toLowerCase() : 'in'}">
+            ${log.type === 'IN' ? '🟢 SAFELY ARRIVED' : '🟡 HEADING HOME'}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    phoneFilter.addEventListener('input', renderFeed);
+
+    // Initial Pusher connection & render
+    initPusherClient();
+    renderFeed();
+  </script>
+</body>
+
+</html>
