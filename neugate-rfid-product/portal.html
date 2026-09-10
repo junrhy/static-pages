@@ -736,11 +736,22 @@
           playAlertSound(parsed.type === 'IN');
 
           if ('Notification' in window && Notification.permission === 'granted') {
-            const title = parsed.type === 'IN'
-              ? `🟢 ${parsed.student_name || 'Your child'} has safely arrived!`
-              : `🟡 ${parsed.student_name || 'Your child'} is heading home!`;
+            const loc = (parsed.location || 'Main Gate').trim();
+            const locLow = loc.toLowerCase();
+            const isMainGate = locLow.includes('gate') || locLow.includes('entrance') || locLow.includes('exit') || loc === 'Main Gate';
 
-            const body = parsed.message || `Recorded at ${parsed.location || 'Main Gate'} at ${parsed.timestamp || new Date().toLocaleTimeString()}`;
+            let title = '';
+            if (isMainGate) {
+              title = parsed.type === 'IN'
+                ? `🟢 ${parsed.student_name || 'Your child'} has safely arrived at school!`
+                : `🟡 ${parsed.student_name || 'Your child'} is heading home!`;
+            } else {
+              title = parsed.type === 'IN'
+                ? `📍 ${parsed.student_name || 'Your child'} entered ${loc}!`
+                : `🚶 ${parsed.student_name || 'Your child'} exited ${loc}!`;
+            }
+
+            const body = parsed.message || `Recorded at ${loc} at ${parsed.timestamp || new Date().toLocaleTimeString()}`;
 
             new Notification(title, {
               body,
@@ -897,6 +908,30 @@
         return;
       }
 
+      function getStatusBadge(log) {
+        const type = (log.type || 'IN').toUpperCase();
+        const loc = (log.location || 'Main Gate').trim();
+        const locLow = loc.toLowerCase();
+
+        // Check if location is a main entrance / exit gate
+        const isMainGate = locLow.includes('gate') || locLow.includes('entrance') || locLow.includes('exit') || loc === 'Main Gate';
+
+        if (isMainGate) {
+          if (type === 'IN') {
+            return `<div class="noti-pill in">🟢 SAFELY ARRIVED</div>`;
+          } else {
+            return `<div class="noti-pill out">🟡 HEADING HOME</div>`;
+          }
+        } else {
+          // Internal campus room, library, lab, canteen, building, etc.
+          if (type === 'IN') {
+            return `<div class="noti-pill in">📍 ENTERED ${loc.toUpperCase()}</div>`;
+          } else {
+            return `<div class="noti-pill out">🚶 EXITED ${loc.toUpperCase()}</div>`;
+          }
+        }
+      }
+
       feedList.innerHTML = filtered.map(log => `
         <div class="noti-card">
           <div class="avatar-wrapper">
@@ -905,9 +940,7 @@
           <div class="noti-info">
             <div class="noti-header-row">
               <div class="noti-student">${log.student_name || 'Your Child'}</div>
-              <div class="noti-pill ${log.type ? log.type.toLowerCase() : 'in'}">
-                ${log.type === 'IN' ? '🟢 SAFELY ARRIVED' : '🟡 HEADING HOME'}
-              </div>
+              ${getStatusBadge(log)}
             </div>
             <div class="noti-meta">
               <span>📍 ${log.location || 'Main Gate'}</span>
