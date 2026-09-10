@@ -751,24 +751,41 @@
       });
     }
 
+    // Global Audio Context initialized on user interaction to satisfy browser Autoplay Policy
+    let audioCtx = null;
+
+    function unlockAudioContext() {
+      if (!audioCtx) {
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        if (AudioCtx) audioCtx = new AudioCtx();
+      }
+      if (audioCtx && audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+    }
+
+    // Attach unlock handlers to user gesture events
+    ['click', 'touchstart', 'keydown', 'input'].forEach(evt => {
+      document.addEventListener(evt, unlockAudioContext, { once: false });
+    });
+
     // Web Audio API Pleasant Chime Generator
     function playAlertSound(isArrival) {
       try {
-        const AudioCtx = window.AudioContext || window.webkitAudioContext;
-        if (!AudioCtx) return;
-        const ctx = new AudioCtx();
+        unlockAudioContext();
+        if (!audioCtx) return;
 
-        const now = ctx.currentTime;
-        const masterGain = ctx.createGain();
+        const now = audioCtx.currentTime;
+        const masterGain = audioCtx.createGain();
         masterGain.gain.setValueAtTime(0.3, now);
-        masterGain.connect(ctx.destination);
+        masterGain.connect(audioCtx.destination);
 
         // Frequencies for pleasant two-tone chime (Arrival: C5 -> E5, Dismissal: G5 -> E5)
         const notes = isArrival ? [523.25, 659.25, 783.99] : [783.99, 659.25, 523.25];
 
         notes.forEach((freq, index) => {
-          const osc = ctx.createOscillator();
-          const noteGain = ctx.createGain();
+          const osc = audioCtx.createOscillator();
+          const noteGain = audioCtx.createGain();
 
           osc.type = 'sine';
           osc.frequency.setValueAtTime(freq, now + index * 0.12);
@@ -784,7 +801,7 @@
           osc.stop(now + index * 0.12 + 0.45);
         });
       } catch (e) {
-        console.warn('Audio playback not supported or blocked by browser gesture policy:', e);
+        console.warn('Audio playback error:', e);
       }
     }
 
