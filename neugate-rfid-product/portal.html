@@ -714,11 +714,12 @@
 
         renderFeed();
 
-        // Send System Push Notification to phone lock screen/status bar
-        const cleanVal = phoneFilter.value.trim().replace(/[^0-9]/g, '');
+        // Send System Push Notification ONLY IF phone number is provided and matches
+        const rawVal = phoneFilter.value.trim();
+        const cleanVal = rawVal.replace(/[^0-9]/g, '');
         const cleanParentPhone = (parsed.parent_phone || '').replace(/[^0-9]/g, '');
 
-        const isMatch = !cleanVal || (cleanParentPhone && cleanParentPhone.includes(cleanVal));
+        const isMatch = isValidPHMobile(rawVal) && cleanParentPhone && cleanParentPhone.includes(cleanVal);
 
         if (isMatch && 'Notification' in window && Notification.permission === 'granted') {
           const title = parsed.type === 'IN'
@@ -782,13 +783,10 @@
         phoneError.style.display = 'none';
       }
 
-      const filterVal = rawVal.toLowerCase();
       const filtered = logs.filter(l => {
-        if (!filterVal) return true;
+        if (!isValidPHMobile(rawVal)) return false;
         const cleanParentPhone = (l.parent_phone || '').replace(/[^0-9]/g, '');
-        return (cleanParentPhone && cleanParentPhone.includes(cleanVal)) ||
-          (l.student_name && l.student_name.toLowerCase().includes(filterVal)) ||
-          (l.student_id && l.student_id.toLowerCase().includes(filterVal));
+        return cleanParentPhone && cleanParentPhone.includes(cleanVal);
       });
 
       if (filtered.length === 0) {
