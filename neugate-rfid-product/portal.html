@@ -245,7 +245,7 @@
       border: 1px solid rgba(226, 232, 240, 0.8);
       display: flex;
       gap: 0.9rem;
-      align-items: center;
+      align-items: flex-start;
       animation: popIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
       transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
@@ -278,6 +278,7 @@
       font-size: 1.5rem;
       overflow: hidden;
       flex-shrink: 0;
+      margin-top: 0.1rem;
     }
 
     .avatar-wrapper img {
@@ -288,13 +289,24 @@
 
     .noti-info {
       flex: 1;
+      min-width: 0;
+    }
+
+    .noti-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.35rem;
     }
 
     .noti-student {
       font-size: 0.95rem;
       font-weight: 700;
       color: var(--text-main);
-      margin-bottom: 0.15rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .noti-meta {
@@ -309,11 +321,13 @@
     .noti-pill {
       display: inline-flex;
       align-items: center;
-      padding: 0.25rem 0.6rem;
+      padding: 0.2rem 0.55rem;
       border-radius: 8px;
-      font-size: 0.72rem;
+      font-size: 0.68rem;
       font-weight: 800;
       letter-spacing: 0.3px;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
 
     .noti-pill.in {
@@ -802,7 +816,12 @@
             ${log.photo && log.photo.startsWith('data:') ? `<img src="${log.photo}" alt="${log.student_name}" />` : '👧'}
           </div>
           <div class="noti-info">
-            <div class="noti-student">${log.student_name || 'Your Child'}</div>
+            <div class="noti-header-row">
+              <div class="noti-student">${log.student_name || 'Your Child'}</div>
+              <div class="noti-pill ${log.type ? log.type.toLowerCase() : 'in'}">
+                ${log.type === 'IN' ? '🟢 SAFELY ARRIVED' : '🟡 HEADING HOME'}
+              </div>
+            </div>
             <div class="noti-meta">
               <span>📍 ${log.location || 'Main Gate'}</span>
               <span>•</span>
@@ -810,9 +829,6 @@
               <span>•</span>
               <span style="font-family: 'JetBrains Mono', monospace; font-weight: 700;">${log.timestamp || new Date().toLocaleTimeString()}</span>
             </div>
-          </div>
-          <div class="noti-pill ${log.type ? log.type.toLowerCase() : 'in'}">
-            ${log.type === 'IN' ? '🟢 SAFELY ARRIVED' : '🟡 HEADING HOME'}
           </div>
         </div>
       `).join('');
