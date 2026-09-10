@@ -710,7 +710,17 @@
           }
         }
 
+        if (!parsed.receivedAt) {
+          parsed.receivedAt = Date.now();
+        }
+
         logs.unshift(parsed);
+
+        // Prune logs older than 24 hours (86,400,000 ms)
+        const TWENTY_FOUR_HOURS = 24 * 60 * 60 * 1000;
+        const now = Date.now();
+        logs = logs.filter(l => !l.receivedAt || (now - l.receivedAt) < TWENTY_FOUR_HOURS);
+
         if (logs.length > 100) logs = logs.slice(0, 100);
         try {
           localStorage.setItem('neugate_alert_history', JSON.stringify(logs));
@@ -806,7 +816,11 @@
     try {
       const savedLogs = localStorage.getItem('neugate_alert_history');
       if (savedLogs) {
-        logs = JSON.parse(savedLogs);
+        const loaded = JSON.parse(savedLogs);
+        const TWENTY_FOUR_HOURS = 24 * 60 * 60 * 1000;
+        const now = Date.now();
+        logs = loaded.filter(l => !l.receivedAt || (now - l.receivedAt) < TWENTY_FOUR_HOURS);
+        localStorage.setItem('neugate_alert_history', JSON.stringify(logs));
       }
     } catch (e) {
       logs = [];
