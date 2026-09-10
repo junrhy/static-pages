@@ -714,12 +714,18 @@
 
         renderFeed();
 
-        // Send System Push Notification ONLY IF phone number is provided and matches
+        // Send System Push Notification & Sound
         const rawVal = phoneFilter.value.trim();
-        const cleanVal = rawVal.replace(/[^0-9]/g, '');
-        const cleanParentPhone = (parsed.parent_phone || '').replace(/[^0-9]/g, '');
 
-        const isMatch = isValidPHMobile(rawVal) && cleanParentPhone && cleanParentPhone.includes(cleanVal);
+        function normalizePhone(p) {
+          const clean = (p || '').replace(/[^0-9]/g, '');
+          return clean.length >= 10 ? clean.slice(-10) : clean;
+        }
+
+        const userNorm = normalizePhone(rawVal);
+        const parentNorm = normalizePhone(parsed.parent_phone);
+
+        const isMatch = !rawVal || (userNorm && parentNorm && (parentNorm.includes(userNorm) || userNorm.includes(parentNorm)));
 
         if (isMatch) {
           // Play Alert Chime Sound
@@ -825,10 +831,30 @@
         phoneError.style.display = 'none';
       }
 
+      function normalizePhone(p) {
+        const clean = (p || '').replace(/[^0-9]/g, '');
+        if (clean.length >= 10) {
+          return clean.slice(-10); // Match last 10 digits e.g. 9260049848
+        }
+        return clean;
+      }
+
+      const userNorm = normalizePhone(rawVal);
+
       const filtered = logs.filter(l => {
-        if (!isValidPHMobile(rawVal)) return false;
-        const cleanParentPhone = (l.parent_phone || '').replace(/[^0-9]/g, '');
-        return cleanParentPhone && cleanParentPhone.includes(cleanVal);
+        // If input is empty, show all logs for convenience or preview
+        if (!rawVal) return true;
+        
+        // If user entered a partial or full phone number, compare normalized digits
+        const parentNorm = normalizePhone(l.parent_phone);
+        if (userNorm && parentNorm) {
+          return parentNorm.includes(userNorm) || userNorm.includes(parentNorm);
+        }
+
+        // Fallback search by student name or ID
+        const searchLow = rawVal.toLowerCase();
+        return (l.student_name && l.student_name.toLowerCase().includes(searchLow)) ||
+               (l.student_id && l.student_id.toLowerCase().includes(searchLow));
       });
 
       if (filtered.length === 0) {
