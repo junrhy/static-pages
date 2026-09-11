@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NeuFood Bistro — Restaurant POS & Kitchen Display Desktop App</title>
+  <meta name="description"
+    content="NeuFood Bistro is an offline-first restaurant point-of-sale and kitchen display desktop app for Mac and Windows. Manage menu items, table management, KDS ordering, process Cash, Card, GCash & Bank payments, and track sales." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+        <defs>
+          <linearGradient id="nf" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#f97316" />
+            <stop offset="100%" stop-color="#ea580c" />
+          </linearGradient>
+        </defs>
+        <rect x="3" y="3" width="18" height="18" rx="5" stroke="url(#nf)" stroke-width="2.5" />
+        <path d="M8 12h8M12 8v8" stroke="url(#nf)" stroke-width="2.5" stroke-linecap="round" />
+      </svg>
+      NeuFood Bistro
+    </a>
+    <ul class="nav-links">
+      <li><a href="#features">Features</a></li>
+      <li><a href="support.html">Support</a></li>
+      <li><a href="#payments">Payments</a></li>
+      <li><a href="#offline">Offline First</a></li>
+      <li><a href="#request-license">Get License</a></li>
+      <li><a href="#download">Download</a></li>
+    </ul>
+    <a href="#download" class="btn btn-primary">Get NeuFood</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="badge fade-up">
+      <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor">
+        <circle cx="5" cy="5" r="5" />
+      </svg>
+      Now Available · Mac &amp; Windows
+    </div>
+
+    <h1 class="fade-up delay-1">
+      Restaurant POS &amp; KDS<br>
+      <span class="gradient-text">made simple. Pay once, own it.</span>
+    </h1>
+
+    <p class="fade-up delay-2">
+      NeuFood Bistro is a desktop restaurant POS and kitchen display system. Manage orders, tables, kitchen tickets, menu categories, and sales analytics — all offline with a one-time license.
+    </p>
+
+    <div class="hero-actions fade-up delay-3">
+      <a href="#download" class="btn btn-primary btn-lg">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
+          <polyline points="7 10 12 15 17 10" />
+          <line x1="12" y1="15" x2="12" y2="3" />
+        </svg>
+        Download NeuFood
+      </a>
+      <a href="#features" class="btn btn-outline btn-lg">See Features</a>
+    </div>
+
+    <div class="platform-note fade-up delay-3">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="3" width="20" height="14" rx="2" />
+        <path d="M8 21h8M12 17v4" />
+      </svg>
+      Available for Mac and Windows computers
+    </div>
+
+    <div class="hero-img-wrapper fade-up delay-4">
+      <img src="public/landing-screenshot.png" alt="NeuFood Bistro — Restaurant POS & Kitchen Display" />
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-value">KDS</div>
+      <div class="stat-label">Kitchen Display System</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">4</div>
+      <div class="stat-label">Payment Methods Supported</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">Offline</div>
+      <div class="stat-label">Works Without Internet</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">Yours</div>
+      <div class="stat-label">No Monthly Subscriptions</div>
+    </div>
+  </div>
+
+  <!-- FEATURES -->
+  <section id="features">
+    <div class="container">
+      <div class="features-header">
+        <div class="section-label">What's included</div>
+        <h2 class="section-title">Everything your restaurant needs,<br>nothing it doesn't.</h2>
+      </div>
+      <div class="features-grid">
+
+        <div class="feature-card">
+          <div class="feature-icon">🍽️</div>
+          <div class="feature-title">Order Terminal</div>
+          <div class="feature-desc">Fast table ordering experience. Fire items straight to the kitchen display system or receipt printer in seconds.</div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">👨‍🍳</div>
+          <div class="feature-title">Kitchen Display System (KDS)</div>
+          <div class="feature-desc">Real-time digital ticket screen for chefs to view pending orders, Preparation times, and complete dish alerts.</div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">🪑</div>
+          <div class="feature-title">Table Floorplan Manager</div>
+          <div class="feature-desc">Visual layout of dining tables, occupancy status, split bills, and guest count tracking.</div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">🍕</div>
+          <div class="feature-title">Menu & Addons</div>
+          <div class="feature-desc">Organize food categories, add-on options (extra cheese, spiciness), and modifiers effortlessly.</div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">🧾</div>
+          <div class="feature-title">Bill & Order Receipts</div>
+          <div class="feature-desc">Print order slips, kitchen tickets, and itemized customer bills with VAT and service charge calculation.</div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">📊</div>
+          <div class="feature-title">Sales Analytics</div>
+          <div class="feature-desc">Track top-selling dishes, peak dining hours, cashier shift summaries, and daily revenue breakdown.</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- PAYMENT METHODS -->
+  <section id="payments" class="payment-section">
+    <div class="container">
+      <div class="features-header">
+        <div class="section-label">Flexible payments</div>
+        <h2 class="section-title">Accept how your guests pay.</h2>
+      </div>
+      <div class="payment-grid">
+        <div class="payment-card">
+          <div class="payment-icon">💵</div>
+          <div class="payment-name">Cash</div>
+          <div class="payment-detail">Auto-computes change</div>
+        </div>
+        <div class="payment-card">
+          <div class="payment-icon">💳</div>
+          <div class="payment-name">Card</div>
+          <div class="payment-detail">Debit &amp; credit</div>
+        </div>
+        <div class="payment-card">
+          <div class="payment-icon">📱</div>
+          <div class="payment-name">GCash</div>
+          <div class="payment-detail">E-wallet payments</div>
+        </div>
+        <div class="payment-card">
+          <div class="payment-icon">🏦</div>
+          <div class="payment-name">Bank Transfer</div>
+          <div class="payment-detail">Direct bank payments</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OFFLINE SECTION -->
+  <section id="offline">
+    <div class="offline-inner">
+      <div class="section-label">Built for fast-paced dining</div>
+      <h2>Runs completely<br><span class="gradient-text">without internet.</span></h2>
+      <p>
+        NeuFood Bistro stores all menu, order, and table data directly on your local network/computer. No cloud server required, zero internet dependency.
+      </p>
+
+      <div class="offline-bullets">
+        <div class="offline-bullet">
+          <div class="offline-bullet-icon">✓</div>
+          All menu and table sales data stored locally on your machine
+        </div>
+        <div class="offline-bullet">
+          <div class="offline-bullet-icon">✓</div>
+          Zero lag during rush hours — no cloud latency or server downtime
+        </div>
+        <div class="offline-bullet">
+          <div class="offline-bullet-icon">✓</div>
+          Keep serving guests even when local Wi-Fi internet is down
+        </div>
+        <div class="offline-bullet">
+          <div class="offline-bullet-icon">✓</div>
+          No monthly cloud subscription fees per register or terminal
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REQUEST LICENSE -->
+  <section id="request-license">
+    <div class="license-inner">
+      <div class="section-label">One-time license</div>
+      <h2>Own it forever.<br><span class="gradient-text">Pay once. Done.</span></h2>
+      <p>
+        NeuFood Bistro uses a hardware-bound license key. Pay once, get a key tied to your machine, and use NeuFood Bistro forever.
+      </p>
+
+      <div class="license-box">
+        <div class="license-contact-row">
+          <div class="license-contact-icon">📧</div>
+          <div>
+            <div class="license-contact-label">Send your request to</div>
+            <div class="license-contact-value">hello@neulify.com</div>
+          </div>
+        </div>
+        <div class="license-contact-row">
+          <div class="license-contact-icon">🏪</div>
+          <div>
+            <div class="license-contact-label">Include your business information</div>
+            <div class="license-contact-value">Restaurant name, owner name, and contact number</div>
+          </div>
+        </div>
+        <div class="license-contact-row">
+          <div class="license-contact-icon">🔑</div>
+          <div>
+            <div class="license-contact-label">Include your machine fingerprint</div>
+            <div class="license-contact-value">Shown on the activation screen after installing NeuFood Bistro</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DOWNLOAD -->
+  <section id="download">
+    <div class="download-wrapper">
+      <div class="section-header">
+        <h2>Install NeuFood Bistro</h2>
+        <p>Cross-platform desktop installers for Mac, Windows, and Linux.</p>
+      </div>
+
+      <div class="download-cards">
+        <!-- Mac -->
+        <div class="download-card">
+          <div class="download-info">
+            <div class="download-tags">
+              <span class="download-tag">macOS</span>
+              <span class="download-tag">Version 0.1</span>
+            </div>
+            <div class="download-name" style="margin-top:0.75rem;">
+              <svg style="display:inline;vertical-align:middle;margin-right:0.4rem;" width="18" height="18"
+                viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" />
+              </svg>
+              NeuFood for Mac
+            </div>
+            <div class="download-meta">macOS 13.0 Ventura or later (Apple Silicon &amp; Intel)</div>
+          </div>
+          <a href="https://junrhy.github.io/static-pages/neufood-bistro-product/downloads/neufood-macos-universal.dmg" target="_blank" class="btn btn-primary"
+            style="width:100%;justify-content:center;white-space:nowrap;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
+              <polyline points="7 10 12 15 17 10" />
+              <line x1="12" y1="15" x2="12" y2="3" />
+            </svg>
+            Download for Mac
+          </a>
+        </div>
+
+        <!-- Windows -->
+        <div class="download-card">
+          <div class="download-info">
+            <div class="download-tags">
+              <span class="download-tag">Windows</span>
+              <span class="download-tag">Version 0.1</span>
+            </div>
+            <div class="download-name" style="margin-top:0.75rem;">
+              <svg style="display:inline;vertical-align:middle;margin-right:0.4rem;" width="18" height="18"
+                viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6 h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801" />
+              </svg>
+              NeuFood for Windows
+            </div>
+            <div class="download-meta">Works on Windows 10 and Windows 11 (64-bit)</div>
+          </div>
+          <a href="https://junrhy.github.io/static-pages/neufood-bistro-product/downloads/neufood-windows.msi" target="_blank" class="btn btn-primary"
+            style="width:100%;justify-content:center;white-space:nowrap;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
+              <polyline points="7 10 12 15 17 10" />
+              <line x1="12" y1="15" x2="12" y2="3" />
+            </svg>
+            Download for Windows
+          </a>
+        </div>
+
+        <!-- Linux -->
+        <div class="download-card">
+          <div class="download-info">
+            <div class="download-tags">
+              <span class="download-tag">Linux</span>
+              <span class="download-tag">Version 0.1</span>
+            </div>
+            <div class="download-name" style="margin-top:0.75rem;">
+              🐧 NeuFood for Linux
+            </div>
+            <div class="download-meta">Ubuntu 20.04+ / Debian package (.deb) &amp; AppImage</div>
+          </div>
+          <a href="https://junrhy.github.io/static-pages/neufood-bistro-product/downloads/neufood-linux.deb" target="_blank" class="btn btn-primary"
+            style="width:100%;justify-content:center;white-space:nowrap;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
+              <polyline points="7 10 12 15 17 10" />
+              <line x1="12" y1="15" x2="12" y2="3" />
+            </svg>
+            Download for Linux
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">NeuFood Bistro</div>
+    <div class="footer-tagline">Restaurant POS &amp; Kitchen Display System. Always Offline-Ready.</div>
+    <div style="margin-top: 1.5rem; font-size: 0.8rem; color: var(--text-muted);">
+      &copy; 2026 NeuFood Bistro &bull; Released under MIT License
+    </div>
+  </footer>
+
+</body>
+
+</html>
