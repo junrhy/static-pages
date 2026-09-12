@@ -644,11 +644,15 @@
     const pwaInstallBanner = document.getElementById('pwaInstallBanner');
     const pwaBannerInstallBtn = document.getElementById('pwaBannerInstallBtn');
 
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+
     window.addEventListener('beforeinstallprompt', (e) => {
       e.preventDefault();
       deferredPrompt = e;
-      if (pwaInstallBtn) pwaInstallBtn.style.display = 'flex';
-      if (pwaInstallBanner) pwaInstallBanner.style.display = 'flex';
+      if (!isStandalone) {
+        if (pwaInstallBtn) pwaInstallBtn.style.display = 'flex';
+        if (pwaInstallBanner) pwaInstallBanner.style.display = 'flex';
+      }
     });
 
     async function triggerPwaInstall() {
