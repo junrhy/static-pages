@@ -39,7 +39,7 @@
   <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
 
   <script>
-    if ('serviceWorker' in navigator) {
+    if ('serviceWorker' in navigator && window.location.protocol.startsWith('http')) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('sw.js').then((reg) => {
           console.log('✅ NeuGate PWA Service Worker registered:', reg.scope);
