@@ -5,10 +5,50 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>NeuGate Enterprise — Employee Access &amp; Timekeeping System</title>
   <meta name="description" content="NeuGate Enterprise is a modern employee access control and timekeeping platform for corporate offices. Track real-time RFID check-ins, employee attendance, and send automated manager SMS notifications." />
+  <!-- Open Graph & Social Media Preview Meta Tags -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://junrhy.github.io/static-pages/neugate-enterprise-product/index.html" />
+  <meta property="og:title" content="NeuGate Enterprise — Employee Access & Timekeeping System" />
+  <meta property="og:description" content="NeuGate Enterprise is a modern employee access control and timekeeping platform for corporate offices. Track real-time RFID check-ins, employee attendance, and send automated manager SMS notifications." />
+  <meta property="og:image" content="https://junrhy.github.io/static-pages/neugate-enterprise-product/public/neugate_hero_showcase.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+
+  <!-- Twitter Card Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="NeuGate Enterprise — Employee Access & Timekeeping System" />
+  <meta name="twitter:description" content="NeuGate Enterprise is a modern employee access control and timekeeping platform for corporate offices. Track real-time RFID check-ins, employee attendance, and send automated manager SMS notifications." />
+  <meta name="twitter:image" content="https://junrhy.github.io/static-pages/neugate-enterprise-product/public/neugate_hero_showcase.png" />
+
+  <!-- PWA & Mobile App Meta Tags -->
+  <meta name="theme-color" content="#4f46e5" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="NeuGate Ent" />
+  <link rel="apple-touch-icon" href="public/neugate_hero_showcase.png" />
+
+  <!-- Dynamically inject Web App Manifest only when hosted over HTTP/HTTPS to avoid file:// CORS warnings -->
+  <script>
+    if (window.location.protocol.startsWith('http')) {
+      const manifestLink = document.createElement('link');
+      manifestLink.rel = 'manifest';
+      manifestLink.href = 'manifest.json';
+      document.head.appendChild(manifestLink);
+    }
+  </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
+
+  <script>
+    if ('serviceWorker' in navigator && window.location.protocol.startsWith('http')) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js').catch(() => {});
+      });
+    }
+  </script>
 </head>
 <body>
 

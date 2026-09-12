@@ -7,6 +7,38 @@
   <title>NeuGate Enterprise — Real-Time Employee Check-In Portal</title>
   <meta name="description"
     content="Corporate employee access control and timekeeping monitor portal for NeuGate Enterprise." />
+  <!-- Open Graph & Social Media Preview Meta Tags -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://junrhy.github.io/static-pages/neugate-enterprise-product/portal.html" />
+  <meta property="og:title" content="NeuGate Enterprise — Real-Time Employee Check-In Portal" />
+  <meta property="og:description" content="Corporate employee access control and timekeeping monitor portal for NeuGate Enterprise." />
+  <meta property="og:image" content="https://junrhy.github.io/static-pages/neugate-enterprise-product/public/neugate_hero_showcase.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+
+  <!-- Twitter Card Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="NeuGate Enterprise — Real-Time Employee Check-In Portal" />
+  <meta name="twitter:description" content="Corporate employee access control and timekeeping monitor portal for NeuGate Enterprise." />
+  <meta name="twitter:image" content="https://junrhy.github.io/static-pages/neugate-enterprise-product/public/neugate_hero_showcase.png" />
+
+  <!-- PWA & Mobile App Meta Tags -->
+  <meta name="theme-color" content="#4f46e5" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="NeuGate Ent" />
+  <link rel="apple-touch-icon" href="public/neugate_hero_showcase.png" />
+
+  <!-- Dynamically inject Web App Manifest only when hosted over HTTP/HTTPS to avoid file:// CORS warnings -->
+  <script>
+    if (window.location.protocol.startsWith('http')) {
+      const manifestLink = document.createElement('link');
+      manifestLink.rel = 'manifest';
+      manifestLink.href = 'manifest.json';
+      document.head.appendChild(manifestLink);
+    }
+  </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
@@ -14,6 +46,18 @@
     rel="stylesheet" />
   <!-- Pusher JS Library -->
   <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
+
+  <script>
+    if ('serviceWorker' in navigator && window.location.protocol.startsWith('http')) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js').then((reg) => {
+          console.log('✅ NeuGate Enterprise PWA Service Worker registered:', reg.scope);
+        }).catch((err) => {
+          console.warn('⚠️ Service Worker registration failed:', err);
+        });
+      });
+    }
+  </script>
   <style>
     :root {
       --bg-mobile: #f4f6fb;
@@ -493,8 +537,31 @@
             <div class="app-tag">Corporate Access &amp; Timekeeping</div>
           </div>
         </div>
-        <button id="openSettingsBtn" class="gear-btn" title="Pusher Settings">
-          ⚙️
+        <div style="display: flex; gap: 0.4rem; align-items: center;">
+          <button id="pwaInstallBtn" class="gear-btn" style="display: none;" title="Install App to Home Screen">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+          </button>
+          <button id="openSettingsBtn" class="gear-btn" title="Pusher Settings">
+            ⚙️
+          </button>
+        </div>
+      </div>
+
+      <!-- Android / Chrome Native PWA Install Banner -->
+      <div id="pwaInstallBanner" style="display: none; background: linear-gradient(135deg, #4f46e5, #4338ca); color: #ffffff; padding: 0.65rem 1rem; border-radius: 12px; margin-bottom: 0.75rem; align-items: center; justify-content: space-between; box-shadow: 0 4px 14px rgba(79, 70, 229, 0.3);">
+        <div style="display: flex; align-items: center; gap: 0.6rem;">
+          <span style="font-size: 1.4rem;">🏢</span>
+          <div>
+            <div style="font-weight: 800; font-size: 0.82rem;">Install NeuGate Enterprise App</div>
+            <div style="font-size: 0.7rem; opacity: 0.9;">Add to Home Screen for instant access</div>
+          </div>
+        </div>
+        <button id="pwaBannerInstallBtn" style="background: #ffffff; color: #4f46e5; border: none; padding: 0.35rem 0.85rem; border-radius: 8px; font-weight: 800; font-size: 0.78rem; cursor: pointer; white-space: nowrap;">
+          Install
         </button>
       </div>
 
@@ -572,6 +639,42 @@
   </div>
 
   <script>
+    // Native Android / Chrome PWA Installation Handler
+    let deferredPrompt = null;
+    const pwaInstallBtn = document.getElementById('pwaInstallBtn');
+    const pwaInstallBanner = document.getElementById('pwaInstallBanner');
+    const pwaBannerInstallBtn = document.getElementById('pwaBannerInstallBtn');
+
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      if (!isStandalone) {
+        if (pwaInstallBtn) pwaInstallBtn.style.display = 'flex';
+        if (pwaInstallBanner) pwaInstallBanner.style.display = 'flex';
+      }
+    });
+
+    async function triggerPwaInstall() {
+      if (!deferredPrompt) return;
+      deferredPrompt.prompt();
+      const { outcome } = await deferredPrompt.userChoice;
+      console.log(`User response to PWA install prompt: ${outcome}`);
+      deferredPrompt = null;
+      if (pwaInstallBtn) pwaInstallBtn.style.display = 'none';
+      if (pwaInstallBanner) pwaInstallBanner.style.display = 'none';
+    }
+
+    if (pwaInstallBtn) pwaInstallBtn.addEventListener('click', triggerPwaInstall);
+    if (pwaBannerInstallBtn) pwaBannerInstallBtn.addEventListener('click', triggerPwaInstall);
+
+    window.addEventListener('appinstalled', () => {
+      console.log('🎉 NeuGate Enterprise App installed successfully');
+      if (pwaInstallBtn) pwaInstallBtn.style.display = 'none';
+      if (pwaInstallBanner) pwaInstallBanner.style.display = 'none';
+    });
+
     // Dynamic Pusher Configuration
     const DEFAULT_PUSHER_KEY = 'ee61d1c72a80396bb7b6';
     const DEFAULT_PUSHER_CLUSTER = 'ap1';
