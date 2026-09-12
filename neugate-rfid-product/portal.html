@@ -7,6 +7,29 @@
   <title>NeuGate Parent App — Real-Time Campus Gate Notifications</title>
   <meta name="description"
     content="Light mode mobile app parent portal for NeuGate RFID Gate Entrance. Receive real-time student check-in and checkout notifications." />
+  <!-- Open Graph & Social Media Preview Meta Tags -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://junrhy.github.io/static-pages/neugate-rfid-product/portal.html" />
+  <meta property="og:title" content="NeuGate Parent App — Real-Time Campus Gate Notifications" />
+  <meta property="og:description" content="Light mode mobile app parent portal for NeuGate RFID Gate Entrance. Receive real-time student check-in and checkout notifications." />
+  <meta property="og:image" content="https://junrhy.github.io/static-pages/neugate-rfid-product/public/neugate_hero_showcase.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+
+  <!-- Twitter Card Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="NeuGate Parent App — Real-Time Campus Gate Notifications" />
+  <meta name="twitter:description" content="Light mode mobile app parent portal for NeuGate RFID Gate Entrance. Receive real-time student check-in and checkout notifications." />
+  <meta name="twitter:image" content="https://junrhy.github.io/static-pages/neugate-rfid-product/public/neugate_hero_showcase.png" />
+
+  <!-- PWA & Mobile App Meta Tags -->
+  <meta name="theme-color" content="#0284c7" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="NeuGate App" />
+  <link rel="apple-touch-icon" href="public/neugate_hero_showcase.png" />
+  <link rel="manifest" href="manifest.json" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
@@ -14,6 +37,18 @@
     rel="stylesheet" />
   <!-- Pusher JS Library -->
   <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js').then((reg) => {
+          console.log('✅ NeuGate PWA Service Worker registered:', reg.scope);
+        }).catch((err) => {
+          console.warn('⚠️ Service Worker registration failed:', err);
+        });
+      });
+    }
+  </script>
   <style>
     :root {
       --bg-mobile: #f4f6fb;

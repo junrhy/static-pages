@@ -5,10 +5,41 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Support & Installation Guide — NeuGate Smart Campus Access</title>
   <meta name="description" content="Official NeuGate support center. Step-by-step guide on how to download, install, troubleshoot, and bypass macOS Gatekeeper unverified developer warnings." />
+  <!-- Open Graph & Social Media Preview Meta Tags -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://junrhy.github.io/static-pages/neugate-rfid-product/support.html" />
+  <meta property="og:title" content="Support & Installation Guide — NeuGate Smart Campus Access" />
+  <meta property="og:description" content="Official NeuGate support center. Step-by-step guide on how to download, install, troubleshoot, and bypass macOS Gatekeeper unverified developer warnings." />
+  <meta property="og:image" content="https://junrhy.github.io/static-pages/neugate-rfid-product/public/neugate_hero_showcase.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+
+  <!-- Twitter Card Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Support & Installation Guide — NeuGate Smart Campus Access" />
+  <meta name="twitter:description" content="Official NeuGate support center. Step-by-step guide on how to download, install, troubleshoot, and bypass macOS Gatekeeper unverified developer warnings." />
+  <meta name="twitter:image" content="https://junrhy.github.io/static-pages/neugate-rfid-product/public/neugate_hero_showcase.png" />
+
+  <!-- PWA & Mobile App Meta Tags -->
+  <meta name="theme-color" content="#0284c7" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="NeuGate Support" />
+  <link rel="apple-touch-icon" href="public/neugate_hero_showcase.png" />
+  <link rel="manifest" href="manifest.json" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js').catch(() => {});
+      });
+    }
+  </script>
   <style>
     .page-header {
       padding: 9rem 1.5rem 4rem;
