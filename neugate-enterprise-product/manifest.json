@@ -9,7 +9,7 @@
   "theme_color": "#4f46e5",
   "icons": [
     {
-      "src": "public/neugate_enterprise_showcase.png",
+      "src": "public/neugate_hero_showcase.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
