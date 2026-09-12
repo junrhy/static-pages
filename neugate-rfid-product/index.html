@@ -26,7 +26,15 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="NeuGate" />
   <link rel="apple-touch-icon" href="public/neugate_hero_showcase.png" />
-  <link rel="manifest" href="manifest.json" />
+  <!-- Dynamically inject Web App Manifest only when hosted over HTTP/HTTPS to avoid file:// CORS warnings -->
+  <script>
+    if (window.location.protocol.startsWith('http')) {
+      const manifestLink = document.createElement('link');
+      manifestLink.rel = 'manifest';
+      manifestLink.href = 'manifest.json';
+      document.head.appendChild(manifestLink);
+    }
+  </script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
