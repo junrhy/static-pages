@@ -11,16 +11,20 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://junrhy.github.io/static-pages/neugate-rfid-product/portal.html" />
   <meta property="og:title" content="NeuGate Parent App — Real-Time Campus Gate Notifications" />
-  <meta property="og:description" content="Light mode mobile app parent portal for NeuGate RFID Gate Entrance. Receive real-time student check-in and checkout notifications." />
-  <meta property="og:image" content="https://junrhy.github.io/static-pages/neugate-rfid-product/public/neugate_hero_showcase.png" />
+  <meta property="og:description"
+    content="Light mode mobile app parent portal for NeuGate RFID Gate Entrance. Receive real-time student check-in and checkout notifications." />
+  <meta property="og:image"
+    content="https://junrhy.github.io/static-pages/neugate-rfid-product/public/neugate_hero_showcase.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
 
   <!-- Twitter Card Meta Tags -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="NeuGate Parent App — Real-Time Campus Gate Notifications" />
-  <meta name="twitter:description" content="Light mode mobile app parent portal for NeuGate RFID Gate Entrance. Receive real-time student check-in and checkout notifications." />
-  <meta name="twitter:image" content="https://junrhy.github.io/static-pages/neugate-rfid-product/public/neugate_hero_showcase.png" />
+  <meta name="twitter:description"
+    content="Light mode mobile app parent portal for NeuGate RFID Gate Entrance. Receive real-time student check-in and checkout notifications." />
+  <meta name="twitter:image"
+    content="https://junrhy.github.io/static-pages/neugate-rfid-product/public/neugate_hero_showcase.png" />
 
   <!-- PWA & Mobile App Meta Tags -->
   <meta name="theme-color" content="#0284c7" />
@@ -539,10 +543,11 @@
         </div>
         <div style="display: flex; gap: 0.4rem; align-items: center;">
           <button id="pwaInstallBtn" class="gear-btn" style="display: none;" title="Install App to Home Screen">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-              <polyline points="7 10 12 15 17 10"/>
-              <line x1="12" y1="15" x2="12" y2="3"/>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+              <polyline points="7 10 12 15 17 10" />
+              <line x1="12" y1="15" x2="12" y2="3" />
             </svg>
           </button>
           <button id="openSettingsBtn" class="gear-btn" title="Pusher Settings">
@@ -579,7 +584,8 @@
       <div class="empty-card">
         <div class="empty-icon">🛡️</div>
         <h3>Connect Your Mobile Number</h3>
-        <p>Type your 11-digit mobile number (e.g. 09171234567) above to link your child's instant arrival and dismissal alerts right to this screen.</p>
+        <p>Type your 11-digit mobile number (e.g. 09171234567) above to link your child's instant arrival and dismissal
+          alerts right to this screen.</p>
       </div>
     </main>
 
@@ -597,6 +603,15 @@
 
         <form id="settingsForm">
           <div class="form-group">
+            <label class="form-label">Broadcaster Server</label>
+            <select id="modalDriver" class="modal-input" style="cursor: pointer; font-weight: 600;">
+              <option value="pusher">Pusher Cloud</option>
+              <option value="soketi">Neulify Soketi</option>
+              <option value="reverb">Neulify Reverb</option>
+            </select>
+          </div>
+
+          <div class="form-group">
             <label class="form-label">School Security Key</label>
             <input type="text" id="modalPusherKey" class="modal-input" placeholder="e.g. ee61d1c72a80396bb7b6"
               spellcheck="false" />
@@ -605,9 +620,15 @@
             </span>
           </div>
 
-          <div class="form-group">
+          <div id="clusterGroup" class="form-group">
             <label class="form-label">Server Region</label>
             <input type="text" id="modalPusherCluster" class="modal-input" placeholder="e.g. ap1" spellcheck="false" />
+          </div>
+
+          <div id="customHostGroup" class="form-group" style="display: none;">
+            <label class="form-label">Live Backend Host Domain</label>
+            <input type="text" id="modalWsHost" class="modal-input" placeholder="sakto-app-backend.onrender.com"
+              spellcheck="false" />
           </div>
 
           <div style="display: flex; gap: 0.5rem; margin-top: 1.25rem;">
@@ -662,12 +683,16 @@
       if (pwaInstallBanner) pwaInstallBanner.style.display = 'none';
     });
 
-    // Dynamic Pusher Configuration
+    // Dynamic Broadcaster Configuration
     const DEFAULT_PUSHER_KEY = 'ee61d1c72a80396bb7b6';
     const DEFAULT_PUSHER_CLUSTER = 'ap1';
+    const DEFAULT_DRIVER = 'pusher';
+    const DEFAULT_WS_HOST = 'sakto-app-backend.onrender.com';
 
+    let activeDriver = localStorage.getItem('neugate_portal_driver') || DEFAULT_DRIVER;
     let activePusherKey = localStorage.getItem('neugate_portal_pusher_key') || DEFAULT_PUSHER_KEY;
     let activePusherCluster = localStorage.getItem('neugate_portal_pusher_cluster') || DEFAULT_PUSHER_CLUSTER;
+    let activeWsHost = localStorage.getItem('neugate_portal_ws_host') || DEFAULT_WS_HOST;
 
     let pusher = null;
     let channel = null;
@@ -683,14 +708,34 @@
     const closeSettingsBtn = document.getElementById('closeSettingsBtn');
     const settingsModal = document.getElementById('settingsModal');
     const settingsForm = document.getElementById('settingsForm');
+    const modalDriver = document.getElementById('modalDriver');
     const modalPusherKey = document.getElementById('modalPusherKey');
     const modalPusherCluster = document.getElementById('modalPusherCluster');
+    const modalWsHost = document.getElementById('modalWsHost');
+    const clusterGroup = document.getElementById('clusterGroup');
+    const customHostGroup = document.getElementById('customHostGroup');
     const resetPusherBtn = document.getElementById('resetPusherBtn');
+
+    function updateModalFieldVisibility() {
+      const drv = modalDriver.value;
+      if (drv === 'pusher') {
+        clusterGroup.style.display = 'block';
+        customHostGroup.style.display = 'none';
+      } else {
+        clusterGroup.style.display = 'none';
+        customHostGroup.style.display = 'block';
+      }
+    }
+
+    modalDriver.addEventListener('change', updateModalFieldVisibility);
 
     // Open Modal
     openSettingsBtn.addEventListener('click', () => {
+      modalDriver.value = activeDriver;
       modalPusherKey.value = activePusherKey;
       modalPusherCluster.value = activePusherCluster;
+      modalWsHost.value = activeWsHost;
+      updateModalFieldVisibility();
       settingsModal.classList.add('open');
     });
 
@@ -702,12 +747,19 @@
 
     // Reset Defaults
     resetPusherBtn.addEventListener('click', () => {
+      localStorage.removeItem('neugate_portal_driver');
       localStorage.removeItem('neugate_portal_pusher_key');
       localStorage.removeItem('neugate_portal_pusher_cluster');
+      localStorage.removeItem('neugate_portal_ws_host');
+      activeDriver = DEFAULT_DRIVER;
       activePusherKey = DEFAULT_PUSHER_KEY;
       activePusherCluster = DEFAULT_PUSHER_CLUSTER;
+      activeWsHost = DEFAULT_WS_HOST;
+      modalDriver.value = DEFAULT_DRIVER;
       modalPusherKey.value = DEFAULT_PUSHER_KEY;
       modalPusherCluster.value = DEFAULT_PUSHER_CLUSTER;
+      modalWsHost.value = DEFAULT_WS_HOST;
+      updateModalFieldVisibility();
       initPusherClient();
       settingsModal.classList.remove('open');
     });
@@ -715,14 +767,20 @@
     // Save Settings Form
     settingsForm.addEventListener('submit', (e) => {
       e.preventDefault();
-      const newKey = modalPusherKey.value.trim() || DEFAULT_PUSHER_KEY;
+      const newDriver = modalDriver.value || DEFAULT_DRIVER;
+      const newKey = modalPusherKey.value.trim() || (newDriver === 'pusher' ? DEFAULT_PUSHER_KEY : 'f7fc5747ad0f8d43f520');
       const newCluster = modalPusherCluster.value.trim() || DEFAULT_PUSHER_CLUSTER;
+      const newHost = modalWsHost.value.trim() || DEFAULT_WS_HOST;
 
+      localStorage.setItem('neugate_portal_driver', newDriver);
       localStorage.setItem('neugate_portal_pusher_key', newKey);
       localStorage.setItem('neugate_portal_pusher_cluster', newCluster);
+      localStorage.setItem('neugate_portal_ws_host', newHost);
 
+      activeDriver = newDriver;
       activePusherKey = newKey;
       activePusherCluster = newCluster;
+      activeWsHost = newHost;
 
       initPusherClient();
       settingsModal.classList.remove('open');
@@ -769,9 +827,32 @@
       statusBadge.className = 'connection-badge connecting';
       statusText.innerText = 'Connecting...';
 
-      pusher = new Pusher(activePusherKey, {
-        cluster: activePusherCluster,
-      });
+      let pusherOpts = {};
+      if (activeDriver === 'soketi') {
+        pusherOpts = {
+          wsHost: activeWsHost,
+          wsPort: 443,
+          wssPort: 443,
+          wsPath: '/soketi',
+          forceTLS: true,
+          enabledTransports: ['ws', 'wss'],
+        };
+      } else if (activeDriver === 'reverb') {
+        pusherOpts = {
+          wsHost: activeWsHost,
+          wsPort: 443,
+          wssPort: 443,
+          wsPath: '/reverb',
+          forceTLS: true,
+          enabledTransports: ['ws', 'wss'],
+        };
+      } else {
+        pusherOpts = {
+          cluster: activePusherCluster,
+        };
+      }
+
+      pusher = new Pusher(activePusherKey, pusherOpts);
 
       pusher.connection.bind('state_change', function (states) {
         if (states.current === 'connected') {
@@ -871,12 +952,12 @@
       arrivalAudio.play().then(() => {
         arrivalAudio.pause();
         arrivalAudio.currentTime = 0;
-      }).catch(() => {});
-      
+      }).catch(() => { });
+
       dismissalAudio.play().then(() => {
         dismissalAudio.pause();
         dismissalAudio.currentTime = 0;
-      }).catch(() => {});
+      }).catch(() => { });
     }
 
     ['click', 'touchstart', 'keydown', 'input'].forEach(evt => {
@@ -960,7 +1041,7 @@
       const filtered = logs.filter(l => {
         // If input is empty, show all logs for convenience or preview
         if (!rawVal) return true;
-        
+
         // If user entered a partial or full phone number, compare normalized digits
         const parentNorm = normalizePhone(l.parent_phone);
         if (userNorm && parentNorm) {
@@ -970,7 +1051,7 @@
         // Fallback search by student name or ID
         const searchLow = rawVal.toLowerCase();
         return (l.student_name && l.student_name.toLowerCase().includes(searchLow)) ||
-               (l.student_id && l.student_id.toLowerCase().includes(searchLow));
+          (l.student_id && l.student_id.toLowerCase().includes(searchLow));
       });
 
       if (filtered.length === 0) {
