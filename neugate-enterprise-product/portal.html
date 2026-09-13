@@ -497,8 +497,20 @@
       outline: none;
     }
 
+    select.modal-input {
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.85rem center;
+      background-size: 1.1rem;
+      padding-right: 2.4rem;
+      cursor: pointer;
+    }
+
     .modal-input:focus {
-      background: #ffffff;
+      background-color: #ffffff;
       border-color: var(--primary);
       box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.12);
     }
@@ -589,8 +601,8 @@
       <div class="modal-card">
         <div class="modal-header">
           <div>
-            <div class="modal-title">⚙️ School Channel Setup</div>
-            <p style="font-size: 0.76rem; color: var(--text-sub); margin-top: 0.15rem;">Connect to your school's live
+            <div class="modal-title">⚙️ Enterprise Channel Setup</div>
+            <p style="font-size: 0.76rem; color: var(--text-sub); margin-top: 0.15rem;">Connect to your company's live
               notification feed</p>
           </div>
           <button id="closeSettingsBtn" class="close-btn">&times;</button>
@@ -598,17 +610,32 @@
 
         <form id="settingsForm">
           <div class="form-group">
-            <label class="form-label">School Security Key</label>
-            <input type="text" id="modalPusherKey" class="modal-input" placeholder="e.g. ee61d1c72a80396bb7b6"
-              spellcheck="false" />
-            <span style="font-size: 0.7rem; color: var(--text-sub); margin-top: 0.2rem; display: block;">
-              Provided by your school administrator to link your phone.
-            </span>
+            <label class="form-label">Broadcaster Server</label>
+            <select id="modalDriver" class="modal-input" style="cursor: pointer; font-weight: 600;">
+              <option value="pusher">Pusher Cloud (default)</option>
+              <option value="soketi">Neulify Soketi</option>
+              <option value="reverb">Neulify Reverb</option>
+            </select>
           </div>
 
           <div class="form-group">
+            <label class="form-label">Company Security Key</label>
+            <input type="text" id="modalPusherKey" class="modal-input" placeholder="e.g. ee61d1c72a80396bb7b6"
+              spellcheck="false" />
+            <span style="font-size: 0.7rem; color: var(--text-sub); margin-top: 0.2rem; display: block;">
+              Provided by your system administrator to link your phone.
+            </span>
+          </div>
+
+          <div id="clusterGroup" class="form-group">
             <label class="form-label">Server Region</label>
             <input type="text" id="modalPusherCluster" class="modal-input" placeholder="e.g. ap1" spellcheck="false" />
+          </div>
+
+          <div id="customHostGroup" class="form-group" style="display: none;">
+            <label class="form-label">Neulify Domain</label>
+            <input type="text" id="modalWsHost" class="modal-input" placeholder="sakto-app-backend.onrender.com"
+              spellcheck="false" />
           </div>
 
           <div style="display: flex; gap: 0.5rem; margin-top: 1.25rem;">
@@ -663,12 +690,16 @@
       if (pwaInstallBanner) pwaInstallBanner.style.display = 'none';
     });
 
-    // Dynamic Pusher Configuration
+    // Dynamic Broadcaster Configuration
     const DEFAULT_PUSHER_KEY = 'ee61d1c72a80396bb7b6';
     const DEFAULT_PUSHER_CLUSTER = 'ap1';
+    const DEFAULT_DRIVER = 'pusher';
+    const DEFAULT_WS_HOST = 'sakto-app-backend.onrender.com';
 
+    let activeDriver = localStorage.getItem('neugate_portal_driver') || DEFAULT_DRIVER;
     let activePusherKey = localStorage.getItem('neugate_portal_pusher_key') || DEFAULT_PUSHER_KEY;
     let activePusherCluster = localStorage.getItem('neugate_portal_pusher_cluster') || DEFAULT_PUSHER_CLUSTER;
+    let activeWsHost = localStorage.getItem('neugate_portal_ws_host') || DEFAULT_WS_HOST;
 
     let pusher = null;
     let channel = null;
@@ -684,14 +715,34 @@
     const closeSettingsBtn = document.getElementById('closeSettingsBtn');
     const settingsModal = document.getElementById('settingsModal');
     const settingsForm = document.getElementById('settingsForm');
+    const modalDriver = document.getElementById('modalDriver');
     const modalPusherKey = document.getElementById('modalPusherKey');
     const modalPusherCluster = document.getElementById('modalPusherCluster');
+    const modalWsHost = document.getElementById('modalWsHost');
+    const clusterGroup = document.getElementById('clusterGroup');
+    const customHostGroup = document.getElementById('customHostGroup');
     const resetPusherBtn = document.getElementById('resetPusherBtn');
+
+    function updateModalFieldVisibility() {
+      const drv = modalDriver.value;
+      if (drv === 'pusher') {
+        clusterGroup.style.display = 'block';
+        customHostGroup.style.display = 'none';
+      } else {
+        clusterGroup.style.display = 'none';
+        customHostGroup.style.display = 'block';
+      }
+    }
+
+    modalDriver.addEventListener('change', updateModalFieldVisibility);
 
     // Open Modal
     openSettingsBtn.addEventListener('click', () => {
+      modalDriver.value = activeDriver;
       modalPusherKey.value = activePusherKey;
       modalPusherCluster.value = activePusherCluster;
+      modalWsHost.value = activeWsHost;
+      updateModalFieldVisibility();
       settingsModal.classList.add('open');
     });
 
@@ -703,12 +754,19 @@
 
     // Reset Defaults
     resetPusherBtn.addEventListener('click', () => {
+      localStorage.removeItem('neugate_portal_driver');
       localStorage.removeItem('neugate_portal_pusher_key');
       localStorage.removeItem('neugate_portal_pusher_cluster');
+      localStorage.removeItem('neugate_portal_ws_host');
+      activeDriver = DEFAULT_DRIVER;
       activePusherKey = DEFAULT_PUSHER_KEY;
       activePusherCluster = DEFAULT_PUSHER_CLUSTER;
+      activeWsHost = DEFAULT_WS_HOST;
+      modalDriver.value = DEFAULT_DRIVER;
       modalPusherKey.value = DEFAULT_PUSHER_KEY;
       modalPusherCluster.value = DEFAULT_PUSHER_CLUSTER;
+      modalWsHost.value = DEFAULT_WS_HOST;
+      updateModalFieldVisibility();
       initPusherClient();
       settingsModal.classList.remove('open');
     });
@@ -716,14 +774,20 @@
     // Save Settings Form
     settingsForm.addEventListener('submit', (e) => {
       e.preventDefault();
-      const newKey = modalPusherKey.value.trim() || DEFAULT_PUSHER_KEY;
+      const newDriver = modalDriver.value || DEFAULT_DRIVER;
+      const newKey = modalPusherKey.value.trim() || (newDriver === 'pusher' ? DEFAULT_PUSHER_KEY : 'f7fc5747ad0f8d43f520');
       const newCluster = modalPusherCluster.value.trim() || DEFAULT_PUSHER_CLUSTER;
+      const newHost = modalWsHost.value.trim() || DEFAULT_WS_HOST;
 
+      localStorage.setItem('neugate_portal_driver', newDriver);
       localStorage.setItem('neugate_portal_pusher_key', newKey);
       localStorage.setItem('neugate_portal_pusher_cluster', newCluster);
+      localStorage.setItem('neugate_portal_ws_host', newHost);
 
+      activeDriver = newDriver;
       activePusherKey = newKey;
       activePusherCluster = newCluster;
+      activeWsHost = newHost;
 
       initPusherClient();
       settingsModal.classList.remove('open');
@@ -749,8 +813,8 @@
         if (permission === 'granted') {
           enablePushBtn.classList.add('active');
           enablePushBtn.innerHTML = '<span>🔔</span> On';
-          new Notification('Child Safety Monitor', {
-            body: '✅ Live arrival & dismissal alerts are now enabled on your phone!',
+          new Notification('Employee Security Monitor', {
+            body: '✅ Live check-in & dismissal alerts are now enabled on your phone!',
             icon: 'public/neugate_hero_showcase.png'
           });
         } else {
@@ -770,9 +834,32 @@
       statusBadge.className = 'connection-badge connecting';
       statusText.innerText = 'Connecting...';
 
-      pusher = new Pusher(activePusherKey, {
-        cluster: activePusherCluster,
-      });
+      let pusherOpts = {};
+      if (activeDriver === 'soketi') {
+        pusherOpts = {
+          wsHost: activeWsHost,
+          wsPort: 443,
+          wssPort: 443,
+          wsPath: '/soketi',
+          forceTLS: true,
+          enabledTransports: ['ws', 'wss'],
+        };
+      } else if (activeDriver === 'reverb') {
+        pusherOpts = {
+          wsHost: activeWsHost,
+          wsPort: 443,
+          wssPort: 443,
+          wsPath: '/reverb',
+          forceTLS: true,
+          enabledTransports: ['ws', 'wss'],
+        };
+      } else {
+        pusherOpts = {
+          cluster: activePusherCluster,
+        };
+      }
+
+      pusher = new Pusher(activePusherKey, pusherOpts);
 
       pusher.connection.bind('state_change', function (states) {
         if (states.current === 'connected') {
