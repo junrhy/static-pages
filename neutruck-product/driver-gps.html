@@ -14,114 +14,192 @@
   <link rel="stylesheet" href="styles.css" />
   <style>
     body {
-      padding-bottom: 2rem;
       background: #0a0e1a;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
 
+    /* Mobile First Compact App Bar Header */
+    .mobile-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.85rem 1.25rem;
+      background: rgba(10, 14, 26, 0.95);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .mobile-header .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 800;
+      font-size: 1.1rem;
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .mobile-header .brand img {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+    }
+
+    .mobile-header .brand span {
+      background: linear-gradient(135deg, #00d4ff, #38bdf8);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .mobile-header .badge-app {
+      font-size: 0.7rem;
+      font-weight: 800;
+      padding: 0.2rem 0.55rem;
+      border-radius: 20px;
+      background: rgba(0, 212, 255, 0.1);
+      border: 1px solid rgba(0, 212, 255, 0.3);
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    /* Mobile First Container */
     .driver-container {
-      max-width: 440px;
+      width: 100%;
+      max-width: 480px;
       margin: 0 auto;
-      padding: 1.25rem 1rem;
+      padding: 1rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
 
     .driver-card {
       background: var(--bg-card);
       border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 1.5rem;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      border-radius: 20px;
+      padding: 1.5rem 1.25rem;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
     }
 
     .form-label {
       display: block;
-      font-size: 0.8rem;
+      font-size: 0.75rem;
       font-weight: 800;
       color: var(--text-muted);
       margin-bottom: 0.4rem;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.06em;
+      text-align: center;
     }
 
     .form-input {
       width: 100%;
-      background: rgba(0, 0, 0, 0.4);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 0.85rem 1rem;
+      background: rgba(0, 0, 0, 0.45);
+      border: 2px solid var(--border);
+      border-radius: 14px;
+      padding: 0.9rem 1rem;
       color: #fff;
       font-family: inherit;
-      font-size: 1.1rem;
-      font-weight: 700;
+      font-size: 1.3rem;
+      font-weight: 900;
       text-align: center;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.08em;
       outline: none;
-      transition: border-color 0.2s;
+      transition: all 0.2s ease;
+      touch-action: manipulation;
     }
 
     .form-input:focus {
       border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.15);
+      background: rgba(0, 0, 0, 0.6);
     }
 
+    /* Mobile Primary Tap Target */
     .btn-checkin {
       width: 100%;
-      padding: 1.25rem 1rem;
-      font-size: 1.15rem;
+      min-height: 56px;
+      padding: 0.9rem 1rem;
+      font-size: 1.2rem;
       font-weight: 900;
-      border-radius: 14px;
+      border-radius: 16px;
       justify-content: center;
-      margin-top: 1.25rem;
-      box-shadow: 0 8px 24px var(--primary-glow);
+      letter-spacing: 0.02em;
+      box-shadow: 0 8px 25px var(--primary-glow);
+      touch-action: manipulation;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .btn-checkin:active {
+      transform: scale(0.98);
     }
 
     .gps-display {
-      background: rgba(0, 212, 255, 0.05);
+      background: rgba(0, 212, 255, 0.06);
       border: 1px solid rgba(0, 212, 255, 0.3);
-      border-radius: 14px;
-      padding: 1.1rem;
-      margin-top: 1.25rem;
+      border-radius: 16px;
+      padding: 1.25rem;
       text-align: center;
     }
 
     .endpoint-details {
-      margin-top: 1rem;
-      background: rgba(0, 0, 0, 0.3);
-      border-radius: 10px;
-      padding: 0.6rem 0.8rem;
+      background: rgba(0, 0, 0, 0.35);
+      border-radius: 12px;
+      padding: 0.75rem 1rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .mobile-footer-nav {
+      text-align: center;
+      padding: 1.5rem 1rem;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      margin-top: auto;
+    }
+
+    .mobile-footer-nav a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
     }
   </style>
 </head>
 
 <body>
 
-  <!-- NAV HEADER -->
-  <nav>
-    <a href="index.html" class="nav-logo">
+  <!-- MOBILE-FIRST COMPACT NAV HEADER -->
+  <header class="mobile-header">
+    <a href="index.html" class="brand">
       <img src="public/logo.png" alt="NeuTruck Logo" />
-      Neu<span>Truck</span>
+      Neu<span>Truck Driver</span>
     </a>
-    <ul class="nav-links">
-      <li><a href="index.html#features">Features</a></li>
-      <li><a href="support.html">Support</a></li>
-      <li><a href="index.html#pricing">Pricing</a></li>
-      <li><a href="index.html#download">Download</a></li>
-      <li><a href="driver-gps.html" style="color: var(--primary); font-weight: 700;">Driver Portal</a></li>
-    </ul>
-    <div>
-      <a href="index.html#download" class="btn btn-primary">Get App</a>
-    </div>
-  </nav>
+    <span class="badge-app">📡 GPS PWA</span>
+  </header>
 
   <div class="driver-container">
 
     <div class="driver-card">
-      <div style="text-align: center; margin-bottom: 1.25rem;">
-        <h2 style="font-size: 1.35rem; font-weight: 900;">Update Location</h2>
-        <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 0.25rem;">
-          Enter truck plate number and tap button.
+      <div style="text-align: center;">
+        <h1 style="font-size: 1.4rem; font-weight: 900; color: #fff;">Driver GPS Check-in</h1>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.25rem;">
+          Enter truck plate and tap button to broadcast live position.
         </p>
       </div>
 
@@ -178,6 +256,10 @@
     </div>
 
   </div>
+
+  <footer class="mobile-footer-nav">
+    <p>&copy; 2026 NeuTruck Freight • <a href="index.html">Back to Main Website</a></p>
+  </footer>
 
   <script>
     // PWA Service Worker & Manifest (Only register when hosted on http/https web server)
