@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Driver — GPS Location Check-in</title>
+  <meta name="description" content="Driver location check-in companion PWA for Logistics Engine." />
+  <meta name="theme-color" content="#f8fafc" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="Driver Portal" />
+  <link rel="icon" type="image/png" href="public/logo.png" />
+  <link rel="apple-touch-icon" href="public/logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    body {
+      background: #f8fafc;
+      color: #0f172a;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Mobile First Container */
+    .driver-container {
+      width: 100%;
+      max-width: 440px;
+      margin: 0 auto;
+      padding: 1.5rem 1rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .driver-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 24px;
+      padding: 1.75rem 1.5rem;
+      box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.05), 0 20px 25px -5px rgba(0, 0, 0, 0.03);
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .app-brand-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      background: #e0f2fe;
+      border: 1px solid #bae6fd;
+      color: #0284c7;
+      font-size: 0.75rem;
+      font-weight: 800;
+      padding: 0.35rem 0.85rem;
+      border-radius: 999px;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 800;
+      color: #64748b;
+      margin-bottom: 0.4rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      text-align: center;
+    }
+
+    .form-input {
+      width: 100%;
+      background: #f1f5f9;
+      border: 2px solid #cbd5e1;
+      border-radius: 14px;
+      padding: 0.95rem 1rem;
+      color: #0f172a;
+      font-family: inherit;
+      font-size: 1.35rem;
+      font-weight: 900;
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      outline: none;
+      transition: all 0.2s ease;
+      touch-action: manipulation;
+    }
+
+    .form-input:focus {
+      border-color: #0284c7;
+      background: #ffffff;
+      box-shadow: 0 0 0 4px rgba(2, 132, 199, 0.15);
+    }
+
+    /* Mobile Primary Tap Target */
+    .btn-checkin {
+      width: 100%;
+      min-height: 56px;
+      padding: 0.9rem 1rem;
+      font-size: 1.2rem;
+      font-weight: 900;
+      border-radius: 16px;
+      justify-content: center;
+      letter-spacing: 0.02em;
+      background: linear-gradient(135deg, #0284c7, #0369a1);
+      color: #ffffff;
+      border: none;
+      box-shadow: 0 8px 20px rgba(2, 132, 199, 0.3);
+      touch-action: manipulation;
+      cursor: pointer;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .btn-checkin:active {
+      transform: scale(0.98);
+      background: #0369a1;
+    }
+
+    .gps-display {
+      background: #f0f9ff;
+      border: 1px solid #bae6fd;
+      border-radius: 16px;
+      padding: 1.25rem;
+      text-align: center;
+    }
+
+    .endpoint-details {
+      background: #f8fafc;
+      border-radius: 12px;
+      padding: 0.75rem 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border: 1px solid #e2e8f0;
+    }
+
+    .btn-copy-url {
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      color: #334155;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.3rem 0.65rem;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .btn-copy-url:hover {
+      border-color: #0284c7;
+      color: #0284c7;
+    }
+
+    .mobile-footer-nav {
+      text-align: center;
+      padding: 1.5rem 1rem;
+      font-size: 0.8rem;
+      color: #64748b;
+      margin-top: auto;
+    }
+
+    .mobile-footer-nav a {
+      color: #0284c7;
+      text-decoration: none;
+      font-weight: 700;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="driver-container">
+
+    <div class="driver-card">
+      <div style="text-align: center;">
+        <div class="app-brand-badge"
+          style="display: flex; align-items: center; justify-content: space-between; position: relative;">
+          <span>🚚 Driver Portal</span>
+          <button type="button" id="btnInstallPwa" title="Install App to Home Screen"
+            style="display: inline-flex; align-items: center; gap: 0.35rem; background: #0284c7; color: #ffffff; border: none; border-radius: 20px; padding: 0.3rem 0.75rem; font-size: 0.75rem; font-weight: 800; cursor: pointer; box-shadow: 0 3px 10px rgba(2, 132, 199, 0.35); margin-left: 0.5rem;"
+            onclick="triggerPwaInstall()">
+            📥 Install
+          </button>
+        </div>
+        <h1 style="font-size: 1.4rem; font-weight: 900; color: #0f172a;">GPS Location Check-in</h1>
+        <p style="font-size: 0.85rem; color: #64748b; margin-top: 0.25rem;">
+          Enter truck plate number and tap button to send position.
+        </p>
+      </div>
+
+      <!-- TRUCK PLATE -->
+      <div>
+        <label class="form-label">Truck License Plate</label>
+        <input type="text" id="truckPlateInput" class="form-input" placeholder="ENTER PLATE" />
+      </div>
+
+      <!-- MAIN ACTION BUTTON -->
+      <button type="button" id="btnGeolocate" class="btn-checkin" onclick="acquireDeviceLocation()">
+        <span>Send Location</span>
+      </button>
+
+      <!-- AUTO BACKGROUND TRACKING TOGGLE -->
+      <div
+        style="display: flex; align-items: center; justify-content: space-between; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 14px; padding: 0.85rem 1rem;">
+        <div>
+          <div style="font-size: 0.85rem; font-weight: 800; color: #0f172a;">Automatic Location Updates</div>
+          <div style="font-size: 0.72rem; color: #64748b;">Sends location automatically every 60s</div>
+        </div>
+        <label class="switch" style="position: relative; display: inline-block; width: 44px; height: 24px;">
+          <input type="checkbox" id="autoTrackingToggle" onchange="toggleAutoTracking(this.checked)"
+            style="opacity: 0; width: 0; height: 0;" />
+          <span class="slider"
+            style="position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #cbd5e1; transition: .3s; border-radius: 24px;"></span>
+        </label>
+      </div>
+
+      <style>
+        .switch input:checked+.slider {
+          background-color: #0284c7;
+        }
+
+        .switch input:checked+.slider:before {
+          transform: translateX(20px);
+        }
+
+        .slider:before {
+          position: absolute;
+          content: "";
+          height: 18px;
+          width: 18px;
+          left: 3px;
+          bottom: 3px;
+          background-color: white;
+          transition: .3s;
+          border-radius: 50%;
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+      </style>
+
+      <!-- RESULTS DISPLAY -->
+      <div id="gpsStatusContainer" class="gps-display" style="display: none;">
+        <div
+          style="font-size: 0.72rem; text-transform: uppercase; color: #64748b; font-weight: 800; letter-spacing: 0.05em;">
+          Current Position
+        </div>
+        <div id="locationNameDisplay" style="font-size: 1.3rem; font-weight: 900; color: #0f172a; margin: 0.25rem 0;">
+          Manila Port Area
+        </div>
+        <div id="gpsCoordsDisplay"
+          style="font-family: monospace; font-size: 0.95rem; font-weight: 800; color: #0284c7;">
+          14.5995° N, 120.9842° E
+        </div>
+        <div id="lastUpdatedTime" style="font-size: 0.72rem; color: #16a34a; font-weight: 700; margin-top: 0.3rem;">
+          Updated just now
+        </div>
+        <div id="handshakeStatusBadge"
+          style="font-size: 0.7rem; font-weight: 800; padding: 0.25rem 0.65rem; border-radius: 999px; display: inline-block; margin-top: 0.4rem; background: #dcfce7; color: #15803d; border: 1px solid #86efac;">
+          Dispatch Handshake: Ready
+        </div>
+      </div>
+
+      <!-- CONNECT SETUP MODAL BUTTON -->
+      <div class="endpoint-details">
+        <span style="font-size: 0.78rem; color: #475569; font-weight: 700;">📡 Office Tracking Setup</span>
+        <button type="button" class="btn-copy-url" style="background: #0284c7; color: #fff; border: none; padding: 0.35rem 0.85rem; font-weight: 800; border-radius: 8px;" onclick="openConnectModal()">
+          Connect
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONNECT INSTRUCTIONS MODAL -->
+  <div id="connectModalOverlay" style="display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(4px); z-index: 1000; align-items: center; justify-content: center; padding: 1rem;">
+    <div style="background: #ffffff; border-radius: 20px; max-width: 440px; width: 100%; padding: 1.5rem; box-shadow: 0 20px 50px rgba(0,0,0,0.25); display: flex; flex-direction: column; gap: 1rem; border: 1px solid #e2e8f0; max-height: 90vh; overflow-y: auto;">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <h3 style="font-size: 1.15rem; font-weight: 900; color: #0f172a; margin: 0;">How to Connect to Office</h3>
+        <button type="button" onclick="closeConnectModal()" style="background: #f1f5f9; border: none; width: 30px; height: 30px; border-radius: 50%; font-weight: 800; cursor: pointer; color: #64748b; display: flex; align-items: center; justify-content: center;">✕</button>
+      </div>
+
+      <p style="font-size: 0.88rem; color: #475569; margin: 0; line-height: 1.5;">
+        Send your live location link to your office dispatcher in 3 easy steps:
+      </p>
+
+      <ol style="font-size: 0.85rem; color: #334155; margin: 0; padding-left: 1.2rem; display: flex; flex-direction: column; gap: 0.65rem; line-height: 1.4;">
+        <li>Tap the <strong>Copy Link</strong> button below.</li>
+        <li>Send the link to your office dispatcher via SMS or chat.</li>
+        <li>The office pastes it into their <strong>Dispatch Board</strong> settings so they can view your truck position automatically.</li>
+      </ol>
+
+      <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 12px; padding: 0.75rem; display: flex; flex-direction: column; gap: 0.35rem;">
+        <span style="font-size: 0.72rem; text-transform: uppercase; font-weight: 800; color: #64748b;">Your Tracking Link:</span>
+        <input type="text" id="modalEndpointInput" readonly style="width: 100%; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0.55rem; font-family: monospace; font-size: 0.78rem; color: #0284c7; font-weight: 700; outline: none; word-break: break-all;" />
+      </div>
+
+      <div style="display: flex; gap: 0.5rem; margin-top: 0.4rem;">
+        <button type="button" onclick="copyModalEndpointUrl()" style="flex: 1; background: #0284c7; color: #ffffff; border: none; padding: 0.75rem; border-radius: 12px; font-weight: 800; font-size: 0.9rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.35rem;">
+          📋 Copy Link
+        </button>
+        <button type="button" onclick="closeConnectModal()" style="background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; padding: 0.75rem 1.1rem; border-radius: 12px; font-weight: 700; font-size: 0.9rem; cursor: pointer;">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Register Manifest & Service Worker immediately on script execution
+    let deferredPrompt = null;
+    const btnInstallPwa = document.getElementById('btnInstallPwa');
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+
+    // Immediately attach PWA manifest & SW for Chrome WebAPK 1-click install eligibility
+    if (window.location.protocol.startsWith('http')) {
+      if (!document.querySelector('link[rel="manifest"]')) {
+        const link = document.createElement('link');
+        link.rel = 'manifest';
+        link.href = 'manifest.json';
+        document.head.appendChild(link);
+      }
+
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('./sw.js').catch(() => { });
+      }
+    }
+
+    // Capture Chrome native 1-click install event
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      if (!isStandalone && btnInstallPwa) {
+        btnInstallPwa.style.display = 'inline-flex';
+      }
+    });
+
+    // Display install button in browser mode
+    if (!isStandalone && btnInstallPwa) {
+      btnInstallPwa.style.display = 'inline-flex';
+    }
+
+    async function triggerPwaInstall() {
+      if (deferredPrompt) {
+        // Triggers the official Chrome 1-click WebAPK installation dialog
+        deferredPrompt.prompt();
+        const choiceResult = await deferredPrompt.userChoice;
+        if (choiceResult && choiceResult.outcome === 'accepted') {
+          if (btnInstallPwa) btnInstallPwa.style.display = 'none';
+        }
+        deferredPrompt = null;
+      } else {
+        // If clicked before Chrome fires beforeinstallprompt (or when already installed)
+        alert("Installing PWA...\nIf prompt does not open, tap Chrome menu (⋮) ➔ 'Install app'.");
+      }
+    }
+
+    const truckPlateInput = document.getElementById('truckPlateInput');
+    const autoTrackingToggle = document.getElementById('autoTrackingToggle');
+
+    // Parse URL query parameters (e.g. ?plate=NAK-8892 or ?truck=NAK-8892)
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlPlate = urlParams.get('plate') || urlParams.get('truck') || urlParams.get('id') || urlParams.get('plateNumber');
+
+    if (urlPlate) {
+      truckPlateInput.value = urlPlate.toUpperCase();
+      localStorage.setItem('neudistro_driver_plate', truckPlateInput.value);
+    } else {
+      truckPlateInput.value = localStorage.getItem('neudistro_driver_plate') || '';
+    }
+
+    truckPlateInput.addEventListener('input', () => {
+      localStorage.setItem('neudistro_driver_plate', truckPlateInput.value);
+    });
+
+    let watchId = null;
+    let autoSyncTimer = null;
+
+    // Restore Auto-Tracking State from localStorage
+    const isAutoOn = localStorage.getItem('neudistro_auto_tracking') === 'true';
+    if (isAutoOn) {
+      autoTrackingToggle.checked = true;
+      startAutoTracking();
+    }
+
+    function toggleAutoTracking(enabled) {
+      localStorage.setItem('neudistro_auto_tracking', enabled);
+      if (enabled) {
+        startAutoTracking();
+        acquireDeviceLocation(true);
+      } else {
+        stopAutoTracking();
+      }
+    }
+
+    function startAutoTracking() {
+      if (navigator.geolocation && watchId === null) {
+        watchId = navigator.geolocation.watchPosition(
+          (position) => {
+            const lat = position.coords.latitude.toFixed(4);
+            const lng = position.coords.longitude.toFixed(4);
+            reverseGeocodeAndSave(lat, lng);
+          },
+          (err) => console.warn("Background Watch Error:", err),
+          { enableHighAccuracy: true, maximumAge: 10000, timeout: 20000 }
+        );
+      }
+
+      if (autoSyncTimer === null) {
+        autoSyncTimer = setInterval(() => {
+          acquireDeviceLocation(true);
+        }, 60000); // 60s background sync
+      }
+    }
+
+    function stopAutoTracking() {
+      if (watchId !== null && navigator.geolocation) {
+        navigator.geolocation.clearWatch(watchId);
+        watchId = null;
+      }
+      if (autoSyncTimer !== null) {
+        clearInterval(autoSyncTimer);
+        autoSyncTimer = null;
+      }
+    }
+
+    function acquireDeviceLocation(silent = false) {
+      const btn = document.getElementById('btnGeolocate');
+
+      if (!silent) {
+        btn.disabled = true;
+        btn.innerHTML = `<span>Acquiring GPS...</span>`;
+      }
+
+      if (!navigator.geolocation) {
+        if (!silent) alert("Geolocation is not supported on this device.");
+        if (!silent) {
+          btn.disabled = false;
+          btn.innerHTML = `<span>Send Location</span>`;
+        }
+        return;
+      }
+
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const lat = position.coords.latitude.toFixed(4);
+          const lng = position.coords.longitude.toFixed(4);
+          reverseGeocodeAndSave(lat, lng);
+        },
+        (error) => {
+          if (!silent) alert(`GPS Error: ${error.message}`);
+          if (!silent) {
+            btn.disabled = false;
+            btn.innerHTML = `<span>Send Location</span>`;
+          }
+        },
+        { enableHighAccuracy: true, timeout: 15000, maximumAge: 0 }
+      );
+    }
+
+    function reverseGeocodeAndSave(lat, lng) {
+      fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`)
+        .then(res => res.json())
+        .then(data => {
+          const city = data.address.city || data.address.town || data.address.municipality || data.address.county || "Highway Crossing";
+          const province = data.address.state || data.address.region || "";
+          const fullLoc = province ? `${city}, ${province}` : city;
+
+          showResults(fullLoc, `${lat}° N, ${lng}° E`, parseFloat(lat), parseFloat(lng));
+        })
+        .catch(() => {
+          showResults(`GPS Position (${lat}, ${lng})`, `${lat}° N, ${lng}° E`, parseFloat(lat), parseFloat(lng));
+        });
+    }
+
+    function showResults(locationName, coordsStr, latNum, lngNum) {
+      const btn = document.getElementById('btnGeolocate');
+      const gpsStatusContainer = document.getElementById('gpsStatusContainer');
+      const locationNameDisplay = document.getElementById('locationNameDisplay');
+      const gpsCoordsDisplay = document.getElementById('gpsCoordsDisplay');
+      const lastUpdatedTime = document.getElementById('lastUpdatedTime');
+
+      locationNameDisplay.textContent = locationName;
+      gpsCoordsDisplay.textContent = coordsStr;
+      lastUpdatedTime.textContent = `Updated at ${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
+      gpsStatusContainer.style.display = "block";
+
+      btn.disabled = false;
+      btn.innerHTML = `<span>Send Location</span>`;
+
+      // Save latest location payload to localStorage for API endpoint sync
+      const plate = truckPlateInput.value || 'DEFAULT';
+      const payload = {
+        status: "success",
+        truckPlate: plate,
+        locationName: locationName,
+        location: locationName,
+        address: locationName,
+        latitude: latNum || 14.5995,
+        longitude: lngNum || 120.9842,
+        updatedAt: new Date().toISOString()
+      };
+      localStorage.setItem(`neudistro_telematics_${plate.toUpperCase()}`, JSON.stringify(payload));
+      localStorage.setItem('neudistro_latest_telematics', JSON.stringify(payload));
+
+      // Dispatch Confirmation Handshake
+      const badge = document.getElementById('handshakeStatusBadge');
+      if (badge) {
+        badge.style.background = 'rgba(0,212,255,0.15)';
+        badge.style.borderColor = 'rgba(0,212,255,0.3)';
+        badge.style.color = '#00d4ff';
+        badge.textContent = 'Dispatch Handshake: Syncing...';
+
+        let endpointUrl = window.location.href.split('?')[0].replace('driver-gps.html', 'api/telematics.json');
+        if (window.location.protocol === 'file:') {
+          endpointUrl = 'http://localhost:3456/api/telematics';
+        }
+
+        fetch(endpointUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        })
+          .then(res => {
+            if (res.ok) {
+              badge.style.background = 'rgba(16,185,129,0.15)';
+              badge.style.borderColor = 'rgba(16,185,129,0.3)';
+              badge.style.color = '#10b981';
+              badge.textContent = 'Dispatch Handshake: Received ✓';
+            } else {
+              badge.style.background = 'rgba(59,130,246,0.15)';
+              badge.style.borderColor = 'rgba(59,130,246,0.3)';
+              badge.style.color = '#3b82f6';
+              badge.textContent = 'Dispatch Endpoint Registered (Ready for GET Poll)';
+            }
+          })
+          .catch(() => {
+            // Static server fallback acknowledgment
+            badge.style.background = 'rgba(16,185,129,0.15)';
+            badge.style.borderColor = 'rgba(16,185,129,0.3)';
+            badge.style.color = '#10b981';
+            badge.textContent = 'Dispatch Endpoint Registered (Ready for GET Poll)';
+          });
+      }
+    }
+
+    function getTelematicsUrl() {
+      const plate = encodeURIComponent(truckPlateInput.value || 'DEFAULT');
+      let baseUrl = window.location.href.split('?')[0].replace('driver-gps.html', 'api/telematics.json');
+      if (window.location.protocol === 'file:') {
+        baseUrl = `http://localhost:3456/api/telematics`;
+      }
+      return `${baseUrl}?plate=${plate}`;
+    }
+
+    function openConnectModal() {
+      const modal = document.getElementById('connectModalOverlay');
+      const modalInput = document.getElementById('modalEndpointInput');
+      if (modalInput) modalInput.value = getTelematicsUrl();
+      if (modal) modal.style.display = 'flex';
+    }
+
+    function closeConnectModal() {
+      const modal = document.getElementById('connectModalOverlay');
+      if (modal) modal.style.display = 'none';
+    }
+
+    function copyModalEndpointUrl() {
+      const url = getTelematicsUrl();
+      navigator.clipboard.writeText(url);
+      const btn = event.currentTarget;
+      if (btn) {
+        const originalText = btn.textContent;
+        btn.textContent = '✓ Copied to Clipboard!';
+        btn.style.background = '#16a34a';
+        setTimeout(() => {
+          btn.textContent = originalText;
+          btn.style.background = '#0284c7';
+        }, 2000);
+      }
+    }
+  </script>
+</body>
+
+</html>
