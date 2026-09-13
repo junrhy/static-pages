@@ -313,16 +313,26 @@
   </div>
 
   <script>
-    // PWA Service Worker & Manifest (Only register when hosted on http/https web server)
+    // Register Manifest & Service Worker immediately on script execution
     let deferredPrompt = null;
     const btnInstallPwa = document.getElementById('btnInstallPwa');
     const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
 
-    // Display install button by default in browser mode unless already running in standalone PWA
-    if (!isStandalone && btnInstallPwa) {
-      btnInstallPwa.style.display = 'inline-flex';
+    // Immediately attach PWA manifest & SW for Chrome WebAPK 1-click install eligibility
+    if (window.location.protocol.startsWith('http')) {
+      if (!document.querySelector('link[rel="manifest"]')) {
+        const link = document.createElement('link');
+        link.rel = 'manifest';
+        link.href = 'manifest.json';
+        document.head.appendChild(link);
+      }
+
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('./sw.js').catch(() => { });
+      }
     }
 
+    // Capture Chrome native 1-click install event
     window.addEventListener('beforeinstallprompt', (e) => {
       e.preventDefault();
       deferredPrompt = e;
@@ -331,30 +341,23 @@
       }
     });
 
-    function triggerPwaInstall() {
-      if (deferredPrompt) {
-        deferredPrompt.prompt();
-        deferredPrompt.userChoice.then((choiceResult) => {
-          if (choiceResult.outcome === 'accepted') {
-            if (btnInstallPwa) btnInstallPwa.style.display = 'none';
-          }
-          deferredPrompt = null;
-        });
-      } else {
-        alert("To install this app on Android:\n1. Tap your browser's menu (⋮ or ⋯)\n2. Select 'Add to Home screen' or 'Install app'");
-      }
+    // Display install button in browser mode
+    if (!isStandalone && btnInstallPwa) {
+      btnInstallPwa.style.display = 'inline-flex';
     }
 
-    if (window.location.protocol.startsWith('http')) {
-      const link = document.createElement('link');
-      link.rel = 'manifest';
-      link.href = 'manifest.json';
-      document.head.appendChild(link);
-
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-          navigator.serviceWorker.register('./sw.js').catch(() => { });
-        });
+    async function triggerPwaInstall() {
+      if (deferredPrompt) {
+        // Triggers the official Chrome 1-click WebAPK installation dialog
+        deferredPrompt.prompt();
+        const choiceResult = await deferredPrompt.userChoice;
+        if (choiceResult && choiceResult.outcome === 'accepted') {
+          if (btnInstallPwa) btnInstallPwa.style.display = 'none';
+        }
+        deferredPrompt = null;
+      } else {
+        // If clicked before Chrome fires beforeinstallprompt (or when already installed)
+        alert("Installing PWA...\nIf prompt does not open, tap Chrome menu (⋮) ➔ 'Install app'.");
       }
     }
 
