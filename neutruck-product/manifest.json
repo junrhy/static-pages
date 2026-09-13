@@ -1,7 +1,7 @@
 {
-  "short_name": "NeuTruck Driver",
-  "name": "NeuTruck Driver GPS Telematics",
-  "description": "Driver GPS Position Broadcast PWA for NeuTruck Logistics Engine",
+  "short_name": "Driver Portal",
+  "name": "Driver GPS Telematics",
+  "description": "Driver GPS Position Broadcast PWA for Logistics Engine",
   "start_url": "./driver-gps.html",
   "display": "standalone",
   "background_color": "#f8fafc",

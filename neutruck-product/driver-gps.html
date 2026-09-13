@@ -4,9 +4,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>NeuTruck Driver — GPS Location Check-in</title>
+  <title>Driver — GPS Location Check-in</title>
   <meta name="description"
-    content="Driver location check-in companion PWA for NeuTruck Freight POS & Logistics Engine." />
+    content="Driver location check-in companion PWA for Logistics Engine." />
   <meta name="theme-color" content="#f8fafc" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -178,7 +178,7 @@
     <div class="driver-card">
       <div style="text-align: center;">
         <div class="app-brand-badge" style="display: flex; align-items: center; justify-content: space-between; position: relative;">
-          <span>🚚 NeuTruck Driver</span>
+          <span>🚚 Driver Portal</span>
           <button type="button" id="btnInstallPwa" title="Install App to Home Screen" style="display: none; background: #0284c7; color: #fff; border: none; border-radius: 50%; width: 26px; height: 26px; font-size: 0.8rem; cursor: pointer; align-items: center; justify-content: center; box-shadow: 0 2px 6px rgba(2, 132, 199, 0.4); margin-left: 0.5rem;" onclick="triggerPwaInstall()">
             📥
           </button>
@@ -239,7 +239,7 @@
 
       <!-- DISPATCH SETUP COLLAPSIBLE / SMALL HELP LINK -->
       <div class="endpoint-details">
-        <span style="font-size: 0.75rem; color: #64748b; font-weight: 600;">NeuTruck Endpoint</span>
+        <span style="font-size: 0.75rem; color: #64748b; font-weight: 600;">Dispatch Endpoint</span>
         <button type="button" class="btn-copy-url" onclick="copyEndpointUrl()">Copy URL</button>
       </div>
     </div>
@@ -485,7 +485,7 @@
 
       const url = `${baseUrl}?plate=${plate}`;
       navigator.clipboard.writeText(url);
-      alert(`NeuTruck GET Endpoint copied to clipboard!\n\n${url}`);
+      alert(`GET Endpoint copied to clipboard!\n\n${url}`);
     }
   </script>
 </body>
