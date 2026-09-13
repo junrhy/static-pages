@@ -177,8 +177,11 @@
 
     <div class="driver-card">
       <div style="text-align: center;">
-        <div class="app-brand-badge">
+        <div class="app-brand-badge" style="display: flex; align-items: center; justify-content: space-between; position: relative;">
           <span>🚚 NeuTruck Driver</span>
+          <button type="button" id="btnInstallPwa" title="Install App to Home Screen" style="display: none; background: #0284c7; color: #fff; border: none; border-radius: 50%; width: 26px; height: 26px; font-size: 0.8rem; cursor: pointer; align-items: center; justify-content: center; box-shadow: 0 2px 6px rgba(2, 132, 199, 0.4); margin-left: 0.5rem;" onclick="triggerPwaInstall()">
+            📥
+          </button>
         </div>
         <h1 style="font-size: 1.4rem; font-weight: 900; color: #0f172a;">GPS Location Check-in</h1>
         <p style="font-size: 0.85rem; color: #64748b; margin-top: 0.25rem;">
@@ -244,6 +247,31 @@
 
   <script>
     // PWA Service Worker & Manifest (Only register when hosted on http/https web server)
+    let deferredPrompt = null;
+    const btnInstallPwa = document.getElementById('btnInstallPwa');
+
+    // Hide install icon if already installed/running in PWA standalone mode
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      if (!isStandalone && btnInstallPwa) {
+        btnInstallPwa.style.display = 'inline-flex';
+      }
+    });
+
+    function triggerPwaInstall() {
+      if (!deferredPrompt) return;
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then((choiceResult) => {
+        if (choiceResult.outcome === 'accepted') {
+          if (btnInstallPwa) btnInstallPwa.style.display = 'none';
+        }
+        deferredPrompt = null;
+      });
+    }
+
     if (window.location.protocol.startsWith('http')) {
       const link = document.createElement('link');
       link.rel = 'manifest';

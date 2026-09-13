@@ -4,8 +4,8 @@
   "description": "Driver GPS Position Broadcast PWA for NeuTruck Logistics Engine",
   "start_url": "./driver-gps.html",
   "display": "standalone",
-  "background_color": "#0a0e1a",
-  "theme_color": "#00d4ff",
+  "background_color": "#f8fafc",
+  "theme_color": "#0284c7",
   "icons": [
     {
       "src": "public/logo.png",
