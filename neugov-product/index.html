@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NeuGov Barangay — Information &amp; Resident Management System</title>
+  <meta name="description" content="NeuGov Barangay is a modern local government unit (LGU) barangay information management system. Manage resident records, issue clearances &amp; certificates, track blotter &amp; incident reports, handle Barangay DTR attendance, and compute barangay official payroll." />
+  <!-- Open Graph & Social Media Preview Meta Tags -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://junrhy.github.io/static-pages/neugov-product/index.html" />
+  <meta property="og:title" content="NeuGov Barangay — Information & Resident Management System" />
+  <meta property="og:description" content="NeuGov Barangay is a modern local government unit (LGU) barangay information management system. Manage resident records, issue clearances &amp; certificates, track blotter &amp; incident reports, handle Barangay DTR attendance, and compute barangay official payroll." />
+  <meta property="og:image" content="https://junrhy.github.io/static-pages/neugov-product/public/neugate_hero_showcase.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+
+  <!-- Twitter Card Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="NeuGov Barangay — Information & Resident Management System" />
+  <meta name="twitter:description" content="NeuGov Barangay is a modern local government unit (LGU) barangay information management system. Manage resident records, issue clearances &amp; certificates, track blotter &amp; incident reports, handle Barangay DTR attendance, and compute barangay official payroll." />
+  <meta name="twitter:image" content="https://junrhy.github.io/static-pages/neugov-product/public/neugate_hero_showcase.png" />
+
+  <!-- PWA & Mobile App Meta Tags -->
+  <meta name="theme-color" content="#4f46e5" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="NeuGov Barangay" />
+  <link rel="icon" type="image/png" href="public/neugate_hero_showcase.png" />
+  <link rel="apple-touch-icon" href="public/neugate_hero_showcase.png" />
+
+  <!-- Dynamically inject Web App Manifest only when hosted over HTTP/HTTPS to avoid file:// CORS warnings -->
+  <script>
+    if (window.location.protocol.startsWith('http')) {
+      const manifestLink = document.createElement('link');
+      manifestLink.rel = 'manifest';
+      manifestLink.href = 'manifest.json';
+      document.head.appendChild(manifestLink);
+    }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+
+  <script>
+    if ('serviceWorker' in navigator && window.location.protocol.startsWith('http')) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js').catch(() => {});
+      });
+    }
+  </script>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 0.4rem;">
+        <path d="M3 21h18" />
+        <path d="M5 21V7l7-4 7 4v14" />
+        <path d="M9 10a2 2 0 0 1 4 0v11" />
+      </svg>Neu<span>Gov Barangay</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#features">Features</a></li>
+      <li><a href="portal.html">Portal</a></li>
+      <li><a href="support.html">Support</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#download">Download</a></li>
+    </ul>
+    <a href="#download" class="btn btn-primary">Get App</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <span class="badge">✨ A Product of Neulify</span>
+    <h1><span>Barangay Information</span> &amp; Resident Management System</h1>
+    <p class="lead">
+      Empower your Barangay LGU with comprehensive resident profiling, clearance &amp; indigency issuance, incident blotter tracking, RFID timekeeping for barangay staff, official Form 48 DTR export, and honorarium payroll processing.
+    </p>
+    <div class="hero-ctas">
+      <a href="#download" class="btn btn-primary btn-lg">Download App</a>
+      <a href="#features" class="btn btn-outline btn-lg">Explore Features</a>
+    </div>
+    
+    <div class="hero-showcase">
+      <img src="public/neugate_hero_showcase.png" alt="NeuGov Barangay Interface Dashboard Mockup" />
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section id="features" class="features">
+    <div class="section-header">
+      <h2>Complete Barangay LGU Digital Platform</h2>
+      <p>Streamlined resident records, barangay services, RFID timekeeping, &amp; honorarium payroll solution.</p>
+    </div>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">👥</div>
+        <h3>Resident Profiling &amp; Directory</h3>
+        <p>Maintain detailed household and resident information, voter status, sector classification (PWD, Senior Citizen, Solo Parent), and digital IDs.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">📜</div>
+        <h3>Certificates &amp; Clearances</h3>
+        <p>Instant generation and printing of Barangay Clearance, Certificate of Indigency, Certificate of Residency, and Business Permits with digital verification stamps.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">⚖️</div>
+        <h3>Blotter &amp; Incident Records</h3>
+        <p>Record, log, and track barangay peace and order complaints, hearing schedules, settlements, and Lupon Tagapamayapa case files.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🪪</div>
+        <h3>RFID Staff &amp; Official Access</h3>
+        <p>Track attendance of Barangay Officials, Tanods, Health Workers (BHWs), and Staff using RFID cards, biometric scanners, or QR passes.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">💰</div>
+        <h3>Honorarium &amp; Staff Payroll</h3>
+        <p>Automate monthly honoraria and staff payroll computations with late minute deductions, leave calculations, and printable payroll sheets.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">📑</div>
+        <h3>Official Form 48 DTR Exporter</h3>
+        <p>Export and print Civil Service Form No. 48 Daily Time Records complete with official 31-day AM/PM logs and Captain/Administrator sign-offs.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">💬</div>
+        <h3>Automated SMS Announcements</h3>
+        <p>Dispatch SMS announcements, barangay advisories, and clearance readiness alerts directly to residents and officials via SMS gateway integration.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">✍️</div>
+        <h3>Manual Attendance Override</h3>
+        <p>Administrator manual attendance override console for field duties, official business (OB) logs, and biometric fallbacks.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🛡️</div>
+        <h3>Role &amp; Security Controls</h3>
+        <p>Granular permission control (Barangay Captain, Secretary, Treasurer, Tanod) to protect sensitive resident records and financial ledgers.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section id="pricing" class="pricing">
+    <div class="section-header">
+      <h2>Transparent LGU Package Pricing</h2>
+      <p>Flexible licensing designed specifically for local government units and barangays.</p>
+    </div>
+
+    <div class="pricing-card-wrapper">
+      <div class="pricing-card">
+        <div class="pricing-badge">Official LGU Package</div>
+        <h3>Barangay System Installation</h3>
+        <div class="pricing-price">
+          <span class="currency">₱</span>25,000
+          <span class="period">/ base installation</span>
+        </div>
+        <p class="pricing-desc">Includes complete system setup, resident database structure, clearance issuing module, RFID timekeeping terminal software, honorarium payroll engine, and staff training.</p>
+        
+        <div class="pricing-divider"></div>
+
+        <div class="pricing-addon">
+          <div class="addon-header">
+            <span class="addon-icon">🖥️</span>
+            <div>
+              <div class="addon-title">Multi-Terminal Workstation Add-on</div>
+              <div class="addon-price">+ ₱5,000 <span class="addon-period">per additional terminal station</span></div>
+            </div>
+          </div>
+          <p class="addon-desc">Deploy additional issuing desks or attendance terminals across your Barangay Hall, Outpost, or Health Center.</p>
+        </div>
+
+        <ul class="pricing-features">
+          <li>✓ System Installation &amp; Database Setup</li>
+          <li>✓ Unlimited Resident Profiling &amp; Records Management</li>
+          <li>✓ Barangay Clearance, Indigency, &amp; Residency Issuance</li>
+          <li>✓ Incident Blotter &amp; Lupon Case Tracking</li>
+          <li>✓ RFID Staff Attendance &amp; Audio Gate Notifications</li>
+          <li>✓ Official Civil Service Form No. 48 DTR Exporter</li>
+          <li>✓ Barangay Officials Honorarium &amp; Payroll Engine</li>
+          <li>✓ Resident &amp; Staff SMS Gateway Integration</li>
+          <li>✓ LAN Offline Database &amp; Multi-PC Synchronization</li>
+          <li>✓ Lifetime Hardware Fingerprint License</li>
+        </ul>
+
+        <a href="#download" class="btn btn-primary btn-lg" style="width: 100%; justify-content: center; margin-top: 2rem;">Get Started Now</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- DOWNLOAD -->
+  <section id="download" class="download">
+    <div class="download-wrapper">
+      <div class="section-header">
+        <h2>Install NeuGov Barangay</h2>
+        <p>Cross-platform desktop builds available for Barangay Hall workstations.</p>
+      </div>
+
+      <div class="download-cards">
+        <div class="download-card">
+          <div class="download-icon">🍎</div>
+          <h3>macOS</h3>
+          <p class="download-meta">macOS 13.0 Ventura or later (Apple Silicon &amp; Intel Universal)</p>
+          <a href="https://junrhy.github.io/static-pages/neugov-product/downloads/neugov-macos-universal.dmg" target="_blank" class="btn btn-outline" style="width: 100%; justify-content: center;">Download for Mac</a>
+        </div>
+
+        <div class="download-card">
+          <div class="download-icon">🪟</div>
+          <h3>Windows</h3>
+          <p class="download-meta">Windows 10 / 11 (64-bit Installer .exe)</p>
+          <a href="https://junrhy.github.io/static-pages/neugov-product/downloads/neugov-windows.exe" target="_blank" class="btn btn-outline" style="width: 100%; justify-content: center;">Download for Windows</a>
+        </div>
+
+        <div class="download-card">
+          <div class="download-icon">🐧</div>
+          <h3>Linux</h3>
+          <p class="download-meta">Ubuntu 20.04+ / Debian (.deb Package)</p>
+          <a href="https://junrhy.github.io/static-pages/neugov-product/downloads/neugov-linux.deb" target="_blank" class="btn btn-outline" style="width: 100%; justify-content: center;">Download for Linux</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">NeuGov Barangay</div>
+    <div class="footer-tagline">Barangay Information &amp; Resident Management System • A Product of <a href="https://neulify.com" target="_blank" style="color: var(--primary); text-decoration: none; font-weight: 700;">Neulify</a></div>
+    <div style="margin-top: 1.5rem; font-size: 0.8rem; color: var(--text-muted);">
+      &copy; 2026 NeuGov Barangay • Neulify LGU Solutions
+    </div>
+  </footer>
+
+</body>
+</html>
+
