@@ -446,15 +446,48 @@
       </div>
 
       <div class="filter-pills">
-        <button class="filter-btn active" onclick="setFilter('all', this)">All Apps (8)</button>
+        <button class="filter-btn active" onclick="setFilter('all', this)">All Apps (9)</button>
         <button class="filter-btn" onclick="setFilter('pos', this)">POS & Retail</button>
         <button class="filter-btn" onclick="setFilter('enterprise', this)">Enterprise & Gov</button>
         <button class="filter-btn" onclick="setFilter('health', this)">Healthcare</button>
+        <button class="filter-btn" onclick="setFilter('developer', this)">Dev Tools</button>
       </div>
     </div>
 
     <!-- Apps Grid -->
     <div class="apps-grid" id="appsGrid">
+
+      <!-- NeuTools -->
+      <div class="app-card" data-category="developer" data-name="neutools developer internal release orchestrator r2 explorer">
+        <div>
+          <div class="card-top">
+            <div class="app-icon" style="background: linear-gradient(135deg, #0ea5e9, #0284c7); color: #fff;">🛠️</div>
+            <div class="app-title-area">
+              <h3>NeuTools</h3>
+              <div class="app-category">Developer Suite</div>
+            </div>
+          </div>
+          <p class="app-desc">Multi-platform desktop app release orchestrator, local build automation, and Cloudflare R2 bucket manager.</p>
+        </div>
+        <div class="download-list">
+          <a href="https://pub-ee4144c0c94046a4aaf83639a1c38994.r2.dev/neutools-product/downloads/neutools-macos.dmg" target="_blank" class="download-link">
+            <div class="platform-info"> macOS <span class="platform-tag">Standard .DMG</span></div>
+            <span class="dl-btn-icon">⬇</span>
+          </a>
+          <a href="https://pub-ee4144c0c94046a4aaf83639a1c38994.r2.dev/neutools-product/downloads/neutools-macos-universal.dmg" target="_blank" class="download-link">
+            <div class="platform-info"> macOS <span class="platform-tag">Universal .DMG</span></div>
+            <span class="dl-btn-icon">⬇</span>
+          </a>
+          <a href="https://pub-ee4144c0c94046a4aaf83639a1c38994.r2.dev/neutools-product/downloads/neutools-windows.exe" target="_blank" class="download-link">
+            <div class="platform-info">🪟 Windows <span class="platform-tag">Installer .EXE</span></div>
+            <span class="dl-btn-icon">⬇</span>
+          </a>
+          <a href="https://pub-ee4144c0c94046a4aaf83639a1c38994.r2.dev/neutools-product/downloads/neutools-windows-setup.exe" target="_blank" class="download-link">
+            <div class="platform-info">🪟 Windows <span class="platform-tag">Setup .EXE</span></div>
+            <span class="dl-btn-icon">⬇</span>
+          </a>
+        </div>
+      </div>
       
       <!-- NeuPOS -->
       <div class="app-card" data-category="pos" data-name="neupos retail point of sale">
@@ -469,12 +502,20 @@
           <p class="app-desc">Offline-first POS with multi-payment support (Cash, Card, GCash), barcode scanner, and inventory tracking.</p>
         </div>
         <div class="download-list">
+          <a href="https://pub-ee4144c0c94046a4aaf83639a1c38994.r2.dev/neupos-product/downloads/neupos-macos.dmg" target="_blank" class="download-link">
+            <div class="platform-info"> macOS <span class="platform-tag">Standard .DMG</span></div>
+            <span class="dl-btn-icon">⬇</span>
+          </a>
           <a href="https://pub-ee4144c0c94046a4aaf83639a1c38994.r2.dev/neupos-product/downloads/neupos-macos-universal.dmg" target="_blank" class="download-link">
             <div class="platform-info"> macOS <span class="platform-tag">Universal .DMG</span></div>
             <span class="dl-btn-icon">⬇</span>
           </a>
           <a href="https://pub-ee4144c0c94046a4aaf83639a1c38994.r2.dev/neupos-product/downloads/neupos-windows.exe" target="_blank" class="download-link">
-            <div class="platform-info">🪟 Windows <span class="platform-tag">x64 .EXE</span></div>
+            <div class="platform-info">🪟 Windows <span class="platform-tag">Installer .EXE</span></div>
+            <span class="dl-btn-icon">⬇</span>
+          </a>
+          <a href="https://pub-ee4144c0c94046a4aaf83639a1c38994.r2.dev/neupos-product/downloads/neupos-windows-setup.exe" target="_blank" class="download-link">
+            <div class="platform-info">🪟 Windows <span class="platform-tag">Setup .EXE</span></div>
             <span class="dl-btn-icon">⬇</span>
           </a>
         </div>
@@ -493,12 +534,20 @@
           <p class="app-desc">Resident records, automated clearance & certificate issuance, blotter logging, and local analytics.</p>
         </div>
         <div class="download-list">
+          <a href="https://pub-ee4144c0c94046a4aaf83639a1c38994.r2.dev/neugov-product/downloads/neugov-macos.dmg" target="_blank" class="download-link">
+            <div class="platform-info"> macOS <span class="platform-tag">Standard .DMG</span></div>
+            <span class="dl-btn-icon">⬇</span>
+          </a>
           <a href="https://pub-ee4144c0c94046a4aaf83639a1c38994.r2.dev/neugov-product/downloads/neugov-macos-universal.dmg" target="_blank" class="download-link">
             <div class="platform-info"> macOS <span class="platform-tag">Universal .DMG</span></div>
             <span class="dl-btn-icon">⬇</span>
           </a>
           <a href="https://pub-ee4144c0c94046a4aaf83639a1c38994.r2.dev/neugov-product/downloads/neugov-windows.exe" target="_blank" class="download-link">
-            <div class="platform-info">🪟 Windows <span class="platform-tag">x64 .EXE</span></div>
+            <div class="platform-info">🪟 Windows <span class="platform-tag">Installer .EXE</span></div>
+            <span class="dl-btn-icon">⬇</span>
+          </a>
+          <a href="https://pub-ee4144c0c94046a4aaf83639a1c38994.r2.dev/neugov-product/downloads/neugov-windows-setup.exe" target="_blank" class="download-link">
+            <div class="platform-info">🪟 Windows <span class="platform-tag">Setup .EXE</span></div>
             <span class="dl-btn-icon">⬇</span>
           </a>
         </div>
@@ -517,12 +566,20 @@
           <p class="app-desc">Weighbridge scale integration, waybill printing, cargo tracking, and fleet dispatch management.</p>
         </div>
         <div class="download-list">
+          <a href="https://pub-ee4144c0c94046a4aaf83639a1c38994.r2.dev/neutruck-product/downloads/neutruck-macos.dmg" target="_blank" class="download-link">
+            <div class="platform-info"> macOS <span class="platform-tag">Standard .DMG</span></div>
+            <span class="dl-btn-icon">⬇</span>
+          </a>
           <a href="https://pub-ee4144c0c94046a4aaf83639a1c38994.r2.dev/neutruck-product/downloads/neutruck-macos-universal.dmg" target="_blank" class="download-link">
             <div class="platform-info"> macOS <span class="platform-tag">Universal .DMG</span></div>
             <span class="dl-btn-icon">⬇</span>
           </a>
           <a href="https://pub-ee4144c0c94046a4aaf83639a1c38994.r2.dev/neutruck-product/downloads/neutruck-windows.exe" target="_blank" class="download-link">
-            <div class="platform-info">🪟 Windows <span class="platform-tag">x64 .EXE</span></div>
+            <div class="platform-info">🪟 Windows <span class="platform-tag">Installer .EXE</span></div>
+            <span class="dl-btn-icon">⬇</span>
+          </a>
+          <a href="https://pub-ee4144c0c94046a4aaf83639a1c38994.r2.dev/neutruck-product/downloads/neutruck-windows-setup.exe" target="_blank" class="download-link">
+            <div class="platform-info">🪟 Windows <span class="platform-tag">Setup .EXE</span></div>
             <span class="dl-btn-icon">⬇</span>
           </a>
         </div>
@@ -541,12 +598,20 @@
           <p class="app-desc">Employee biometric/RFID attendance terminal with automated payroll log calculations and shifts.</p>
         </div>
         <div class="download-list">
+          <a href="https://pub-ee4144c0c94046a4aaf83639a1c38994.r2.dev/neugate-enterprise-product/downloads/neugate-enterprise-macos.dmg" target="_blank" class="download-link">
+            <div class="platform-info"> macOS <span class="platform-tag">Standard .DMG</span></div>
+            <span class="dl-btn-icon">⬇</span>
+          </a>
           <a href="https://pub-ee4144c0c94046a4aaf83639a1c38994.r2.dev/neugate-enterprise-product/downloads/neugate-enterprise-macos-universal.dmg" target="_blank" class="download-link">
             <div class="platform-info"> macOS <span class="platform-tag">Universal .DMG</span></div>
             <span class="dl-btn-icon">⬇</span>
           </a>
           <a href="https://pub-ee4144c0c94046a4aaf83639a1c38994.r2.dev/neugate-enterprise-product/downloads/neugate-enterprise-windows.exe" target="_blank" class="download-link">
-            <div class="platform-info">🪟 Windows <span class="platform-tag">x64 .EXE</span></div>
+            <div class="platform-info">🪟 Windows <span class="platform-tag">Installer .EXE</span></div>
+            <span class="dl-btn-icon">⬇</span>
+          </a>
+          <a href="https://pub-ee4144c0c94046a4aaf83639a1c38994.r2.dev/neugate-enterprise-product/downloads/neugate-enterprise-windows-setup.exe" target="_blank" class="download-link">
+            <div class="platform-info">🪟 Windows <span class="platform-tag">Setup .EXE</span></div>
             <span class="dl-btn-icon">⬇</span>
           </a>
         </div>
@@ -565,12 +630,20 @@
           <p class="app-desc">Instant RFID turnstile tapping with real-time parent SMS notifications upon entrance & exit.</p>
         </div>
         <div class="download-list">
+          <a href="https://pub-ee4144c0c94046a4aaf83639a1c38994.r2.dev/neugate-rfid-product/downloads/neugate-macos.dmg" target="_blank" class="download-link">
+            <div class="platform-info"> macOS <span class="platform-tag">Standard .DMG</span></div>
+            <span class="dl-btn-icon">⬇</span>
+          </a>
           <a href="https://pub-ee4144c0c94046a4aaf83639a1c38994.r2.dev/neugate-rfid-product/downloads/neugate-macos-universal.dmg" target="_blank" class="download-link">
             <div class="platform-info"> macOS <span class="platform-tag">Universal .DMG</span></div>
             <span class="dl-btn-icon">⬇</span>
           </a>
           <a href="https://pub-ee4144c0c94046a4aaf83639a1c38994.r2.dev/neugate-rfid-product/downloads/neugate-windows.exe" target="_blank" class="download-link">
-            <div class="platform-info">🪟 Windows <span class="platform-tag">x64 .EXE</span></div>
+            <div class="platform-info">🪟 Windows <span class="platform-tag">Installer .EXE</span></div>
+            <span class="dl-btn-icon">⬇</span>
+          </a>
+          <a href="https://pub-ee4144c0c94046a4aaf83639a1c38994.r2.dev/neugate-rfid-product/downloads/neugate-windows-setup.exe" target="_blank" class="download-link">
+            <div class="platform-info">🪟 Windows <span class="platform-tag">Setup .EXE</span></div>
             <span class="dl-btn-icon">⬇</span>
           </a>
         </div>
@@ -589,12 +662,20 @@
           <p class="app-desc">Loan amortization schedules, field collector sync, penalty tracking, and financial ledgers.</p>
         </div>
         <div class="download-list">
+          <a href="https://pub-ee4144c0c94046a4aaf83639a1c38994.r2.dev/neucollect-product/downloads/neucollect-macos.dmg" target="_blank" class="download-link">
+            <div class="platform-info"> macOS <span class="platform-tag">Standard .DMG</span></div>
+            <span class="dl-btn-icon">⬇</span>
+          </a>
           <a href="https://pub-ee4144c0c94046a4aaf83639a1c38994.r2.dev/neucollect-product/downloads/neucollect-macos-universal.dmg" target="_blank" class="download-link">
             <div class="platform-info"> macOS <span class="platform-tag">Universal .DMG</span></div>
             <span class="dl-btn-icon">⬇</span>
           </a>
           <a href="https://pub-ee4144c0c94046a4aaf83639a1c38994.r2.dev/neucollect-product/downloads/neucollect-windows.exe" target="_blank" class="download-link">
-            <div class="platform-info">🪟 Windows <span class="platform-tag">x64 .EXE</span></div>
+            <div class="platform-info">🪟 Windows <span class="platform-tag">Installer .EXE</span></div>
+            <span class="dl-btn-icon">⬇</span>
+          </a>
+          <a href="https://pub-ee4144c0c94046a4aaf83639a1c38994.r2.dev/neucollect-product/downloads/neucollect-windows-setup.exe" target="_blank" class="download-link">
+            <div class="platform-info">🪟 Windows <span class="platform-tag">Setup .EXE</span></div>
             <span class="dl-btn-icon">⬇</span>
           </a>
         </div>
@@ -613,12 +694,20 @@
           <p class="app-desc">Table floor mapping, Kitchen Display System (KDS), order splitting, and recipe inventory management.</p>
         </div>
         <div class="download-list">
+          <a href="https://pub-ee4144c0c94046a4aaf83639a1c38994.r2.dev/neufood-bistro-product/downloads/neufood-macos.dmg" target="_blank" class="download-link">
+            <div class="platform-info"> macOS <span class="platform-tag">Standard .DMG</span></div>
+            <span class="dl-btn-icon">⬇</span>
+          </a>
           <a href="https://pub-ee4144c0c94046a4aaf83639a1c38994.r2.dev/neufood-bistro-product/downloads/neufood-macos-universal.dmg" target="_blank" class="download-link">
             <div class="platform-info"> macOS <span class="platform-tag">Universal .DMG</span></div>
             <span class="dl-btn-icon">⬇</span>
           </a>
           <a href="https://pub-ee4144c0c94046a4aaf83639a1c38994.r2.dev/neufood-bistro-product/downloads/neufood-windows.exe" target="_blank" class="download-link">
-            <div class="platform-info">🪟 Windows <span class="platform-tag">x64 .EXE</span></div>
+            <div class="platform-info">🪟 Windows <span class="platform-tag">Installer .EXE</span></div>
+            <span class="dl-btn-icon">⬇</span>
+          </a>
+          <a href="https://pub-ee4144c0c94046a4aaf83639a1c38994.r2.dev/neufood-bistro-product/downloads/neufood-windows-setup.exe" target="_blank" class="download-link">
+            <div class="platform-info">🪟 Windows <span class="platform-tag">Setup .EXE</span></div>
             <span class="dl-btn-icon">⬇</span>
           </a>
         </div>
@@ -637,12 +726,20 @@
           <p class="app-desc">Patient medical records (EMR), consultation queue management, pharmacy inventory, and lab billing.</p>
         </div>
         <div class="download-list">
+          <a href="https://pub-ee4144c0c94046a4aaf83639a1c38994.r2.dev/neulify-clinic-product/downloads/neulify-clinic-macos.dmg" target="_blank" class="download-link">
+            <div class="platform-info"> macOS <span class="platform-tag">Standard .DMG</span></div>
+            <span class="dl-btn-icon">⬇</span>
+          </a>
           <a href="https://pub-ee4144c0c94046a4aaf83639a1c38994.r2.dev/neulify-clinic-product/downloads/neulify-clinic-macos-universal.dmg" target="_blank" class="download-link">
             <div class="platform-info"> macOS <span class="platform-tag">Universal .DMG</span></div>
             <span class="dl-btn-icon">⬇</span>
           </a>
           <a href="https://pub-ee4144c0c94046a4aaf83639a1c38994.r2.dev/neulify-clinic-product/downloads/neulify-clinic-windows.exe" target="_blank" class="download-link">
-            <div class="platform-info">🪟 Windows <span class="platform-tag">x64 .EXE</span></div>
+            <div class="platform-info">🪟 Windows <span class="platform-tag">Installer .EXE</span></div>
+            <span class="dl-btn-icon">⬇</span>
+          </a>
+          <a href="https://pub-ee4144c0c94046a4aaf83639a1c38994.r2.dev/neulify-clinic-product/downloads/neulify-clinic-windows-setup.exe" target="_blank" class="download-link">
+            <div class="platform-info">🪟 Windows <span class="platform-tag">Setup .EXE</span></div>
             <span class="dl-btn-icon">⬇</span>
           </a>
         </div>
