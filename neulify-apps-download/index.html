@@ -452,13 +452,11 @@
         <button class="filter-btn" onclick="setFilter('health', this)">Healthcare</button>
         <button class="filter-btn" onclick="setFilter('developer', this)">Dev Tools</button>
       </div>
-    </div>
-
-    <!-- Apps Grid -->
+    </d    <!-- Apps Grid -->
     <div class="apps-grid" id="appsGrid">
 
       <!-- NeuTools -->
-      <div class="app-card" data-category="developer" data-name="neutools developer internal release orchestrator r2 explorer">
+      <div class="app-card" data-category="developer" data-name="neutools developer internal release orchestrator r2 explorer" data-manifest="https://download.neulify.com/neutools-product/downloads/latest.json">
         <div>
           <div class="card-top">
             <div class="app-icon" style="background: linear-gradient(135deg, #0ea5e9, #0284c7); color: #fff;">🛠️</div>
@@ -469,28 +467,13 @@
           </div>
           <p class="app-desc">Multi-platform desktop app release orchestrator, local build automation, and Cloudflare R2 bucket manager.</p>
         </div>
-        <div class="download-list">
-          <a href="https://download.neulify.com/neutools-product/downloads/neutools-macos.dmg" target="_blank" class="download-link">
-            <div class="platform-info"> macOS <span class="platform-tag">Standard .DMG</span></div>
-            <span class="dl-btn-icon">⬇</span>
-          </a>
-          <a href="https://download.neulify.com/neutools-product/downloads/neutools-macos-universal.dmg" target="_blank" class="download-link">
-            <div class="platform-info"> macOS <span class="platform-tag">Universal .DMG</span></div>
-            <span class="dl-btn-icon">⬇</span>
-          </a>
-          <a href="https://download.neulify.com/neutools-product/downloads/neutools-windows.exe" target="_blank" class="download-link">
-            <div class="platform-info">🪟 Windows <span class="platform-tag">Installer .EXE</span></div>
-            <span class="dl-btn-icon">⬇</span>
-          </a>
-          <a href="https://download.neulify.com/neutools-product/downloads/neutools-windows-setup.exe" target="_blank" class="download-link">
-            <div class="platform-info">🪟 Windows <span class="platform-tag">Setup .EXE</span></div>
-            <span class="dl-btn-icon">⬇</span>
-          </a>
+        <div class="download-list" id="dl-neutools">
+          <div class="dl-loading">⏳ Loading latest build...</div>
         </div>
       </div>
-      
+
       <!-- NeuPOS -->
-      <div class="app-card" data-category="pos" data-name="neupos retail point of sale">
+      <div class="app-card" data-category="pos" data-name="neupos retail point of sale" data-manifest="https://download.neulify.com/neupos-product/downloads/latest.json">
         <div>
           <div class="card-top">
             <div class="app-icon" style="background: linear-gradient(135deg, #fbbf24, #d97706); color: #fff;">🛒</div>
@@ -501,28 +484,13 @@
           </div>
           <p class="app-desc">Offline-first POS with multi-payment support (Cash, Card, GCash), barcode scanner, and inventory tracking.</p>
         </div>
-        <div class="download-list">
-          <a href="https://download.neulify.com/neupos-product/downloads/neupos-macos.dmg" target="_blank" class="download-link">
-            <div class="platform-info"> macOS <span class="platform-tag">Standard .DMG</span></div>
-            <span class="dl-btn-icon">⬇</span>
-          </a>
-          <a href="https://download.neulify.com/neupos-product/downloads/neupos-macos-universal.dmg" target="_blank" class="download-link">
-            <div class="platform-info"> macOS <span class="platform-tag">Universal .DMG</span></div>
-            <span class="dl-btn-icon">⬇</span>
-          </a>
-          <a href="https://download.neulify.com/neupos-product/downloads/neupos-windows.exe" target="_blank" class="download-link">
-            <div class="platform-info">🪟 Windows <span class="platform-tag">Installer .EXE</span></div>
-            <span class="dl-btn-icon">⬇</span>
-          </a>
-          <a href="https://download.neulify.com/neupos-product/downloads/neupos-windows-setup.exe" target="_blank" class="download-link">
-            <div class="platform-info">🪟 Windows <span class="platform-tag">Setup .EXE</span></div>
-            <span class="dl-btn-icon">⬇</span>
-          </a>
+        <div class="download-list" id="dl-neupos">
+          <div class="dl-loading">⏳ Loading latest build...</div>
         </div>
       </div>
 
       <!-- NeuGov -->
-      <div class="app-card" data-category="enterprise" data-name="neugov barangay local government">
+      <div class="app-card" data-category="enterprise" data-name="neugov barangay local government" data-manifest="https://download.neulify.com/neugov-product/downloads/latest.json">
         <div>
           <div class="card-top">
             <div class="app-icon" style="background: linear-gradient(135deg, #10b981, #047857); color: #fff;">🏛️</div>
@@ -533,28 +501,13 @@
           </div>
           <p class="app-desc">Resident records, automated clearance & certificate issuance, blotter logging, and local analytics.</p>
         </div>
-        <div class="download-list">
-          <a href="https://download.neulify.com/neugov-product/downloads/neugov-macos.dmg" target="_blank" class="download-link">
-            <div class="platform-info"> macOS <span class="platform-tag">Standard .DMG</span></div>
-            <span class="dl-btn-icon">⬇</span>
-          </a>
-          <a href="https://download.neulify.com/neugov-product/downloads/neugov-macos-universal.dmg" target="_blank" class="download-link">
-            <div class="platform-info"> macOS <span class="platform-tag">Universal .DMG</span></div>
-            <span class="dl-btn-icon">⬇</span>
-          </a>
-          <a href="https://download.neulify.com/neugov-product/downloads/neugov-windows.exe" target="_blank" class="download-link">
-            <div class="platform-info">🪟 Windows <span class="platform-tag">Installer .EXE</span></div>
-            <span class="dl-btn-icon">⬇</span>
-          </a>
-          <a href="https://download.neulify.com/neugov-product/downloads/neugov-windows-setup.exe" target="_blank" class="download-link">
-            <div class="platform-info">🪟 Windows <span class="platform-tag">Setup .EXE</span></div>
-            <span class="dl-btn-icon">⬇</span>
-          </a>
+        <div class="download-list" id="dl-neugov">
+          <div class="dl-loading">⏳ Loading latest build...</div>
         </div>
       </div>
 
       <!-- NeuTruck -->
-      <div class="app-card" data-category="pos" data-name="neutruck logistics fleet scale">
+      <div class="app-card" data-category="pos" data-name="neutruck logistics fleet scale" data-manifest="https://download.neulify.com/neutruck-product/downloads/latest.json">
         <div>
           <div class="card-top">
             <div class="app-icon" style="background: linear-gradient(135deg, #0284c7, #0369a1); color: #fff;">🚚</div>
@@ -565,28 +518,13 @@
           </div>
           <p class="app-desc">Weighbridge scale integration, waybill printing, cargo tracking, and fleet dispatch management.</p>
         </div>
-        <div class="download-list">
-          <a href="https://download.neulify.com/neutruck-product/downloads/neutruck-macos.dmg" target="_blank" class="download-link">
-            <div class="platform-info"> macOS <span class="platform-tag">Standard .DMG</span></div>
-            <span class="dl-btn-icon">⬇</span>
-          </a>
-          <a href="https://download.neulify.com/neutruck-product/downloads/neutruck-macos-universal.dmg" target="_blank" class="download-link">
-            <div class="platform-info"> macOS <span class="platform-tag">Universal .DMG</span></div>
-            <span class="dl-btn-icon">⬇</span>
-          </a>
-          <a href="https://download.neulify.com/neutruck-product/downloads/neutruck-windows.exe" target="_blank" class="download-link">
-            <div class="platform-info">🪟 Windows <span class="platform-tag">Installer .EXE</span></div>
-            <span class="dl-btn-icon">⬇</span>
-          </a>
-          <a href="https://download.neulify.com/neutruck-product/downloads/neutruck-windows-setup.exe" target="_blank" class="download-link">
-            <div class="platform-info">🪟 Windows <span class="platform-tag">Setup .EXE</span></div>
-            <span class="dl-btn-icon">⬇</span>
-          </a>
+        <div class="download-list" id="dl-neutruck">
+          <div class="dl-loading">⏳ Loading latest build...</div>
         </div>
       </div>
 
       <!-- NeuGate Enterprise -->
-      <div class="app-card" data-category="enterprise" data-name="neugate enterprise timekeeping attendance biometric">
+      <div class="app-card" data-category="enterprise" data-name="neugate enterprise timekeeping attendance biometric" data-manifest="https://download.neulify.com/neugate-enterprise-product/downloads/latest.json">
         <div>
           <div class="card-top">
             <div class="app-icon" style="background: linear-gradient(135deg, #6366f1, #4338ca); color: #fff;">🏢</div>
@@ -597,28 +535,13 @@
           </div>
           <p class="app-desc">Employee biometric/RFID attendance terminal with automated payroll log calculations and shifts.</p>
         </div>
-        <div class="download-list">
-          <a href="https://download.neulify.com/neugate-enterprise-product/downloads/neugate-enterprise-macos.dmg" target="_blank" class="download-link">
-            <div class="platform-info"> macOS <span class="platform-tag">Standard .DMG</span></div>
-            <span class="dl-btn-icon">⬇</span>
-          </a>
-          <a href="https://download.neulify.com/neugate-enterprise-product/downloads/neugate-enterprise-macos-universal.dmg" target="_blank" class="download-link">
-            <div class="platform-info"> macOS <span class="platform-tag">Universal .DMG</span></div>
-            <span class="dl-btn-icon">⬇</span>
-          </a>
-          <a href="https://download.neulify.com/neugate-enterprise-product/downloads/neugate-enterprise-windows.exe" target="_blank" class="download-link">
-            <div class="platform-info">🪟 Windows <span class="platform-tag">Installer .EXE</span></div>
-            <span class="dl-btn-icon">⬇</span>
-          </a>
-          <a href="https://download.neulify.com/neugate-enterprise-product/downloads/neugate-enterprise-windows-setup.exe" target="_blank" class="download-link">
-            <div class="platform-info">🪟 Windows <span class="platform-tag">Setup .EXE</span></div>
-            <span class="dl-btn-icon">⬇</span>
-          </a>
+        <div class="download-list" id="dl-neugate-enterprise">
+          <div class="dl-loading">⏳ Loading latest build...</div>
         </div>
       </div>
 
       <!-- NeuGate RFID -->
-      <div class="app-card" data-category="enterprise" data-name="neugate rfid school entrance campus gate sms">
+      <div class="app-card" data-category="enterprise" data-name="neugate rfid school entrance campus gate sms" data-manifest="https://download.neulify.com/neugate-rfid-product/downloads/latest.json">
         <div>
           <div class="card-top">
             <div class="app-icon" style="background: linear-gradient(135deg, #ec4899, #be185d); color: #fff;">🏫</div>
@@ -629,28 +552,13 @@
           </div>
           <p class="app-desc">Instant RFID turnstile tapping with real-time parent SMS notifications upon entrance & exit.</p>
         </div>
-        <div class="download-list">
-          <a href="https://download.neulify.com/neugate-rfid-product/downloads/neugate-macos.dmg" target="_blank" class="download-link">
-            <div class="platform-info"> macOS <span class="platform-tag">Standard .DMG</span></div>
-            <span class="dl-btn-icon">⬇</span>
-          </a>
-          <a href="https://download.neulify.com/neugate-rfid-product/downloads/neugate-macos-universal.dmg" target="_blank" class="download-link">
-            <div class="platform-info"> macOS <span class="platform-tag">Universal .DMG</span></div>
-            <span class="dl-btn-icon">⬇</span>
-          </a>
-          <a href="https://download.neulify.com/neugate-rfid-product/downloads/neugate-windows.exe" target="_blank" class="download-link">
-            <div class="platform-info">🪟 Windows <span class="platform-tag">Installer .EXE</span></div>
-            <span class="dl-btn-icon">⬇</span>
-          </a>
-          <a href="https://download.neulify.com/neugate-rfid-product/downloads/neugate-windows-setup.exe" target="_blank" class="download-link">
-            <div class="platform-info">🪟 Windows <span class="platform-tag">Setup .EXE</span></div>
-            <span class="dl-btn-icon">⬇</span>
-          </a>
+        <div class="download-list" id="dl-neugate-rfid">
+          <div class="dl-loading">⏳ Loading latest build...</div>
         </div>
       </div>
 
       <!-- NeuCollect -->
-      <div class="app-card" data-category="enterprise" data-name="neucollect debt collection ledger microfinance">
+      <div class="app-card" data-category="enterprise" data-name="neucollect debt collection ledger microfinance" data-manifest="https://download.neulify.com/neucollect-product/downloads/latest.json">
         <div>
           <div class="card-top">
             <div class="app-icon" style="background: linear-gradient(135deg, #8b5cf6, #6d28d9); color: #fff;">⚖️</div>
@@ -661,28 +569,13 @@
           </div>
           <p class="app-desc">Loan amortization schedules, field collector sync, penalty tracking, and financial ledgers.</p>
         </div>
-        <div class="download-list">
-          <a href="https://download.neulify.com/neucollect-product/downloads/neucollect-macos.dmg" target="_blank" class="download-link">
-            <div class="platform-info"> macOS <span class="platform-tag">Standard .DMG</span></div>
-            <span class="dl-btn-icon">⬇</span>
-          </a>
-          <a href="https://download.neulify.com/neucollect-product/downloads/neucollect-macos-universal.dmg" target="_blank" class="download-link">
-            <div class="platform-info"> macOS <span class="platform-tag">Universal .DMG</span></div>
-            <span class="dl-btn-icon">⬇</span>
-          </a>
-          <a href="https://download.neulify.com/neucollect-product/downloads/neucollect-windows.exe" target="_blank" class="download-link">
-            <div class="platform-info">🪟 Windows <span class="platform-tag">Installer .EXE</span></div>
-            <span class="dl-btn-icon">⬇</span>
-          </a>
-          <a href="https://download.neulify.com/neucollect-product/downloads/neucollect-windows-setup.exe" target="_blank" class="download-link">
-            <div class="platform-info">🪟 Windows <span class="platform-tag">Setup .EXE</span></div>
-            <span class="dl-btn-icon">⬇</span>
-          </a>
+        <div class="download-list" id="dl-neucollect">
+          <div class="dl-loading">⏳ Loading latest build...</div>
         </div>
       </div>
 
       <!-- NeuFood Bistro -->
-      <div class="app-card" data-category="pos" data-name="neufood bistro restaurant cafe kitchen display kds pos">
+      <div class="app-card" data-category="pos" data-name="neufood bistro restaurant cafe kitchen display kds pos" data-manifest="https://download.neulify.com/neufood-bistro-product/downloads/latest.json">
         <div>
           <div class="card-top">
             <div class="app-icon" style="background: linear-gradient(135deg, #f97316, #c2410c); color: #fff;">🍔</div>
@@ -693,28 +586,13 @@
           </div>
           <p class="app-desc">Table floor mapping, Kitchen Display System (KDS), order splitting, and recipe inventory management.</p>
         </div>
-        <div class="download-list">
-          <a href="https://download.neulify.com/neufood-bistro-product/downloads/neufood-macos.dmg" target="_blank" class="download-link">
-            <div class="platform-info"> macOS <span class="platform-tag">Standard .DMG</span></div>
-            <span class="dl-btn-icon">⬇</span>
-          </a>
-          <a href="https://download.neulify.com/neufood-bistro-product/downloads/neufood-macos-universal.dmg" target="_blank" class="download-link">
-            <div class="platform-info"> macOS <span class="platform-tag">Universal .DMG</span></div>
-            <span class="dl-btn-icon">⬇</span>
-          </a>
-          <a href="https://download.neulify.com/neufood-bistro-product/downloads/neufood-windows.exe" target="_blank" class="download-link">
-            <div class="platform-info">🪟 Windows <span class="platform-tag">Installer .EXE</span></div>
-            <span class="dl-btn-icon">⬇</span>
-          </a>
-          <a href="https://download.neulify.com/neufood-bistro-product/downloads/neufood-windows-setup.exe" target="_blank" class="download-link">
-            <div class="platform-info">🪟 Windows <span class="platform-tag">Setup .EXE</span></div>
-            <span class="dl-btn-icon">⬇</span>
-          </a>
+        <div class="download-list" id="dl-neufood">
+          <div class="dl-loading">⏳ Loading latest build...</div>
         </div>
       </div>
 
-      <!-- NeuLify Clinic -->
-      <div class="app-card" data-category="health" data-name="neulify clinic hospital medical records patient emr">
+      <!-- NeuClinic -->
+      <div class="app-card" data-category="health" data-name="neulify clinic hospital medical records patient emr" data-manifest="https://download.neulify.com/neulify-clinic-product/downloads/latest.json">
         <div>
           <div class="card-top">
             <div class="app-icon" style="background: linear-gradient(135deg, #14b8a6, #0f766e); color: #fff;">🏥</div>
@@ -725,23 +603,8 @@
           </div>
           <p class="app-desc">Patient medical records (EMR), consultation queue management, pharmacy inventory, and lab billing.</p>
         </div>
-        <div class="download-list">
-          <a href="https://download.neulify.com/neulify-clinic-product/downloads/neulify-clinic-macos.dmg" target="_blank" class="download-link">
-            <div class="platform-info"> macOS <span class="platform-tag">Standard .DMG</span></div>
-            <span class="dl-btn-icon">⬇</span>
-          </a>
-          <a href="https://download.neulify.com/neulify-clinic-product/downloads/neulify-clinic-macos-universal.dmg" target="_blank" class="download-link">
-            <div class="platform-info"> macOS <span class="platform-tag">Universal .DMG</span></div>
-            <span class="dl-btn-icon">⬇</span>
-          </a>
-          <a href="https://download.neulify.com/neulify-clinic-product/downloads/neulify-clinic-windows.exe" target="_blank" class="download-link">
-            <div class="platform-info">🪟 Windows <span class="platform-tag">Installer .EXE</span></div>
-            <span class="dl-btn-icon">⬇</span>
-          </a>
-          <a href="https://download.neulify.com/neulify-clinic-product/downloads/neulify-clinic-windows-setup.exe" target="_blank" class="download-link">
-            <div class="platform-info">🪟 Windows <span class="platform-tag">Setup .EXE</span></div>
-            <span class="dl-btn-icon">⬇</span>
-          </a>
+        <div class="download-list" id="dl-neuclinic">
+          <div class="dl-loading">⏳ Loading latest build...</div>
         </div>
       </div>
 
@@ -749,8 +612,35 @@
   </main>
 
   <footer>
-    <p>© 2026 <a href="https://neulify.com">Neulify Softwares</a>. Direct downloads served via Cloudflare R2 bucket <code>neulify-desktop-apps</code>.</p>
+    <p>© 2026 <a href="https://neulify.com">Neulify Softwares</a>. Direct downloads served via Cloudflare R2 CDN — builds auto-updated on every release.</p>
   </footer>
+
+  <style>
+    .dl-loading {
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      padding: 0.5rem 0;
+      text-align: center;
+    }
+    .dl-unavailable {
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      padding: 0.5rem 0;
+      text-align: center;
+      opacity: 0.6;
+    }
+    .build-badge {
+      font-size: 0.68rem;
+      font-weight: 700;
+      font-family: var(--font-code);
+      padding: 0.1rem 0.4rem;
+      border-radius: 4px;
+      background: rgba(56, 189, 248, 0.1);
+      color: var(--primary);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      margin-left: 0.35rem;
+    }
+  </style>
 
   <script>
     let activeFilter = 'all';
@@ -778,21 +668,94 @@
     function filterApps() {
       const query = document.getElementById('appSearch').value.toLowerCase().trim();
       const cards = document.querySelectorAll('.app-card');
-
       cards.forEach(card => {
         const cat = card.getAttribute('data-category');
         const name = card.getAttribute('data-name').toLowerCase();
-
         const matchesCat = activeFilter === 'all' || cat === activeFilter;
         const matchesSearch = !query || name.includes(query);
-
-        if (matchesCat && matchesSearch) {
-          card.style.display = 'flex';
-        } else {
-          card.style.display = 'none';
-        }
+        card.style.display = (matchesCat && matchesSearch) ? 'flex' : 'none';
       });
     }
+
+    // ─── Manifest-driven download links ───────────────────────────────────────
+
+    function formatTimestamp(ts) {
+      // ts format: "20260915-1523"  → "Sep 15, 2026 · 15:23"
+      if (!ts || ts.length < 13) return ts;
+      const y = ts.slice(0, 4), mo = ts.slice(4, 6), d = ts.slice(6, 8);
+      const h = ts.slice(9, 11), m = ts.slice(11, 13);
+      const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      return `${months[parseInt(mo, 10) - 1]} ${parseInt(d, 10)}, ${y} · ${h}:${m}`;
+    }
+
+    function platformLabel(key) {
+      const map = {
+        macos:           { icon: '', label: 'macOS', tag: '.DMG' },
+        windows_exe:     { icon: '🪟', label: 'Windows', tag: '.EXE' },
+        windows_msi:     { icon: '🪟', label: 'Windows', tag: '.MSI' },
+        linux_appimage:  { icon: '🐧', label: 'Linux', tag: '.AppImage' },
+        linux_deb:       { icon: '🐧', label: 'Linux', tag: '.deb' },
+        // legacy single-key from older manifests
+        windows:         { icon: '🪟', label: 'Windows', tag: '.EXE / .MSI' },
+        linux:           { icon: '🐧', label: 'Linux', tag: 'Installer' },
+      };
+      return map[key] || null;
+    }
+
+    function renderDownloadList(container, manifest) {
+      const keys = ['macos', 'windows_exe', 'windows_msi', 'windows', 'linux_appimage', 'linux_deb', 'linux'];
+      const ts = formatTimestamp(manifest.timestamp || manifest.built_at || '');
+      let html = '';
+
+      if (ts) {
+        html += `<div style="font-size:0.72rem;color:var(--text-dim);margin-bottom:0.5rem;font-family:var(--font-code);">🕐 Build: ${ts}</div>`;
+      }
+
+      let hasAny = false;
+      keys.forEach(key => {
+        const url = manifest[key];
+        if (!url || url === 'null' || url === '') return;
+        const meta = platformLabel(key);
+        if (!meta) return;
+        hasAny = true;
+        const filename = url.split('/').pop();
+        html += `
+          <a href="${url}" target="_blank" class="download-link" title="${filename}">
+            <div class="platform-info">${meta.icon} ${meta.label} <span class="platform-tag">${meta.tag}</span></div>
+            <span class="dl-btn-icon">⬇</span>
+          </a>`;
+      });
+
+      if (!hasAny) {
+        html += `<div class="dl-unavailable">No builds available yet.</div>`;
+      }
+
+      container.innerHTML = html;
+    }
+
+    async function loadManifest(card) {
+      const manifestUrl = card.getAttribute('data-manifest');
+      if (!manifestUrl) return;
+
+      const container = card.querySelector('.download-list');
+      if (!container) return;
+
+      try {
+        // Cache-bust so we always get the latest manifest (R2 has no-store but proxy may cache)
+        const res = await fetch(manifestUrl + '?v=' + Date.now(), { cache: 'no-store' });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const manifest = await res.json();
+        renderDownloadList(container, manifest);
+      } catch (err) {
+        container.innerHTML = `<div class="dl-unavailable">⚠️ Not yet released</div>`;
+      }
+    }
+
+    function loadManifests() {
+      document.querySelectorAll('.app-card[data-manifest]').forEach(loadManifest);
+    }
+
+    document.addEventListener('DOMContentLoaded', loadManifests);
   </script>
 </body>
 
