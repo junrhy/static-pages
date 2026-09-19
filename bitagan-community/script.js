@@ -122,7 +122,7 @@ window.addEventListener('scroll', highlightNavigation);
 
 // --- Products API Integration ---
 // Replace this URL with your production backend API URL when deploying
-const API_BASE_URL = 'https://sakto-app-backend.onrender.com/api';
+const API_BASE_URL = 'https://enterprise.neulify.com/api';
 const API_KEY = '4|d5d5bsHmujUgRsu1Y3iwfZFQBQDb8croK66RkkuR69f0a8b5';
 const CLIENT_IDENTIFIER = 'b6ac6642-4a05-4ede-9423-54adb9a0b9f1';
 const JOB_BOARD_ID = '1';
@@ -252,7 +252,7 @@ async function fetchEvents() {
             // Use specific image if available, else a nice default family picnic image
             let imageUrl = event.image_url || event.image || 'https://images.unsplash.com/photo-1528607929212-2636ec44253e?w=400&q=80';
             if (imageUrl.startsWith('/')) {
-                imageUrl = 'https://sakto-app-backend.onrender.com' + imageUrl;
+                imageUrl = 'https://enterprise.neulify.com' + imageUrl;
             }
 
             return `
