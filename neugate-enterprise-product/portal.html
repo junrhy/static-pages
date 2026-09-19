@@ -874,7 +874,7 @@
         }
       });
 
-      channel = pusher.subscribe('neugate-notifications');
+      channel = pusher.subscribe('neugate-enterprise-notifications');
 
       channel.bind('gate-scan', function (data) {
         console.log('⚡ Pusher Gate Event:', data);
