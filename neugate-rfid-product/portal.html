@@ -842,6 +842,7 @@
       let pusherOpts = {};
       if (activeDriver === 'soketi') {
         pusherOpts = {
+          cluster: activePusherCluster || 'mt1',
           wsHost: activeWsHost,
           wsPort: 443,
           wssPort: 443,
@@ -851,6 +852,7 @@
         };
       } else if (activeDriver === 'reverb') {
         pusherOpts = {
+          cluster: activePusherCluster || 'mt1',
           wsHost: activeWsHost,
           wsPort: 443,
           wssPort: 443,
@@ -860,7 +862,7 @@
         };
       } else {
         pusherOpts = {
-          cluster: activePusherCluster,
+          cluster: activePusherCluster || 'mt1',
         };
       }
 
