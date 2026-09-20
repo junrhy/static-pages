@@ -958,6 +958,14 @@
 
       channel.bind('gate-scan', handleGateEvent);
       channel.bind('.gate-scan', handleGateEvent);
+      channel.bind('App\\Events\\GeneralBroadcastEvent', handleGateEvent);
+      channel.bind('.App\\Events\\GeneralBroadcastEvent', handleGateEvent);
+      channel.bind_global((eventName, data) => {
+        console.log(`⚡ Pusher Event Received [${eventName}]:`, data);
+        if (eventName !== 'pusher:subscription_succeeded') {
+          handleGateEvent(data);
+        }
+      });
     }
 
     // Preloaded Audio Elements for Instant Sound Playback
