@@ -691,7 +691,7 @@
     });
 
     // Dynamic Broadcaster Configuration
-    const DEFAULT_PUSHER_KEY = 'app-key';
+    const DEFAULT_PUSHER_KEY = 'f7fc5747ad0f8d43f520';
     const DEFAULT_PUSHER_CLUSTER = 'ap1';
     const DEFAULT_DRIVER = 'soketi';
     const DEFAULT_WS_HOST = 'enterprise.neulify.com';
@@ -775,7 +775,7 @@
     settingsForm.addEventListener('submit', (e) => {
       e.preventDefault();
       const newDriver = modalDriver.value || DEFAULT_DRIVER;
-      const newKey = modalPusherKey.value.trim() || (newDriver === 'pusher' ? DEFAULT_PUSHER_KEY : 'app-key');
+      const newKey = modalPusherKey.value.trim() || (newDriver === 'pusher' ? DEFAULT_PUSHER_KEY : 'f7fc5747ad0f8d43f520');
       const newCluster = modalPusherCluster.value.trim() || DEFAULT_PUSHER_CLUSTER;
       const newHost = modalWsHost.value.trim() || DEFAULT_WS_HOST;
 
