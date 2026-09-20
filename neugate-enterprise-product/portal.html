@@ -878,7 +878,7 @@
 
       channel = pusher.subscribe('neugate-enterprise-notifications');
 
-      channel.bind('gate-scan', function (data) {
+      function handleGateEvent(data) {
         console.log('⚡ Pusher Gate Event:', data);
 
         let parsed = data;
@@ -949,7 +949,10 @@
             });
           }
         }
-      });
+      }
+
+      channel.bind('gate-scan', handleGateEvent);
+      channel.bind('.gate-scan', handleGateEvent);
     }
 
     // Preloaded Audio Elements for Instant Sound Playback
