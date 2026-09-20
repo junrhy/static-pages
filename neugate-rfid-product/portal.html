@@ -866,7 +866,13 @@
         };
       }
 
+      Pusher.logToConsole = true;
+
       pusher = new Pusher(activePusherKey, pusherOpts);
+
+      pusher.bind_global((eventName, data) => {
+        console.log(`🔔 ALL PUSHER EVENTS [${eventName}]:`, data);
+      });
 
       pusher.connection.bind('state_change', function (states) {
         if (states.current === 'connected') {
@@ -884,7 +890,7 @@
       channel = pusher.subscribe('neugate-notifications');
 
       function handleGateEvent(data) {
-        console.log('⚡ Pusher Gate Event:', data);
+        console.log('⚡ Pusher Gate Event Handled:', data);
 
         let parsed = data;
         if (parsed && parsed.data && typeof parsed.data === 'object') {
@@ -900,6 +906,8 @@
         if (parsed && parsed.data && typeof parsed.data === 'object') {
           parsed = parsed.data;
         }
+
+        if (!parsed || typeof parsed !== 'object') return;
 
         if (!parsed.receivedAt) {
           parsed.receivedAt = Date.now();
@@ -962,13 +970,9 @@
         }
       }
 
-      channel.bind('gate-scan', handleGateEvent);
-      channel.bind('.gate-scan', handleGateEvent);
-      channel.bind('App\\Events\\GeneralBroadcastEvent', handleGateEvent);
-      channel.bind('.App\\Events\\GeneralBroadcastEvent', handleGateEvent);
       channel.bind_global((eventName, data) => {
-        console.log(`⚡ Pusher Event Received [${eventName}]:`, data);
-        if (eventName !== 'pusher:subscription_succeeded') {
+        console.log(`⚡ Channel Global Event Received [${eventName}]:`, data);
+        if (!eventName.startsWith('pusher:')) {
           handleGateEvent(data);
         }
       });
