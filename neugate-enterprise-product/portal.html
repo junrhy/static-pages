@@ -632,12 +632,6 @@
             <input type="text" id="modalPusherCluster" class="modal-input" placeholder="e.g. ap1" spellcheck="false" />
           </div>
 
-          <div id="customHostGroup" class="form-group" style="display: none;">
-            <label class="form-label">Neulify Domain</label>
-            <input type="text" id="modalWsHost" class="modal-input" placeholder="enterprise.neulify.com"
-              spellcheck="false" />
-          </div>
-
           <div style="display: flex; gap: 0.5rem; margin-top: 1.25rem;">
             <button type="button" id="resetPusherBtn"
               style="flex: 1; padding: 0.65rem; border-radius: 10px; border: 1px solid var(--border-light); background: #f8fafc; font-size: 0.8rem; font-weight: 700; color: var(--text-sub); cursor: pointer;">
@@ -718,19 +712,15 @@
     const modalDriver = document.getElementById('modalDriver');
     const modalPusherKey = document.getElementById('modalPusherKey');
     const modalPusherCluster = document.getElementById('modalPusherCluster');
-    const modalWsHost = document.getElementById('modalWsHost');
     const clusterGroup = document.getElementById('clusterGroup');
-    const customHostGroup = document.getElementById('customHostGroup');
     const resetPusherBtn = document.getElementById('resetPusherBtn');
 
     function updateModalFieldVisibility() {
       const drv = modalDriver.value;
       if (drv === 'pusher') {
         clusterGroup.style.display = 'block';
-        customHostGroup.style.display = 'none';
       } else {
         clusterGroup.style.display = 'none';
-        customHostGroup.style.display = 'block';
       }
     }
 
@@ -741,7 +731,6 @@
       modalDriver.value = activeDriver;
       modalPusherKey.value = activePusherKey;
       modalPusherCluster.value = activePusherCluster;
-      modalWsHost.value = activeWsHost;
       updateModalFieldVisibility();
       settingsModal.classList.add('open');
     });
@@ -762,7 +751,6 @@
       modalDriver.value = DEFAULT_DRIVER;
       modalPusherKey.value = DEFAULT_PUSHER_KEY;
       modalPusherCluster.value = DEFAULT_PUSHER_CLUSTER;
-      modalWsHost.value = DEFAULT_WS_HOST;
       phoneFilter.value = '';
       logs = [];
       renderFeed();
@@ -777,7 +765,7 @@
       const newDriver = modalDriver.value || DEFAULT_DRIVER;
       const newKey = modalPusherKey.value.trim() || (newDriver === 'pusher' ? DEFAULT_PUSHER_KEY : 'f7fc5747ad0f8d43f520');
       const newCluster = modalPusherCluster.value.trim() || DEFAULT_PUSHER_CLUSTER;
-      const newHost = modalWsHost.value.trim() || DEFAULT_WS_HOST;
+      const newHost = DEFAULT_WS_HOST;
 
       localStorage.setItem('neugate_portal_driver', newDriver);
       localStorage.setItem('neugate_portal_pusher_key', newKey);
