@@ -757,12 +757,9 @@
       if (e.target === settingsModal) settingsModal.classList.remove('open');
     });
 
-    // Reset Defaults
+    // Reset Defaults (Wipeout local storage, connected phone number, and message history)
     resetPusherBtn.addEventListener('click', () => {
-      localStorage.removeItem('neugate_portal_driver');
-      localStorage.removeItem('neugate_portal_pusher_key');
-      localStorage.removeItem('neugate_portal_pusher_cluster');
-      localStorage.removeItem('neugate_portal_ws_host');
+      localStorage.clear();
       activeDriver = DEFAULT_DRIVER;
       activePusherKey = DEFAULT_PUSHER_KEY;
       activePusherCluster = DEFAULT_PUSHER_CLUSTER;
@@ -771,6 +768,9 @@
       modalPusherKey.value = DEFAULT_PUSHER_KEY;
       modalPusherCluster.value = DEFAULT_PUSHER_CLUSTER;
       modalWsHost.value = DEFAULT_WS_HOST;
+      phoneFilter.value = '';
+      logs = [];
+      renderFeed();
       updateModalFieldVisibility();
       initPusherClient();
       settingsModal.classList.remove('open');
