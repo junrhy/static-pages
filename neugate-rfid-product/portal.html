@@ -866,13 +866,9 @@
         };
       }
 
-      Pusher.logToConsole = true;
+      Pusher.logToConsole = false;
 
       pusher = new Pusher(activePusherKey, pusherOpts);
-
-      pusher.bind_global((eventName, data) => {
-        console.log(`🔔 ALL PUSHER EVENTS [${eventName}]:`, data);
-      });
 
       pusher.connection.bind('state_change', function (states) {
         if (states.current === 'connected') {
@@ -971,7 +967,6 @@
       }
 
       channel.bind_global((eventName, data) => {
-        console.log(`⚡ Channel Global Event Received [${eventName}]:`, data);
         if (!eventName.startsWith('pusher:')) {
           handleGateEvent(data);
         }
