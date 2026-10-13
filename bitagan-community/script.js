@@ -123,7 +123,7 @@ window.addEventListener('scroll', highlightNavigation);
 // --- Products API Integration ---
 // Replace this URL with your production backend API URL when deploying
 const API_BASE_URL = 'https://enterprise.neulify.com/api';
-const API_KEY = '4|d5d5bsHmujUgRsu1Y3iwfZFQBQDb8croK66RkkuR69f0a8b5';
+const API_KEY = '43|wWSrqHK4xbY5jV9j6re1P26DR2EpBWW04P5M6OGQb4f5f23e';
 const CLIENT_IDENTIFIER = 'b6ac6642-4a05-4ede-9423-54adb9a0b9f1';
 const JOB_BOARD_ID = '1';
 
