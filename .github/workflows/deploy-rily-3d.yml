@@ -39,9 +39,11 @@ jobs:
           cache-dependency-path: rily-architects-3d/package-lock.json
 
       - name: Install Dependencies
+        working-directory: ./rily-architects-3d
         run: npm ci
 
       - name: Build Project
+        working-directory: ./rily-architects-3d
         run: npm run build
 
       - name: Setup Pages
@@ -50,7 +52,7 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: rily-architects-3d/dist
+          path: ./rily-architects-3d/dist
 
       - name: Deploy to GitHub Pages
         id: deployment
