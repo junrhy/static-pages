@@ -49,10 +49,17 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
+      - name: Assemble Site (publish under /rily-architects-3d/)
+        working-directory: ${{ github.workspace }}
+        run: |
+          mkdir -p _site/rily-architects-3d
+          cp -R rily-architects-3d/dist/. _site/rily-architects-3d/
+          echo '<!doctype html><meta charset="utf-8"><meta http-equiv="refresh" content="0; url=./rily-architects-3d/"><a href="./rily-architects-3d/">Ri-Ly Architects</a>' > _site/index.html
+
       - name: Upload Artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./rily-architects-3d/dist
+          path: ./_site
 
       - name: Deploy to GitHub Pages
         id: deployment
