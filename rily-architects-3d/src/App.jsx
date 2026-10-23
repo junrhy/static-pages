@@ -12,7 +12,7 @@ export default function App() {
         <div className="brand-badge">
           <a href="https://ri-lyarchitects.com/" className="brand-link" target="_blank" rel="noreferrer">
             <img 
-              src="/rily-logo.png" 
+              src="./rily-logo.png" 
               alt="Ri-Ly Architects & Associates" 
               className="brand-logo-img" 
             />

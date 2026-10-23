@@ -5,7 +5,7 @@ import { ArrowUpRight } from 'lucide-react'
 
 gsap.registerPlugin(ScrollTrigger)
 
-export function VideoScrollytelling({ videoSrc = '/architectural-walkthrough.mp4' }) {
+export function VideoScrollytelling({ videoSrc = './architectural-walkthrough.mp4' }) {
   const containerRef = useRef(null)
   const videoRef = useRef(null)
 
