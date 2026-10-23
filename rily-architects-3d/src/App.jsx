@@ -76,7 +76,7 @@ export default function App() {
       </div>
 
       {/* Primary Scroll-Driven Video Walkthrough */}
-      <VideoScrollytelling videoSrc="/architectural-walkthrough.mp4" />
+      <VideoScrollytelling videoSrc="./architectural-walkthrough.mp4" />
     </div>
   )
 }
