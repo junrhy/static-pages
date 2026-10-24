@@ -14,7 +14,36 @@ export function VideoScrollytelling({ videoSrc = './architectural-walkthrough.mp
     const container = containerRef.current
     if (!video || !container) return
 
-    video.pause()
+    video.muted = true
+    video.defaultMuted = true
+    video.setAttribute('muted', '')
+    video.setAttribute('playsinline', '')
+
+    // Mobile browsers (iOS Safari especially) don't decode/paint frames of a
+    // video that has never been played. Prime it with a muted play->pause.
+    let primed = false
+    const prime = () => {
+      if (primed) return
+      const p = video.play()
+      if (p && typeof p.then === 'function') {
+        p.then(() => {
+          video.pause()
+          primed = true
+          removePrimeListeners()
+        }).catch(() => {})
+      } else {
+        video.pause()
+        primed = true
+        removePrimeListeners()
+      }
+    }
+    const primeEvents = ['touchstart', 'touchend', 'pointerdown', 'scroll', 'click']
+    const removePrimeListeners = () =>
+      primeEvents.forEach(e => window.removeEventListener(e, prime))
+    primeEvents.forEach(e => window.addEventListener(e, prime, { passive: true }))
+    video.load()
+    prime()
+    video.addEventListener('loadeddata', prime, { once: true })
 
     const setupScroller = () => {
       const duration = video.duration || 23.03
@@ -64,6 +93,7 @@ export function VideoScrollytelling({ videoSrc = './architectural-walkthrough.mp
     }
 
     return () => {
+      removePrimeListeners()
       ScrollTrigger.getAll().forEach(t => t.kill())
     }
   }, [videoSrc])
@@ -75,8 +105,11 @@ export function VideoScrollytelling({ videoSrc = './architectural-walkthrough.mp
         <video
           ref={videoRef}
           src={videoSrc}
+          poster="./video-poster.jpg"
           playsInline
           webkit-playsinline="true"
+          disablePictureInPicture
+          disableRemotePlayback
           muted
           autoPlay={false}
           preload="auto"
