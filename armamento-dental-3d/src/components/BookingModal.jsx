@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { X, CheckCircle2, Calendar, Phone, Mail, User, Clock } from 'lucide-react'
+import { X, CheckCircle2 } from 'lucide-react'
 
 export function BookingModal({ isOpen, onClose }) {
   const [submitted, setSubmitted] = useState(false)
@@ -35,38 +35,36 @@ export function BookingModal({ isOpen, onClose }) {
         {!submitted ? (
           <div>
             <div style={{ marginBottom: '1.5rem' }}>
-              <span className="story-tag" style={{ marginBottom: '0.5rem' }}>Book Consultation</span>
-              <h3 style={{ fontFamily: 'Syne, sans-serif', fontSize: '1.75rem', fontWeight: 800, color: '#fff' }}>
+              <span className="step-tag" style={{ marginBottom: '0.4rem' }}>Consultation Request</span>
+              <h3 style={{ fontFamily: 'Cinzel, Georgia, serif', fontSize: '1.65rem', fontWeight: 600, color: '#fff' }}>
                 Schedule at APM Centrale
               </h3>
-              <p style={{ color: '#94a3b8', fontSize: '0.88rem', marginTop: '4px' }}>
-                Dr. Aldrine Armamento & Team • Mon-Sat: 9:00 AM - 8:00 PM
+              <p style={{ color: '#A8B0C0', fontSize: '0.88rem', marginTop: '4px' }}>
+                Dr. Aldrine Armamento &amp; Team • Mon–Sat: 9:00 AM – 8:00 PM
               </p>
             </div>
 
-            <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+            <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '0.95rem' }}>
               <div>
                 <label style={{ display: 'block', fontSize: '0.8rem', color: '#cbd5e1', marginBottom: '4px' }}>
                   Full Name
                 </label>
-                <div style={{ position: 'relative' }}>
-                  <input
-                    type="text"
-                    required
-                    placeholder="e.g. Maria Santos"
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    style={{
-                      width: '100%',
-                      background: 'rgba(255,255,255,0.05)',
-                      border: '1px solid rgba(255,255,255,0.12)',
-                      borderRadius: '10px',
-                      padding: '0.65rem 0.85rem',
-                      color: '#fff',
-                      fontSize: '0.9rem'
-                    }}
-                  />
-                </div>
+                <input
+                  type="text"
+                  required
+                  placeholder="e.g. Maria Santos"
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  style={{
+                    width: '100%',
+                    background: 'rgba(11, 20, 38, 0.6)',
+                    border: '1px solid rgba(201, 168, 75, 0.3)',
+                    borderRadius: '10px',
+                    padding: '0.65rem 0.85rem',
+                    color: '#fff',
+                    fontSize: '0.9rem'
+                  }}
+                />
               </div>
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
@@ -82,8 +80,8 @@ export function BookingModal({ isOpen, onClose }) {
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                     style={{
                       width: '100%',
-                      background: 'rgba(255,255,255,0.05)',
-                      border: '1px solid rgba(255,255,255,0.12)',
+                      background: 'rgba(11, 20, 38, 0.6)',
+                      border: '1px solid rgba(201, 168, 75, 0.3)',
                       borderRadius: '10px',
                       padding: '0.65rem 0.85rem',
                       color: '#fff',
@@ -102,8 +100,8 @@ export function BookingModal({ isOpen, onClose }) {
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     style={{
                       width: '100%',
-                      background: 'rgba(255,255,255,0.05)',
-                      border: '1px solid rgba(255,255,255,0.12)',
+                      background: 'rgba(11, 20, 38, 0.6)',
+                      border: '1px solid rgba(201, 168, 75, 0.3)',
                       borderRadius: '10px',
                       padding: '0.65rem 0.85rem',
                       color: '#fff',
@@ -122,8 +120,8 @@ export function BookingModal({ isOpen, onClose }) {
                   onChange={(e) => setFormData({ ...formData, service: e.target.value })}
                   style={{
                     width: '100%',
-                    background: '#1e293b',
-                    border: '1px solid rgba(255,255,255,0.12)',
+                    background: '#0B1426',
+                    border: '1px solid rgba(201, 168, 75, 0.3)',
                     borderRadius: '10px',
                     padding: '0.65rem 0.85rem',
                     color: '#fff',
@@ -149,8 +147,8 @@ export function BookingModal({ isOpen, onClose }) {
                     onChange={(e) => setFormData({ ...formData, preferredDate: e.target.value })}
                     style={{
                       width: '100%',
-                      background: 'rgba(255,255,255,0.05)',
-                      border: '1px solid rgba(255,255,255,0.12)',
+                      background: 'rgba(11, 20, 38, 0.6)',
+                      border: '1px solid rgba(201, 168, 75, 0.3)',
                       borderRadius: '10px',
                       padding: '0.65rem 0.85rem',
                       color: '#fff',
@@ -167,8 +165,8 @@ export function BookingModal({ isOpen, onClose }) {
                     onChange={(e) => setFormData({ ...formData, preferredTime: e.target.value })}
                     style={{
                       width: '100%',
-                      background: '#1e293b',
-                      border: '1px solid rgba(255,255,255,0.12)',
+                      background: '#0B1426',
+                      border: '1px solid rgba(201, 168, 75, 0.3)',
                       borderRadius: '10px',
                       padding: '0.65rem 0.85rem',
                       color: '#fff',
@@ -199,14 +197,14 @@ export function BookingModal({ isOpen, onClose }) {
           </div>
         ) : (
           <div style={{ textAlign: 'center', padding: '1.5rem 0' }}>
-            <div style={{ width: '64px', height: '64px', borderRadius: '50%', background: 'rgba(0, 210, 255, 0.15)', border: '2px solid #00d2ff', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1.5rem' }}>
-              <CheckCircle2 size={36} color="#00d2ff" />
+            <div style={{ width: '64px', height: '64px', borderRadius: '50%', background: 'rgba(201, 168, 75, 0.15)', border: '2px solid #C9A84B', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1.5rem' }}>
+              <CheckCircle2 size={36} color="#C9A84B" />
             </div>
-            <h3 style={{ fontFamily: 'Syne, sans-serif', fontSize: '1.8rem', fontWeight: 800, color: '#fff' }}>
-              Appointment Requested!
+            <h3 style={{ fontFamily: 'Cinzel, Georgia, serif', fontSize: '1.8rem', fontWeight: 600, color: '#fff' }}>
+              Appointment Requested
             </h3>
-            <p style={{ color: '#94a3b8', fontSize: '0.95rem', marginTop: '0.75rem', lineHeight: 1.6 }}>
-              Thank you, <strong style={{ color: '#fff' }}>{formData.name}</strong>. Our clinical coordinator will reach out to you via WhatsApp / SMS at <strong style={{ color: '#00d2ff' }}>{formData.phone}</strong> to confirm your slot.
+            <p style={{ color: '#A8B0C0', fontSize: '0.95rem', marginTop: '0.75rem', lineHeight: 1.6 }}>
+              Thank you, <strong style={{ color: '#fff' }}>{formData.name}</strong>. Our care team will contact you via WhatsApp or SMS at <strong style={{ color: '#C9A84B' }}>{formData.phone}</strong> to confirm your slot.
             </p>
             <div style={{ marginTop: '2rem' }}>
               <button onClick={resetAndClose} className="nav-cta-btn" style={{ padding: '0.75rem 2rem' }}>
@@ -219,4 +217,3 @@ export function BookingModal({ isOpen, onClose }) {
     </div>
   )
 }
-

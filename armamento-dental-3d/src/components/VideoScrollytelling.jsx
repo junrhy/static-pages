@@ -5,19 +5,14 @@ import { BookingModal } from './BookingModal'
 import {
   Sparkles,
   ShieldCheck,
-  Award,
   Phone,
   Clock,
   MapPin,
   ArrowUpRight,
   Menu,
   X,
-  Heart,
-  Users,
   ChevronRight,
-  Calendar,
-  Layers,
-  Activity
+  Calendar
 } from 'lucide-react'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -68,7 +63,6 @@ export function VideoScrollytelling({
     video.addEventListener('loadeddata', prime, { once: true })
 
     const setupScroller = () => {
-      // Direct scroll timeline to scrub the video smoothly from beginning to end
       ScrollTrigger.create({
         trigger: container,
         start: 'top top',
@@ -81,7 +75,6 @@ export function VideoScrollytelling({
         }
       })
 
-      // Card entrance and exit transitions
       const cards = container.querySelectorAll('.story-card')
       cards.forEach((card) => {
         gsap.fromTo(
@@ -120,7 +113,7 @@ export function VideoScrollytelling({
 
   return (
     <div ref={containerRef} className="video-scrolly-container">
-      {/* Fixed Fullscreen Background Video Viewport */}
+      {/* Fixed Background Video Viewport */}
       <div className="fixed-video-viewport">
         <video
           ref={videoRef}
@@ -135,30 +128,37 @@ export function VideoScrollytelling({
           preload="auto"
           className="scrolly-video-element"
         />
-        {/* Ambient Cinema Vignette Overlay */}
         <div className="video-cinema-overlay" />
       </div>
 
-      {/* Global Navbar */}
+      {/* Global Navbar with Official Armamento SVG Emblem Logo */}
       <header className="nav-header">
-        <a href="#intro" className="brand-badge">
-          <div className="brand-icon-box">
-            <Sparkles size={22} color="#021226" />
-          </div>
-          <div>
-            <div className="brand-title">ARMAMENTO</div>
-            <div className="brand-sub">Dental Studio • APM Centrale</div>
+        <a aria-label="Armamento Dental Studio Home" className="logo" href="#intro">
+          <svg aria-hidden="true" className="logo-icon" fill="none" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="navGoldGrad" x1="0%" x2="100%" y1="0%" y2="100%">
+                <stop offset="0%" stopColor="#E8D48B" />
+                <stop offset="45%" stopColor="#C9A84B" />
+                <stop offset="100%" stopColor="#A88B2E" />
+              </linearGradient>
+            </defs>
+            <path d="M50 6 L90 50 L50 94 L10 50 Z" fill="none" stroke="url(#navGoldGrad)" strokeLinejoin="round" strokeWidth="5.5" />
+            <path d="M50 26 L70 70 H58.5 L54 58 H46 L41.5 70 H30 L50 26 Z" fill="url(#navGoldGrad)" />
+            <path d="M46 50 H54 L50 39 Z" fill="#0B1426" />
+          </svg>
+          <div className="logo-text">
+            <span className="brand">ARMAMENTO</span>
+            <span className="sub">Dental Studio</span>
           </div>
         </a>
 
         <div className="nav-center-group">
           <nav className="nav-links">
-            <a href="#intro" className="nav-pill">Overview</a>
-            <a href="#team" className="nav-pill">Dr. Aldrine & Team</a>
-            <a href="#implants" className="nav-pill">Implants & Surgery</a>
-            <a href="#cosmetic" className="nav-pill">Smile Makeover</a>
+            <a href="#intro" className="nav-pill">Home</a>
+            <a href="#team" className="nav-pill">About</a>
+            <a href="#implants" className="nav-pill">Services</a>
             <a href="#gallery" className="nav-pill">Inside The Studio</a>
-            <a href="#location" className="nav-pill">Visit Us</a>
+            <a href="#location" className="nav-pill">Contact</a>
           </nav>
         </div>
 
@@ -167,7 +167,7 @@ export function VideoScrollytelling({
             onClick={() => setBookingOpen(true)}
             className="nav-cta-btn"
           >
-            <Calendar size={16} /> Book Appointment
+            <Calendar size={15} /> Book Appointment
           </button>
 
           <button
@@ -184,12 +184,11 @@ export function VideoScrollytelling({
       <div className={`mobile-nav-drawer ${mobileMenuOpen ? 'open' : ''}`}>
         <div className="mobile-drawer-content">
           <nav className="mobile-links">
-            <a href="#intro" onClick={() => setMobileMenuOpen(false)}>Overview</a>
-            <a href="#team" onClick={() => setMobileMenuOpen(false)}>Dr. Aldrine & Team</a>
-            <a href="#implants" onClick={() => setMobileMenuOpen(false)}>Implants & Surgery</a>
-            <a href="#cosmetic" onClick={() => setMobileMenuOpen(false)}>Smile Makeover</a>
+            <a href="#intro" onClick={() => setMobileMenuOpen(false)}>Home</a>
+            <a href="#team" onClick={() => setMobileMenuOpen(false)}>About</a>
+            <a href="#implants" onClick={() => setMobileMenuOpen(false)}>Services</a>
             <a href="#gallery" onClick={() => setMobileMenuOpen(false)}>Inside The Studio</a>
-            <a href="#location" onClick={() => setMobileMenuOpen(false)}>Visit Us</a>
+            <a href="#location" onClick={() => setMobileMenuOpen(false)}>Contact</a>
           </nav>
 
           <button
@@ -200,7 +199,7 @@ export function VideoScrollytelling({
             className="nav-cta-btn"
             style={{ marginTop: '1.5rem', width: '100%', justifyContent: 'center' }}
           >
-            <Calendar size={18} /> Book Appointment
+            <Calendar size={16} /> Book Appointment
           </button>
         </div>
       </div>
@@ -211,23 +210,23 @@ export function VideoScrollytelling({
         {/* CHAPTER 1: Welcome & Studio Overview */}
         <section className="story-step step-left" id="intro">
           <div className="story-card">
-            <span className="step-tag">01 &middot; Precision Dental Studio</span>
-            <h2>Sculpting Healthy, Confident Smiles in Cebu</h2>
+            <span className="step-tag">01 &middot; Precision Dentistry &amp; Care</span>
+            <h2>Precision Dentistry. Personalized Care.</h2>
             <p>
-              Welcome to <strong>Armamento Dental Studio</strong> at APM Centrale, Mabolo, Cebu City. Experience patient-centric dentistry blending advanced clinical engineering with personalized care.
+              Your trusted dental home in Mabolo, Cebu City. At <strong>Armamento Dental Studio</strong>, we blend modern techniques and gentle, focused attention to give you a truly calm dental experience.
             </p>
             <div className="feature-list" style={{ margin: '1.25rem 0' }}>
               <div className="feature-item">
-                <div className="feature-bullet"><ShieldCheck size={14} color="#00d2ff" /></div>
-                <span>Titanium Dental Implants & Oral Surgery</span>
+                <div className="feature-bullet"><ShieldCheck size={14} color="#C9A84B" /></div>
+                <span>Specialized Dental Implants &amp; Oral Surgery</span>
               </div>
               <div className="feature-item">
-                <div className="feature-bullet"><Sparkles size={14} color="#00d2ff" /></div>
-                <span>Cosmetic Smile Design & Laser Whitening</span>
+                <div className="feature-bullet"><Sparkles size={14} color="#C9A84B" /></div>
+                <span>Aesthetic Veneers &amp; In-Office Laser Whitening</span>
               </div>
               <div className="feature-item">
-                <div className="feature-bullet"><Clock size={14} color="#00d2ff" /></div>
-                <span>Mon–Sat: 9:00 AM – 8:00 PM</span>
+                <div className="feature-bullet"><Clock size={14} color="#C9A84B" /></div>
+                <span>Mon–Sat: 9:00 AM – 8:00 PM (Across SM City Cebu)</span>
               </div>
             </div>
             <div style={{ marginTop: '1.5rem', display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
@@ -235,7 +234,7 @@ export function VideoScrollytelling({
                 Schedule Consultation <ChevronRight size={16} />
               </button>
               <a href="tel:09455997475" className="glass-pill" style={{ color: '#fff', textDecoration: 'none', padding: '0.65rem 1.25rem', display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '0.85rem' }}>
-                <Phone size={14} color="#00d2ff" /> (032) 256-0878
+                <Phone size={14} color="#C9A84B" /> (032) 256-0878
               </a>
             </div>
           </div>
@@ -244,7 +243,7 @@ export function VideoScrollytelling({
         {/* CHAPTER 2: Meet Dr. Aldrine Armamento */}
         <section className="story-step step-right" id="team">
           <div className="story-card">
-            <span className="step-tag">02 &middot; Clinical Leadership</span>
+            <span className="step-tag">02 &middot; Meet Your Doctor</span>
             <div className="doctor-profile-card">
               <img
                 src="./images/dr-aldrine.jpg"
@@ -252,21 +251,21 @@ export function VideoScrollytelling({
                 className="doctor-avatar"
               />
               <div>
-                <h3 style={{ fontSize: '1.2rem', fontWeight: 800, color: '#fff' }}>
+                <h3 style={{ fontFamily: 'Cinzel, Georgia, serif', fontSize: '1.25rem', fontWeight: 600, color: '#fff' }}>
                   Dr. Aldrine Armamento
                 </h3>
-                <div style={{ color: '#00d2ff', fontSize: '0.82rem', fontWeight: 600, marginBottom: '4px' }}>
-                  Founder & Principal Dentist
+                <div style={{ color: '#C9A84B', fontSize: '0.82rem', fontWeight: 600, marginBottom: '4px' }}>
+                  Founder &amp; Principal Dentist
                 </div>
-                <p style={{ color: '#cbd5e1', fontSize: '0.8rem', lineHeight: 1.45 }}>
-                  Committed to pain-free, meticulous dental care tailored to your unique smile.
+                <p style={{ color: '#A8B0C0', fontSize: '0.82rem', lineHeight: 1.5 }}>
+                  Dedicated to meticulous clinical care, clear patient education, and painless treatment.
                 </p>
               </div>
             </div>
             <p>
-              Dentistry should never feel intimidating. We take the time to listen, explain every step with clarity, and ensure every appointment feels calm and reassuring.
+              "We designed our studio so you never feel rushed or anxious. From routine prophylaxis to complex surgeries, we walk you through every option with total transparency."
             </p>
-            <div style={{ marginTop: '1.25rem' }}>
+            <div style={{ marginTop: '1.35rem' }}>
               <button onClick={() => setBookingOpen(true)} className="nav-cta-btn">
                 Book with Dr. Aldrine
               </button>
@@ -278,41 +277,41 @@ export function VideoScrollytelling({
         <section className="story-step step-left" id="implants">
           <div className="story-card">
             <span className="step-tag">03 &middot; Restorative Surgery</span>
-            <h2>Titanium Implants & Bone-Integrated Teeth</h2>
+            <h2>Dental Implants &amp; Oral Surgery</h2>
             <p>
-              Replace missing teeth with natural-looking, permanent dental implants. Enjoy biting into your favorite food again with complete confidence.
+              Permanent tooth replacement engineered for strength, biocompatibility, and natural aesthetic harmony.
             </p>
             <div className="services-grid">
               <div className="service-card-mini">
-                <div style={{ color: '#00d2ff', fontWeight: 700, fontSize: '0.9rem', marginBottom: '3px' }}>
-                  Single & Multi Implants
+                <div style={{ color: '#C9A84B', fontWeight: 600, fontSize: '0.9rem', marginBottom: '3px' }}>
+                  Dental Implants
                 </div>
-                <p style={{ color: '#94a3b8', fontSize: '0.8rem' }}>
-                  Permanent titanium roots with custom porcelain crowns.
+                <p style={{ color: '#A8B0C0', fontSize: '0.8rem' }}>
+                  Titanium fixtures that integrate with bone to replace missing teeth permanently.
                 </p>
               </div>
               <div className="service-card-mini">
-                <div style={{ color: '#00d2ff', fontWeight: 700, fontSize: '0.9rem', marginBottom: '3px' }}>
+                <div style={{ color: '#C9A84B', fontWeight: 600, fontSize: '0.9rem', marginBottom: '3px' }}>
                   Wisdom Tooth Removal
                 </div>
-                <p style={{ color: '#94a3b8', fontSize: '0.8rem' }}>
-                  Minimally traumatic impactions with rapid healing.
+                <p style={{ color: '#A8B0C0', fontSize: '0.8rem' }}>
+                  Safe, gentle extractions of impacted molars with minimal post-op swelling.
                 </p>
               </div>
               <div className="service-card-mini">
-                <div style={{ color: '#00d2ff', fontWeight: 700, fontSize: '0.9rem', marginBottom: '3px' }}>
+                <div style={{ color: '#C9A84B', fontWeight: 600, fontSize: '0.9rem', marginBottom: '3px' }}>
                   Bone Grafting
                 </div>
-                <p style={{ color: '#94a3b8', fontSize: '0.8rem' }}>
-                  Foundational regeneration for lifetime implant anchorage.
+                <p style={{ color: '#A8B0C0', fontSize: '0.8rem' }}>
+                  Site preservation to support solid, long-lasting implant placement.
                 </p>
               </div>
               <div className="service-card-mini">
-                <div style={{ color: '#00d2ff', fontWeight: 700, fontSize: '0.9rem', marginBottom: '3px' }}>
-                  Full Arch Restorations
+                <div style={{ color: '#C9A84B', fontWeight: 600, fontSize: '0.9rem', marginBottom: '3px' }}>
+                  Tooth Extractions
                 </div>
-                <p style={{ color: '#94a3b8', fontSize: '0.8rem' }}>
-                  Fixed hybrid bridge solutions for complete smile restoration.
+                <p style={{ color: '#A8B0C0', fontSize: '0.8rem' }}>
+                  Careful, trauma-controlled removal when teeth cannot be preserved.
                 </p>
               </div>
             </div>
@@ -327,23 +326,23 @@ export function VideoScrollytelling({
         {/* CHAPTER 4: Cosmetic Dentistry & Veneers */}
         <section className="story-step step-right" id="cosmetic">
           <div className="story-card">
-            <span className="step-tag">04 &middot; Cosmetic & Aesthetic Artistry</span>
-            <h2>Porcelain Veneers & Laser Whitening</h2>
+            <span className="step-tag">04 &middot; Cosmetic Smile Design</span>
+            <h2>Veneers &amp; Teeth Whitening</h2>
             <p>
-              Elevate your confidence. Whether fixing tooth discoloration, closing gaps, or reshaping chipped edges, our cosmetic treatments create naturally luminous smiles.
+              Transform your smile with artistic precision. We craft individual smile makeovers that bring out your natural beauty.
             </p>
             <div className="feature-list" style={{ margin: '1.25rem 0' }}>
               <div className="feature-item">
-                <div className="feature-bullet"><Sparkles size={14} color="#00d2ff" /></div>
-                <span><strong>Laser In-Office Whitening:</strong> Immediate shade lift safely administered in a single visit.</span>
+                <div className="feature-bullet"><Sparkles size={14} color="#C9A84B" /></div>
+                <span><strong>In-Office Laser Whitening:</strong> Lift deep staining caused by coffee, tea, and age in just one sitting.</span>
               </div>
               <div className="feature-item">
-                <div className="feature-bullet"><Sparkles size={14} color="#00d2ff" /></div>
-                <span><strong>E-Max Porcelain Veneers:</strong> Micro-thin, lifelike porcelain shells with unmatched durability.</span>
+                <div className="feature-bullet"><Sparkles size={14} color="#C9A84B" /></div>
+                <span><strong>Custom Porcelain Veneers:</strong> Micro-thin ceramic shells crafted to fix gaps, chips, and shape.</span>
               </div>
               <div className="feature-item">
-                <div className="feature-bullet"><Sparkles size={14} color="#00d2ff" /></div>
-                <span><strong>Composite Dental Bonding:</strong> Seamless repair for small chips and gaps.</span>
+                <div className="feature-bullet"><Sparkles size={14} color="#C9A84B" /></div>
+                <span><strong>Composite Dental Fillings:</strong> Color-matched composite restorations that blend seamlessly.</span>
               </div>
             </div>
             <button onClick={() => setBookingOpen(true)} className="nav-cta-btn">
@@ -355,10 +354,10 @@ export function VideoScrollytelling({
         {/* CHAPTER 5: Inside The Studio Photo Gallery */}
         <section className="story-step step-left" id="gallery">
           <div className="story-card" style={{ maxWidth: '560px' }}>
-            <span className="step-tag">05 &middot; Clinic Culture & Space</span>
-            <h2>Inside Our Studio Sanctuary</h2>
+            <span className="step-tag">05 &middot; Clinic Atmosphere</span>
+            <h2>Inside Our Dental Sanctuary</h2>
             <p>
-              Take a look at our clinical team, opening celebration, and welcoming environment at APM Centrale, Mabolo.
+              Step inside our calm studio environment at APM Centrale. Meet our team dedicated to making every visit comfortable.
             </p>
             <div className="photo-gallery-grid">
               <div className="photo-gallery-item">
@@ -389,35 +388,35 @@ export function VideoScrollytelling({
         {/* CHAPTER 6: Visit Us & Booking */}
         <section className="story-step step-right" id="location">
           <div className="story-card">
-            <span className="step-tag">06 &middot; Prime Location</span>
+            <span className="step-tag">06 &middot; Studio Location</span>
             <h2>Visit Us at APM Centrale</h2>
             <p>
-              Conveniently located directly across SM City Cebu with hassle-free parking and straightforward transit access.
+              Conveniently located directly across SM City Cebu with secure mall parking and taxi/Grab accessibility.
             </p>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem', background: 'rgba(255,255,255,0.03)', padding: '1.15rem', borderRadius: '16px', border: '1px solid rgba(255,255,255,0.06)', margin: '1.25rem 0' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem', background: 'rgba(26, 42, 69, 0.4)', padding: '1.2rem', borderRadius: '16px', border: '1px solid var(--border-glass)', margin: '1.25rem 0' }}>
               <div style={{ display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
-                <MapPin size={18} color="#00d2ff" style={{ flexShrink: 0, marginTop: '2px' }} />
+                <MapPin size={18} color="#C9A84B" style={{ flexShrink: 0, marginTop: '2px' }} />
                 <div>
-                  <div style={{ fontWeight: 700, color: '#fff', fontSize: '0.9rem' }}>Address</div>
+                  <div style={{ fontWeight: 600, color: '#fff', fontSize: '0.9rem' }}>Address</div>
                   <div style={{ color: '#cbd5e1', fontSize: '0.82rem' }}>
                     2nd Floor, APM Centrale, A. Soriano Ave, Mabolo, Cebu City
                   </div>
-                  <div style={{ color: '#64748b', fontSize: '0.74rem' }}>(Directly opposite SM City Cebu)</div>
+                  <div style={{ color: '#A8B0C0', fontSize: '0.74rem' }}>(Directly opposite SM City Cebu)</div>
                 </div>
               </div>
               <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                <Clock size={18} color="#00d2ff" style={{ flexShrink: 0 }} />
+                <Clock size={18} color="#C9A84B" style={{ flexShrink: 0 }} />
                 <div>
-                  <div style={{ fontWeight: 700, color: '#fff', fontSize: '0.9rem' }}>Operating Hours</div>
-                  <div style={{ color: '#cbd5e1', fontSize: '0.82rem' }}>Mon–Sat: 9:00 AM – 8:00 PM (Closed Sun)</div>
+                  <div style={{ fontWeight: 600, color: '#fff', fontSize: '0.9rem' }}>Clinic Hours</div>
+                  <div style={{ color: '#cbd5e1', fontSize: '0.82rem' }}>Monday – Saturday: 9:00 AM – 8:00 PM (Closed Sundays)</div>
                 </div>
               </div>
               <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                <Phone size={18} color="#00d2ff" style={{ flexShrink: 0 }} />
+                <Phone size={18} color="#C9A84B" style={{ flexShrink: 0 }} />
                 <div>
-                  <div style={{ fontWeight: 700, color: '#fff', fontSize: '0.9rem' }}>Direct Line</div>
+                  <div style={{ fontWeight: 600, color: '#fff', fontSize: '0.9rem' }}>Contact</div>
                   <div style={{ color: '#cbd5e1', fontSize: '0.82rem' }}>
-                    <a href="tel:09455997475" style={{ color: '#00d2ff', textDecoration: 'none' }}>+63 945 599 7475</a> • (032) 256-0878
+                    <a href="tel:09455997475" style={{ color: '#C9A84B', textDecoration: 'none' }}>+63 945 599 7475</a> • (032) 256-0878
                   </div>
                 </div>
               </div>
