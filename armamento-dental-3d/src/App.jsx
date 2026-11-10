@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { SceneCanvas } from './components/SceneCanvas'
+import { VideoBackground } from './components/VideoBackground'
 import { BookingModal } from './components/BookingModal'
 import {
   Sparkles,
@@ -13,12 +14,13 @@ import {
   MapPin,
   ChevronRight,
   Eye,
-  Maximize2,
   Calendar,
   Layers,
   ArrowUpRight,
   Menu,
-  X
+  X,
+  Heart,
+  Users
 } from 'lucide-react'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -43,7 +45,7 @@ export default function App() {
   useEffect(() => {
     const ctx = gsap.context(() => {
       const cards = document.querySelectorAll('.story-card')
-      cards.forEach((card, index) => {
+      cards.forEach((card) => {
         gsap.fromTo(
           card,
           { opacity: 0, y: 50, scale: 0.95 },
@@ -69,7 +71,13 @@ export default function App() {
 
   return (
     <div className="interactive-viewport" ref={containerRef}>
-      {/* 3D WebGL Three.js Scene Background */}
+      {/* 1. Cinematic Background Video Scrubbed by Scroll */}
+      <VideoBackground
+        videoSrc="./videos/armamento-dental-studio-video.mp4"
+        poster="./videos/armamento-dental-studio-poster.jpg"
+      />
+
+      {/* 2. Interactive 3D Three.js Overlay Canvas */}
       <SceneCanvas
         mode={modelMode}
         wireframe={wireframe}
@@ -77,7 +85,7 @@ export default function App() {
         isMobile={isMobile}
       />
 
-      {/* Global Glass Nav Header */}
+      {/* 3. Global Glass Nav Header */}
       <header className="nav-header">
         <a href="#hero" className="brand-badge">
           <div className="brand-icon-box">
@@ -93,10 +101,11 @@ export default function App() {
         <div className="nav-center-group">
           <nav className="nav-links">
             <a href="#hero" className="nav-pill">Overview</a>
+            <a href="#team" className="nav-pill">Dr. Aldrine & Team</a>
             <a href="#implants" className="nav-pill">Implants & Surgery</a>
             <a href="#cosmetic" className="nav-pill">Smile Makeover</a>
-            <a href="#technology" className="nav-pill">3D Precision</a>
-            <a href="#location" className="nav-pill">Visit Studio</a>
+            <a href="#gallery" className="nav-pill">Inside The Studio</a>
+            <a href="#location" className="nav-pill">Visit Us</a>
           </nav>
         </div>
 
@@ -143,34 +152,34 @@ export default function App() {
         </div>
       </div>
 
-      {/* Storytelling Scrolly Layers */}
+      {/* Scrollytelling Story Layers */}
       <main className="story-layer">
         
         {/* Section 1: Hero Studio Introduction */}
         <section className="story-section" id="hero">
           <div className="glass-panel story-card">
             <span className="story-tag">
-              <Sparkles size={14} /> Architectural Dental Precision
+              <Sparkles size={14} /> Modern Precision Dentistry
             </span>
             <h1 className="story-heading">
               Sculpting Healthy, Confident Smiles in Cebu.
             </h1>
             <p className="story-desc">
-              Led by <strong>Dr. Aldrine Armamento</strong>, Armamento Dental Studio blends bio-compatible engineering, surgical precision, and restorative artistry at <strong>APM Centrale, Mabolo, Cebu City</strong>.
+              Step into a warm, gentle, and technologically advanced dental experience located at <strong>APM Centrale, Mabolo, Cebu City</strong> (directly opposite SM City Cebu).
             </p>
 
             <div className="feature-list">
               <div className="feature-item">
                 <div className="feature-bullet"><ShieldCheck size={14} color="#00d2ff" /></div>
-                <span>Specialized in Advanced Implantology & Oral Surgery</span>
+                <span>Guided Dental Implants & Comprehensive Oral Surgery</span>
               </div>
               <div className="feature-item">
                 <div className="feature-bullet"><Activity size={14} color="#00d2ff" /></div>
-                <span>Guided CAD/CAM Precision & High-Strength Zirconia</span>
+                <span>Aesthetic Porcelain Veneers & In-Office Laser Whitening</span>
               </div>
               <div className="feature-item">
                 <div className="feature-bullet"><Clock size={14} color="#00d2ff" /></div>
-                <span>Open Mon-Sat: 9:00 AM – 8:00 PM for Your Convenience</span>
+                <span>Convenient Schedule: Mon–Sat, 9:00 AM – 8:00 PM</span>
               </div>
             </div>
 
@@ -201,17 +210,60 @@ export default function App() {
           </div>
         </section>
 
-        {/* Section 2: Dental Implants & Surgery */}
+        {/* Section 2: Meet Dr. Aldrine Armamento */}
+        <section className="story-section" id="team">
+          <div className="glass-panel story-card">
+            <span className="story-tag">
+              <Users size={14} /> Clinical Leadership
+            </span>
+            <h2 className="story-heading">
+              Meet Dr. Aldrine Armamento & Team.
+            </h2>
+            
+            {/* Real Doctor Portrait & Info */}
+            <div className="doctor-profile-card">
+              <img
+                src="./images/dr-aldrine.jpg"
+                alt="Dr. Aldrine Armamento"
+                className="doctor-avatar"
+              />
+              <div>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: 700, color: '#fff' }}>
+                  Dr. Aldrine Armamento
+                </h3>
+                <div style={{ color: '#00d2ff', fontSize: '0.85rem', fontWeight: 600, marginBottom: '6px' }}>
+                  Founder & Principal Dental Surgeon
+                </div>
+                <p style={{ color: '#94a3b8', fontSize: '0.82rem', lineHeight: 1.5 }}>
+                  Dedicated to pain-free, meticulous dental procedures with a warm and empathetic touch.
+                </p>
+              </div>
+            </div>
+
+            <p className="story-desc">
+              Every smile is crafted with personalized attention. We believe in educating our patients, demystifying treatments, and creating an inviting sanctuary away from the anxiety of conventional clinics.
+            </p>
+
+            <button
+              onClick={() => setBookingOpen(true)}
+              className="nav-cta-btn"
+            >
+              Meet the Doctor <ChevronRight size={16} />
+            </button>
+          </div>
+        </section>
+
+        {/* Section 3: Dental Implants & Surgery */}
         <section className="story-section" id="implants">
           <div className="glass-panel story-card">
             <span className="story-tag">
-              <Award size={14} /> Restorative & Surgical Mastery
+              <Award size={14} /> Surgical Excellence
             </span>
             <h2 className="story-heading">
               Titanium Implants & Bone-Integrated Restorations.
             </h2>
             <p className="story-desc">
-              Say goodbye to loose dentures or gaps. Our dental implant systems integrate seamlessly into the jawbone, preserving natural facial structure with permanent, lifetime strength.
+              Restore your smile's original chewing strength and aesthetics. Our dental implants fuse with the bone for permanent stability and natural function.
             </p>
 
             <div className="services-grid">
@@ -220,34 +272,34 @@ export default function App() {
                   Single & Multi Implants
                 </div>
                 <p style={{ color: '#94a3b8', fontSize: '0.82rem' }}>
-                  Engineered screw roots with custom-milled anatomical crowns.
+                  Titanium root fixtures with custom porcelain anatomy.
                 </p>
               </div>
 
               <div className="service-card-mini">
                 <div style={{ color: '#00d2ff', fontWeight: 700, fontSize: '0.95rem', marginBottom: '4px' }}>
-                  Wisdom Tooth Surgery
+                  Wisdom Tooth Removal
                 </div>
                 <p style={{ color: '#94a3b8', fontSize: '0.82rem' }}>
-                  Minimally traumatic impaction removal under gentle local anesthesia.
+                  Gentle, minimally invasive surgical impactions.
                 </p>
               </div>
 
               <div className="service-card-mini">
                 <div style={{ color: '#00d2ff', fontWeight: 700, fontSize: '0.95rem', marginBottom: '4px' }}>
-                  Bone Grafting & Sinus Lift
+                  Bone Grafting & Augmentation
                 </div>
                 <p style={{ color: '#94a3b8', fontSize: '0.82rem' }}>
-                  Regenerative foundation prep for solid, secure implant seating.
+                  Strong bio-compatible foundation for lifetime support.
                 </p>
               </div>
 
               <div className="service-card-mini">
                 <div style={{ color: '#00d2ff', fontWeight: 700, fontSize: '0.95rem', marginBottom: '4px' }}>
-                  Fixed Hybrid Bridges
+                  Full-Arch Restorations
                 </div>
                 <p style={{ color: '#94a3b8', fontSize: '0.82rem' }}>
-                  Full-arch transformations that look and chew like natural teeth.
+                  Fixed bridges giving you the confidence to bite freely.
                 </p>
               </div>
             </div>
@@ -263,31 +315,31 @@ export default function App() {
           </div>
         </section>
 
-        {/* Section 3: Cosmetic Dentistry & Smile Design */}
+        {/* Section 4: Cosmetic Dentistry & Smile Design */}
         <section className="story-section" id="cosmetic">
           <div className="glass-panel story-card">
             <span className="story-tag">
-              <Sparkles size={14} /> Cosmetic & Aesthetic Craft
+              <Sparkles size={14} /> Aesthetic Smile Artistry
             </span>
             <h2 className="story-heading">
-              Smile Design, Veneers & Laser Whitening.
+              Porcelain Veneers & Laser Teeth Whitening.
             </h2>
             <p className="story-desc">
-              A vibrant smile opens every door. We combine shade-matching spectrophotometry with ultra-thin porcelain veneers and professional in-office whitening to deliver natural, radiant beauty.
+              Your dream smile is a consultation away. Whether correcting tooth shape, closing diastemas, or brightening enamel, we provide tailored aesthetic transformations.
             </p>
 
             <div className="feature-list">
               <div className="feature-item">
                 <div className="feature-bullet"><Sparkles size={14} color="#00d2ff" /></div>
-                <span><strong>In-Office Laser Teeth Whitening:</strong> Lift stubborn coffee, tea, and age stains safely in one session.</span>
+                <span><strong>In-Office Laser Teeth Whitening:</strong> Immediate shade enhancement in a safe, monitored setting.</span>
               </div>
               <div className="feature-item">
                 <div className="feature-bullet"><Sparkles size={14} color="#00d2ff" /></div>
-                <span><strong>E-Max & Porcelain Veneers:</strong> Correct chipped, misaligned, or discolored teeth with micro-thin shells.</span>
+                <span><strong>E-Max Porcelain Veneers:</strong> Natural translucency designed for long-lasting brilliance.</span>
               </div>
               <div className="feature-item">
                 <div className="feature-bullet"><Sparkles size={14} color="#00d2ff" /></div>
-                <span><strong>Composite Aesthetic Fillings:</strong> Seamless tooth-colored restorations that blend invisibly.</span>
+                <span><strong>Composite Dental Bonding:</strong> Fast, direct restoration for chips and minor irregularities.</span>
               </div>
             </div>
 
@@ -300,27 +352,38 @@ export default function App() {
           </div>
         </section>
 
-        {/* Section 4: General Preventive Care & Cleanings */}
-        <section className="story-section" id="technology">
-          <div className="glass-panel story-card">
+        {/* Section 5: Studio Gallery & Team Moments */}
+        <section className="story-section" id="gallery">
+          <div className="glass-panel story-card" style={{ maxWidth: '620px' }}>
             <span className="story-tag">
-              <Activity size={14} /> Preventative & Oral Wellness
+              <Heart size={14} /> Inside the Studio
             </span>
             <h2 className="story-heading">
-              Gentle Care for the Entire Family.
+              A Warm, Caring Atmosphere.
             </h2>
             <p className="story-desc">
-              Healthy foundations prevent complex problems. Experience gentle ultrasonic prophylaxis, thorough oral cancer screenings, and comprehensive dental health roadmaps.
+              See the genuine smiles and clinical passion of our team at our grand opening and daily care routines in APM Centrale.
             </p>
 
-            <div className="services-grid" style={{ marginBottom: '1.5rem' }}>
-              <div className="service-card-mini">
-                <div style={{ color: '#fff', fontWeight: 600, fontSize: '0.9rem' }}>Comprehensive Exam</div>
-                <div style={{ color: '#94a3b8', fontSize: '0.8rem' }}>Intraoral photography & diagnostic assessments.</div>
+            {/* Photo Gallery Grid */}
+            <div className="photo-gallery-grid">
+              <div className="photo-gallery-item">
+                <img src="./images/team-group.jpg" alt="Armamento Dental Studio Team" loading="lazy" />
               </div>
-              <div className="service-card-mini">
-                <div style={{ color: '#fff', fontWeight: 600, fontSize: '0.9rem' }}>Ultrasonic Cleaning</div>
-                <div style={{ color: '#94a3b8', fontSize: '0.8rem' }}>Pain-free plaque & tartar removal for fresh breath.</div>
+              <div className="photo-gallery-item">
+                <img src="./images/team-dentists.jpg" alt="Dentists in White Coats" loading="lazy" />
+              </div>
+              <div className="photo-gallery-item">
+                <img src="./images/team-opening.jpg" alt="Clinic Entrance Opening" loading="lazy" />
+              </div>
+              <div className="photo-gallery-item">
+                <img src="./images/team-care.jpg" alt="Care Team in Scrubs" loading="lazy" />
+              </div>
+              <div className="photo-gallery-item">
+                <img src="./images/team-fun.jpg" alt="Fun Team Moments" loading="lazy" />
+              </div>
+              <div className="photo-gallery-item">
+                <img src="./images/team-care-portrait.jpg" alt="Dr. Aldrine and Team" loading="lazy" />
               </div>
             </div>
 
@@ -328,22 +391,22 @@ export default function App() {
               onClick={() => setBookingOpen(true)}
               className="nav-cta-btn"
             >
-              Book General Cleaning
+              Experience the Studio Firsthand
             </button>
           </div>
         </section>
 
-        {/* Section 5: Location, Contact & Directions */}
+        {/* Section 6: Location & Visit Information */}
         <section className="story-section" id="location">
           <div className="glass-panel story-card" style={{ maxWidth: '600px' }}>
             <span className="story-tag">
-              <MapPin size={14} /> Prime Studio Location
+              <MapPin size={14} /> Convenient Location
             </span>
             <h2 className="story-heading">
               Visit Us at APM Centrale, Cebu City.
             </h2>
             <p className="story-desc">
-              Conveniently situated right across SM City Cebu with ample secure parking and accessible transit links.
+              Located right across SM City Cebu with ample parking, easy Grab access, and seamless transit links.
             </p>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', background: 'rgba(255,255,255,0.03)', padding: '1.25rem', borderRadius: '16px', border: '1px solid rgba(255,255,255,0.06)', marginBottom: '1.5rem' }}>
@@ -354,7 +417,7 @@ export default function App() {
                   <div style={{ color: '#cbd5e1', fontSize: '0.88rem' }}>
                     2nd Floor, APM Centrale, A. Soriano Ave, Mabolo, Cebu City, 6000 Philippines
                   </div>
-                  <div style={{ color: '#64748b', fontSize: '0.78rem' }}>(Directly opposite SM City Cebu)</div>
+                  <div style={{ color: '#64748b', fontSize: '0.78rem' }}>(Across SM City Cebu)</div>
                 </div>
               </div>
 
@@ -419,4 +482,3 @@ export default function App() {
     </div>
   )
 }
-
