@@ -98,19 +98,33 @@ export function MobileStoryView({
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
     >
-      {/* 1. Fullscreen Autoplaying Background Video Loop */}
+      {/* 1. Fullscreen Background Media Screen (Video OR Fullscreen Story Photo) */}
       <div className="mobile-video-screen">
-        <video
-          ref={videoRef}
-          src={videoSrc}
-          poster={posterSrc}
-          autoPlay
-          muted
-          playsInline
-          loop={false}
-          onTimeUpdate={handleTimeUpdate}
-          className="mobile-story-video"
-        />
+        {current.id === 'team' ? (
+          <img
+            src="./images/dr-aldrine.jpg"
+            alt="Dr. Aldrine Armamento"
+            className="mobile-story-image-bg"
+          />
+        ) : current.id === 'gallery' ? (
+          <img
+            src="./images/team-group.jpg"
+            alt="APM Centrale Care Team"
+            className="mobile-story-image-bg"
+          />
+        ) : (
+          <video
+            ref={videoRef}
+            src={videoSrc}
+            poster={posterSrc}
+            autoPlay
+            muted
+            playsInline
+            loop={false}
+            onTimeUpdate={handleTimeUpdate}
+            className="mobile-story-video"
+          />
+        )}
         <div className="mobile-story-overlay" />
       </div>
 
@@ -145,29 +159,6 @@ export function MobileStoryView({
       {/* 3. Left/Right Tap Target Zones */}
       <div className="story-tap-zone tap-left" onClick={goPrev} />
       <div className="story-tap-zone tap-right" onClick={goNext} />
-
-      {/* 4. PROMINENT PHOTO HERO ON MOBILE (Doctor or Gallery) */}
-      {current.id === 'team' && (
-        <div className="mobile-spotlight-hero">
-          <div className="mobile-hero-frame">
-            <img src="./images/dr-aldrine.jpg" alt="Dr. Aldrine Armamento" />
-            <div className="spotlight-gold-badge">
-              <Award size={13} color="#0B1426" /> Dr. Aldrine Armamento
-            </div>
-          </div>
-        </div>
-      )}
-
-      {current.id === 'gallery' && (
-        <div className="mobile-spotlight-hero">
-          <div className="mobile-gallery-card">
-            <img src="./images/team-group.jpg" alt="Care Team Group" />
-            <div className="mobile-gallery-badge">
-              <Sparkles size={13} color="#0B1426" /> APM Centrale Care Team
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* 5. Bottom Story Card HUD */}
       <div className="mobile-story-card-container">
