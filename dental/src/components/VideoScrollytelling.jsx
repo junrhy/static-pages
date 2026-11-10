@@ -106,6 +106,23 @@ export function VideoScrollytelling({
           }}
         />
 
+        {/* Doctor Photo visible as background on chapter 1 (Meet Dr) */}
+        <div
+          className="scrolly-doctor-bg"
+          style={{
+            position: 'absolute',
+            inset: 0,
+            backgroundImage: `url(${currentChapter.doctorImg || './images/dr-aldrine.jpg'})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center 20%',
+            opacity: currentChapter.id === 'team' && !activeGalleryBg ? 1 : 0,
+            pointerEvents: 'none',
+            transition: 'opacity 0.6s ease, transform 10s ease-out',
+            transform: currentChapter.id === 'team' ? 'scale(1.03)' : 'scale(1)',
+            zIndex: 1
+          }}
+        />
+
         {/* Dynamic Gallery Background Image when a thumbnail is clicked */}
         <div
           className="scrolly-gallery-bg"
@@ -119,7 +136,7 @@ export function VideoScrollytelling({
             pointerEvents: 'none',
             transition: 'opacity 0.6s ease, transform 10s ease-out',
             transform: activeGalleryBg ? 'scale(1.05)' : 'scale(1)',
-            zIndex: 1
+            zIndex: 2
           }}
         />
 
@@ -137,7 +154,7 @@ export function VideoScrollytelling({
           preload="auto"
           className="scrolly-video-element"
           style={{
-            opacity: (activeChapterIndex === 0 || activeGalleryBg) ? 0 : 1,
+            opacity: (activeChapterIndex === 0 || currentChapter.id === 'team' || activeGalleryBg) ? 0 : 1,
             transition: 'opacity 0.6s ease'
           }}
         />
@@ -197,28 +214,7 @@ export function VideoScrollytelling({
         ))}
       </div>
 
-      {/* 4. PROMINENT FLOATING SHOWCASE BADGE (Top-Right / Floating when on Doctor) */}
-      {currentChapter.id === 'team' && (
-        <div className="prominent-feature-card doctor-spotlight animate-fade-in">
-          <div className="spotlight-portrait-frame">
-            <img
-              src="./images/dr-aldrine.jpg"
-              alt="Dr. Aldrine Armamento"
-              className="spotlight-img"
-            />
-            <div className="spotlight-gold-badge">
-              <Award size={14} color="#0B1426" /> Principal Surgeon
-            </div>
-          </div>
-          <div className="spotlight-info">
-            <div className="spotlight-title">Dr. Aldrine Armamento</div>
-            <div className="spotlight-role">Founder &amp; Clinical Director</div>
-            <div className="spotlight-tagline">12+ Years of Advanced Implantology &amp; Aesthetic Restorations</div>
-          </div>
-        </div>
-      )}
-
-      {/* 5. Desktop Low-Profile Glass HUD Dock */}
+      {/* 4. Desktop Low-Profile Glass HUD Dock */}
       <div className="floating-hud-dock-wrapper">
         <div className="floating-hud-dock">
           
