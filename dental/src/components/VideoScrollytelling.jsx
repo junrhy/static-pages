@@ -122,13 +122,15 @@ export function VideoScrollytelling({
         removePrimeListeners()
       }
     }
-    const primeEvents = ['touchstart', 'touchend', 'pointerdown', 'scroll', 'click']
+    const primeEvents = ['touchstart', 'touchend', 'pointerdown', 'scroll', 'click', 'visibilitychange']
     const removePrimeListeners = () =>
       primeEvents.forEach(e => window.removeEventListener(e, prime))
     primeEvents.forEach(e => window.addEventListener(e, prime, { passive: true }))
+    document.addEventListener('visibilitychange', prime)
     video.load()
     prime()
     video.addEventListener('loadeddata', prime, { once: true })
+    video.addEventListener('canplay', prime, { once: true })
 
     const setupScroller = () => {
       // 1. Continuous video scrubbing across entire scroll runway
