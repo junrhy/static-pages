@@ -15,7 +15,8 @@ import {
   MapPin,
   ArrowUpRight,
   MessageSquareQuote,
-  HelpCircle
+  HelpCircle,
+  UserCheck
 } from 'lucide-react'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -206,7 +207,16 @@ export function VideoScrollytelling({
           </nav>
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', pointerEvents: 'auto' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', pointerEvents: 'auto' }}>
+          <a
+            href="https://www.armamentodentalsytem.com/portal.html"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="nav-portal-btn"
+          >
+            <UserCheck size={14} /> Patient Portal
+          </a>
+
           <a
             href="https://www.armamentodentalsytem.com/book.html"
             target="_blank"

@@ -399,12 +399,23 @@ export function MobileStoryView({
           </nav>
 
           <a
+            href="https://www.armamentodentalsytem.com/portal.html"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => setMobileMenuOpen(false)}
+            className="nav-portal-btn"
+            style={{ marginTop: '1.25rem', width: '100%', justifyContent: 'center' }}
+          >
+            Patient Portal
+          </a>
+
+          <a
             href="https://www.armamentodentalsytem.com/book.html"
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => setMobileMenuOpen(false)}
             className="nav-cta-btn"
-            style={{ marginTop: '1.5rem', width: '100%', justifyContent: 'center' }}
+            style={{ marginTop: '0.75rem', width: '100%', justifyContent: 'center' }}
           >
             Book Appointment
           </a>

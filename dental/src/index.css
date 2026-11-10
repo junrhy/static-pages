@@ -189,6 +189,34 @@ html, body, #root {
   box-shadow: 0 8px 30px rgba(201, 168, 75, 0.5);
 }
 
+.nav-portal-btn {
+  background: rgba(18, 30, 51, 0.75);
+  color: var(--gold-light);
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 0.82rem;
+  letter-spacing: 0.5px;
+  padding: 0.65rem 1.25rem;
+  border-radius: 9999px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid rgba(201, 168, 75, 0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.nav-portal-btn:hover {
+  background: rgba(201, 168, 75, 0.15);
+  border-color: var(--gold);
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 18px rgba(201, 168, 75, 0.25);
+}
+
 .glass-pill {
   background: rgba(255, 255, 255, 0.04);
   backdrop-filter: blur(12px);
