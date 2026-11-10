@@ -19,6 +19,7 @@ export function MobileStoryView({
   posterSrc = './videos/armamento-dental-studio-poster.jpg'
 }) {
   const [activeIndex, setActiveIndex] = useState(0)
+  const [selectedGalleryImg, setSelectedGalleryImg] = useState('./images/team-group.jpg')
   const [isExpanded, setIsExpanded] = useState(false)
   const [bookingOpen, setBookingOpen] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -26,6 +27,13 @@ export function MobileStoryView({
   const touchStartX = useRef(null)
 
   const current = chapters[activeIndex]
+
+  // Reset selected gallery image whenever chapter changes
+  useEffect(() => {
+    if (current.id === 'gallery') {
+      setSelectedGalleryImg(current.gallery?.[0] || './images/team-group.jpg')
+    }
+  }, [activeIndex])
 
   const chapterTimecodes = [
     { start: 0.0, end: 3.5 },
@@ -109,9 +117,9 @@ export function MobileStoryView({
             />
           </div>
         ) : current.id === 'gallery' ? (
-          <div className="mobile-pan-container">
+          <div className="mobile-pan-container" key={selectedGalleryImg}>
             <img
-              src="./images/team-group.jpg"
+              src={selectedGalleryImg}
               alt="APM Centrale Care Team"
               className="mobile-story-image-wide-pan"
             />
@@ -215,9 +223,19 @@ export function MobileStoryView({
               )}
 
               {current.gallery && (
-                <div className="hud-gallery-strip" style={{ marginTop: '0.75rem' }}>
-                  {current.gallery.slice(1, 5).map((img, i) => (
-                    <img key={i} src={img} alt="Studio gallery thumbnail" />
+                <div className="hud-gallery-strip" style={{ marginTop: '0.85rem' }}>
+                  {current.gallery.map((img, i) => (
+                    <img
+                      key={i}
+                      src={img}
+                      alt={`Studio gallery thumbnail ${i + 1}`}
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        setSelectedGalleryImg(img)
+                      }}
+                      className={selectedGalleryImg === img ? 'thumbnail-active' : ''}
+                      style={{ cursor: 'pointer' }}
+                    />
                   ))}
                 </div>
               )}

@@ -474,18 +474,29 @@ html, body, #root {
 .hud-gallery-strip {
   display: flex;
   gap: 8px;
+  overflow-x: auto;
+  padding: 4px 2px;
+  -webkit-overflow-scrolling: touch;
 }
 .hud-gallery-strip img {
-  width: 52px;
-  height: 40px;
-  border-radius: 6px;
+  width: 58px;
+  height: 44px;
+  border-radius: 8px;
   object-fit: cover;
   border: 1px solid var(--border-subtle);
-  transition: transform 0.2s, border-color 0.2s;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
 }
-.hud-gallery-strip img:hover {
-  transform: scale(1.1);
+.hud-gallery-strip img:hover,
+.hud-gallery-strip img:active {
+  transform: scale(1.08);
   border-color: var(--gold);
+}
+.hud-gallery-strip img.thumbnail-active {
+  border: 2px solid var(--gold);
+  box-shadow: 0 0 12px var(--gold-glow);
+  transform: scale(1.06);
 }
 
 /* Interactive Timeline Indicators on Top of HUD */
