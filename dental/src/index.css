@@ -854,12 +854,25 @@ html, body, #root {
 .mobile-spotlight-hero {
   position: absolute;
   top: 13%;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 0;
+  right: 0;
+  margin: 0 auto;
   width: calc(100% - 2.5rem);
   max-width: 320px;
   z-index: 30;
   pointer-events: auto;
+  animation: mobileFadeIn 0.35s ease forwards;
+}
+
+@keyframes mobileFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .mobile-hero-frame {

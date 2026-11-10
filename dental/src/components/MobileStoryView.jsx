@@ -148,7 +148,7 @@ export function MobileStoryView({
 
       {/* 4. PROMINENT PHOTO HERO ON MOBILE (Doctor or Gallery) */}
       {current.id === 'team' && (
-        <div className="mobile-spotlight-hero animate-fade-in">
+        <div className="mobile-spotlight-hero">
           <div className="mobile-hero-frame">
             <img src="./images/dr-aldrine.jpg" alt="Dr. Aldrine Armamento" />
             <div className="spotlight-gold-badge">
@@ -159,7 +159,7 @@ export function MobileStoryView({
       )}
 
       {current.id === 'gallery' && (
-        <div className="mobile-spotlight-hero animate-fade-in">
+        <div className="mobile-spotlight-hero">
           <div className="mobile-gallery-card">
             <img src="./images/team-group.jpg" alt="Care Team Group" />
             <div className="mobile-gallery-badge">
