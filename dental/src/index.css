@@ -142,18 +142,27 @@ html, body, #root {
 }
 
 .nav-pill {
-  color: var(--text-muted);
+  color: var(--gold-light);
   text-decoration: none;
   font-size: 0.85rem;
   font-weight: 500;
   padding: 0.45rem 1rem;
   border-radius: 9999px;
   transition: all 0.25s ease;
+  opacity: 0.85;
 }
 
-.nav-pill:hover, .nav-pill.active {
+.nav-pill:hover {
   color: #fff;
-  background: rgba(201, 168, 75, 0.16);
+  opacity: 1;
+  background: rgba(201, 168, 75, 0.2);
+}
+
+.nav-pill.active {
+  color: #fff;
+  opacity: 1;
+  background: rgba(201, 168, 75, 0.3);
+  box-shadow: 0 0 12px rgba(201, 168, 75, 0.4);
 }
 
 .nav-cta-btn {
@@ -246,17 +255,21 @@ html, body, #root {
 }
 
 .mobile-links a {
-  color: var(--text-muted);
+  color: var(--gold-light);
   text-decoration: none;
   font-family: var(--font-serif);
   font-size: 1.25rem;
   font-weight: 600;
   letter-spacing: 1px;
-  transition: color 0.2s;
+  transition: all 0.2s ease;
+  opacity: 0.9;
 }
 
-.mobile-links a:hover {
-  color: var(--gold);
+.mobile-links a:hover,
+.mobile-links a.active {
+  color: #fff;
+  opacity: 1;
+  text-shadow: 0 0 10px rgba(232, 212, 139, 0.6);
 }
 
 /* ==================== VIDEO SCROLLYTELLING CONTAINER ==================== */

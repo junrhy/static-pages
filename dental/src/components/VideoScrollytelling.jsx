@@ -194,7 +194,7 @@ export function VideoScrollytelling({
                 setServicesModalOpen(true)
               }}
               className="nav-pill"
-              style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: '#E8D48B' }}
+              style={{ background: 'transparent', border: 'none', cursor: 'pointer' }}
             >
               Services
             </button>
@@ -204,7 +204,7 @@ export function VideoScrollytelling({
                 setServicesModalOpen(true)
               }}
               className="nav-pill"
-              style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: '#E8D48B' }}
+              style={{ background: 'transparent', border: 'none', cursor: 'pointer' }}
             >
               Reviews
             </button>
@@ -214,7 +214,7 @@ export function VideoScrollytelling({
                 setServicesModalOpen(true)
               }}
               className="nav-pill"
-              style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: '#E8D48B' }}
+              style={{ background: 'transparent', border: 'none', cursor: 'pointer' }}
             >
               FAQ
             </button>
