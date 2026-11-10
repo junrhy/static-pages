@@ -43,12 +43,12 @@ jobs:
         working-directory: ./rily-architects-3d
         run: npm run build
 
-      - name: Install Dependencies (Armamento Dental 3D)
-        working-directory: ./armamento-dental-3d
+      - name: Install Dependencies (Dental 3D)
+        working-directory: ./dental
         run: npm ci
 
-      - name: Build Project (Armamento Dental 3D)
-        working-directory: ./armamento-dental-3d
+      - name: Build Project (Dental 3D)
+        working-directory: ./dental
         run: npm run build
 
       - name: Setup Pages
@@ -59,12 +59,12 @@ jobs:
         run: |
           mkdir -p _site
           # Copy all static directories into _site, excluding git, github configs, and node/build sources
-          rsync -av --exclude='.git' --exclude='.github' --exclude='_site' --exclude='rily-architects-3d' --exclude='armamento-dental-3d' ./ _site/
+          rsync -av --exclude='.git' --exclude='.github' --exclude='_site' --exclude='rily-architects-3d' --exclude='dental' ./ _site/
           # Copy built dists
           mkdir -p _site/rily-architects-3d
           cp -R rily-architects-3d/dist/. _site/rily-architects-3d/
-          mkdir -p _site/armamento-dental-3d
-          cp -R armamento-dental-3d/dist/. _site/armamento-dental-3d/
+          mkdir -p _site/dental
+          cp -R dental/dist/. _site/dental/
           # Add .nojekyll so files/folders starting with underscores or special names are preserved
           touch _site/.nojekyll
 
