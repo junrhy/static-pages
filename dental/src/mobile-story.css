@@ -42,79 +42,148 @@
   padding: 0 1.5rem 10rem 1.5rem;
 }
 
-.mobile-branding-center {
+/* Official Armamento Hologram Tooth Hero from Website */
+.hero-holo {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
-  animation: heroBrandPop 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-@keyframes heroBrandPop {
-  0% {
-    opacity: 0;
-    transform: scale(0.92) translateY(10px);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
-}
-
-.hero-emblem-badge {
-  width: 90px;
-  height: 90px;
-  border-radius: 24px;
-  background: rgba(18, 30, 51, 0.85);
-  border: 1.5px solid var(--border-glass);
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7), 0 0 35px var(--gold-glow);
-  display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 1.25rem;
+  text-align: center;
+  position: relative;
+  width: 100%;
+  transform: scale(0.85);
+  transform-origin: center center;
 }
 
-.hero-logo-emblem {
-  width: 58px;
-  height: 58px;
-  filter: drop-shadow(0 4px 12px rgba(201, 168, 75, 0.45));
+.hero-holo::before {
+  content: "";
+  position: absolute;
+  inset: -8% -12%;
+  background: radial-gradient(ellipse at 50% 55%, rgba(201, 168, 75, 0.22), transparent 65%);
+  pointer-events: none;
 }
 
-.hero-brand-typography {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 3px;
+.holo-stage {
+  position: relative;
+  width: min(320px, 86vw);
+  height: 380px;
+  margin: 0 auto;
+  perspective: 900px;
 }
 
-.hero-title-main {
+.holo-tooth {
+  position: absolute;
+  inset: 0 0 70px;
+  transform-style: preserve-3d;
+  animation: holoSpin 5s ease-in-out infinite alternate;
+}
+
+.holo-tooth svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  transform: translateZ(var(--z));
+  fill: rgba(232, 212, 139, 0.05);
+  stroke: var(--gold-light);
+  stroke-width: 1.4;
+  stroke-linejoin: round;
+  opacity: var(--o);
+  filter: drop-shadow(0 0 4px rgba(232, 212, 139, 0.95));
+}
+
+.holo-tooth svg.mk {
+  inset: 0 18px 92px;
+  width: calc(100% - 36px);
+  height: calc(100% - 92px);
+}
+
+.holo-tooth svg.wm {
+  inset: auto 0 4px 0;
+  height: 78px;
+  width: 100%;
+  transform: none;
+  fill: var(--gold-light);
+  stroke: none;
+  opacity: 0.95;
+  filter: drop-shadow(0 0 6px rgba(232, 212, 139, 0.9));
+}
+
+.holo-beam {
+  position: absolute;
+  left: 50%;
+  bottom: 34px;
+  width: 240px;
+  height: 320px;
+  transform: translateX(-50%);
+  background: linear-gradient(to top, rgba(232, 212, 139, 0.28), transparent);
+  clip-path: polygon(18% 100%, 82% 100%, 100% 0, 0 0);
+  animation: holoFlick 4s steps(1) infinite;
+}
+
+.holo-base {
+  position: absolute;
+  left: 50%;
+  bottom: 6px;
+  width: 240px;
+  height: 64px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  border: 2px solid var(--gold);
+  box-shadow: 0 0 18px rgba(201, 168, 75, 0.7), inset 0 0 18px rgba(201, 168, 75, 0.5);
+}
+
+.holo-base::after {
+  content: "";
+  position: absolute;
+  inset: 12px 30px;
+  border-radius: 50%;
+  border: 1px solid var(--gold-light);
+  animation: holoPulse 2.4s ease-out infinite;
+}
+
+.holo-scan {
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  height: 2px;
+  top: 8%;
+  background: linear-gradient(90deg, transparent, #fff, transparent);
+  box-shadow: 0 0 12px var(--gold-light);
+  animation: holoScan 3.2s ease-in-out infinite;
+}
+
+.hero-holo .holo-caption {
+  position: relative;
+  margin: 10px 0 0;
   font-family: var(--font-serif);
-  font-size: 2.1rem;
-  font-weight: 700;
-  letter-spacing: 4px;
-  background: var(--gold-gradient);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  line-height: 1.1;
-  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-}
-
-.hero-title-sub {
-  font-family: var(--font-serif);
-  font-size: 0.88rem;
-  font-weight: 600;
-  letter-spacing: 4px;
   color: var(--gold-light);
-  margin-top: 2px;
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
 }
 
-.hero-title-location {
-  font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 2.5px;
-  color: var(--text-muted);
-  opacity: 0.75;
-  margin-top: 6px;
+@keyframes holoSpin {
+  from { transform: rotateY(-38deg); }
+  to { transform: rotateY(38deg); }
+}
+
+@keyframes holoScan {
+  0%, 100% { top: 6%; opacity: 0; }
+  15%, 85% { opacity: 1; }
+  50% { top: 78%; }
+}
+
+@keyframes holoPulse {
+  from { transform: scale(0.5); opacity: 1; }
+  to { transform: scale(1.25); opacity: 0; }
+}
+
+@keyframes holoFlick {
+  0%, 100% { opacity: 1; }
+  46% { opacity: 0.75; }
+  48% { opacity: 1; }
+  90% { opacity: 0.85; }
 }
 
 .mobile-pan-container {

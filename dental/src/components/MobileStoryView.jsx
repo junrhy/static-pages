@@ -13,6 +13,8 @@ import {
 } from 'lucide-react'
 import { BookingModal } from './BookingModal'
 
+import { HoloToothHero } from './HoloToothHero'
+
 export function MobileStoryView({
   chapters,
   videoSrc = './videos/armamento-dental-studio-video.mp4',
@@ -106,34 +108,11 @@ export function MobileStoryView({
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
     >
-      {/* 1. Fullscreen Background Media Screen (Video OR Cinematic Ken Burns Pan/Zoom Photo) */}
+      {/* 1. Fullscreen Background Media Screen */}
       <div className="mobile-video-screen">
         {current.id === 'intro' ? (
           <div className="mobile-hero-branding-screen">
-            <div className="mobile-branding-center">
-              {/* Separate Floating Gold Emblem Logo */}
-              <div className="hero-emblem-badge">
-                <svg aria-hidden="true" className="hero-logo-emblem" fill="none" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                  <defs>
-                    <linearGradient id="heroGoldGrad" x1="0%" x2="100%" y1="0%" y2="100%">
-                      <stop offset="0%" stopColor="#E8D48B" />
-                      <stop offset="45%" stopColor="#C9A84B" />
-                      <stop offset="100%" stopColor="#A88B2E" />
-                    </linearGradient>
-                  </defs>
-                  <path d="M50 6 L90 50 L50 94 L10 50 Z" fill="none" stroke="url(#heroGoldGrad)" strokeLinejoin="round" strokeWidth="5.5" />
-                  <path d="M50 26 L70 70 H58.5 L54 58 H46 L41.5 70 H30 L50 26 Z" fill="url(#heroGoldGrad)" />
-                  <path d="M46 50 H54 L50 39 Z" fill="#0B1426" />
-                </svg>
-              </div>
-
-              {/* Separate Gold Foil Brand Name Typography */}
-              <div className="hero-brand-typography">
-                <div className="hero-title-main">ARMAMENTO</div>
-                <div className="hero-title-sub">DENTAL STUDIO</div>
-                <div className="hero-title-location">APM CENTRALE • CEBU CITY</div>
-              </div>
-            </div>
+            <HoloToothHero />
           </div>
         ) : current.id === 'team' ? (
           <div className="mobile-pan-container">
