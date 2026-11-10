@@ -98,20 +98,24 @@ export function MobileStoryView({
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
     >
-      {/* 1. Fullscreen Background Media Screen (Video OR Fullscreen Story Photo) */}
+      {/* 1. Fullscreen Background Media Screen (Video OR Cinematic Ken Burns Pan/Zoom Photo) */}
       <div className="mobile-video-screen">
         {current.id === 'team' ? (
-          <img
-            src="./images/dr-aldrine.jpg"
-            alt="Dr. Aldrine Armamento"
-            className="mobile-story-image-bg"
-          />
+          <div className="mobile-pan-container">
+            <img
+              src="./images/dr-aldrine.jpg"
+              alt="Dr. Aldrine Armamento"
+              className="mobile-story-image-portrait"
+            />
+          </div>
         ) : current.id === 'gallery' ? (
-          <img
-            src="./images/team-group.jpg"
-            alt="APM Centrale Care Team"
-            className="mobile-story-image-bg"
-          />
+          <div className="mobile-pan-container">
+            <img
+              src="./images/team-group.jpg"
+              alt="APM Centrale Care Team"
+              className="mobile-story-image-wide-pan"
+            />
+          </div>
         ) : (
           <video
             ref={videoRef}
