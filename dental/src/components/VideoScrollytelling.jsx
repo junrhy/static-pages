@@ -182,6 +182,16 @@ export function VideoScrollytelling({
               .filter((ch) => ch.id !== 'location')
               .map((ch) => {
                 const idx = chapters.findIndex((c) => c.id === ch.id)
+                let label = ch.title.split('.')[0]
+                if (ch.id === 'intro') label = 'Precision Dentistry'
+                if (ch.id === 'team') label = 'Meet Dr'
+                if (ch.id === 'services') label = 'Services'
+                if (ch.id === 'implants') label = 'Implants & Surgery'
+                if (ch.id === 'cosmetic') label = 'Cosmetics'
+                if (ch.id === 'gallery') label = 'Studio Tour'
+                if (ch.id === 'reviews') label = 'Reviews'
+                if (ch.id === 'faq') label = 'FAQ'
+
                 return (
                   <button
                     key={ch.id}
@@ -189,43 +199,10 @@ export function VideoScrollytelling({
                     className={`nav-pill ${activeChapterIndex === idx ? 'active' : ''}`}
                     style={{ background: 'transparent', border: 'none', cursor: 'pointer' }}
                   >
-                    {ch.title
-                      .split('.')[0]
-                      .replace('Inside The Studio Experience', 'Studio Tour')
-                      .replace('Porcelain Veneers & Laser Whitening', 'Cosmetics')}
+                    {label}
                   </button>
                 )
               })}
-            <button
-              onClick={() => {
-                setServicesModalTab('services')
-                setServicesModalOpen(true)
-              }}
-              className="nav-pill"
-              style={{ background: 'transparent', border: 'none', cursor: 'pointer' }}
-            >
-              Services
-            </button>
-            <button
-              onClick={() => {
-                setServicesModalTab('reviews')
-                setServicesModalOpen(true)
-              }}
-              className="nav-pill"
-              style={{ background: 'transparent', border: 'none', cursor: 'pointer' }}
-            >
-              Reviews
-            </button>
-            <button
-              onClick={() => {
-                setServicesModalTab('faqs')
-                setServicesModalOpen(true)
-              }}
-              className="nav-pill"
-              style={{ background: 'transparent', border: 'none', cursor: 'pointer' }}
-            >
-              FAQ
-            </button>
           </nav>
         </div>
 
@@ -327,6 +304,70 @@ export function VideoScrollytelling({
                     ))}
                   </div>
                 )}
+
+                {/* Chapter: Services Overview inside HUD */}
+                {currentChapter.isServicesChapter && (
+                  <div style={{ marginTop: '0.85rem' }}>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '0.6rem' }}>
+                      {currentChapter.servicesList?.map((s) => (
+                        <div
+                          key={s.id}
+                          style={{
+                            background: 'rgba(255, 255, 255, 0.04)',
+                            border: '1px solid rgba(201, 168, 75, 0.25)',
+                            borderRadius: '10px',
+                            padding: '0.6rem 0.8rem'
+                          }}
+                        >
+                          <div style={{ color: '#E8D48B', fontWeight: 600, fontSize: '0.82rem' }}>{s.title}</div>
+                          <div style={{ color: '#94a3b8', fontSize: '0.72rem', marginTop: '2px' }}>{s.desc}</div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Chapter: Reviews inside HUD */}
+                {currentChapter.isReviewsChapter && (
+                  <div style={{ marginTop: '0.85rem', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '0.75rem' }}>
+                    {currentChapter.reviewsList?.map((r, i) => (
+                      <div
+                        key={i}
+                        style={{
+                          background: 'rgba(255, 255, 255, 0.04)',
+                          border: '1px solid rgba(201, 168, 75, 0.25)',
+                          borderRadius: '10px',
+                          padding: '0.75rem'
+                        }}
+                      >
+                        <div style={{ color: '#E8D48B', fontSize: '0.8rem' }}>★★★★★</div>
+                        <div style={{ color: '#cbd5e1', fontSize: '0.76rem', fontStyle: 'italic', margin: '4px 0' }}>"{r.quote}"</div>
+                        <div style={{ color: '#fff', fontSize: '0.74rem', fontWeight: 600 }}>{r.name}</div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {/* Chapter: FAQ inside HUD */}
+                {currentChapter.isFaqChapter && (
+                  <div style={{ marginTop: '0.85rem', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '0.6rem' }}>
+                    {currentChapter.faqList?.map((f, i) => (
+                      <div
+                        key={i}
+                        style={{
+                          background: 'rgba(255, 255, 255, 0.04)',
+                          border: '1px solid rgba(201, 168, 75, 0.25)',
+                          borderRadius: '10px',
+                          padding: '0.65rem 0.8rem'
+                        }}
+                      >
+                        <div style={{ color: '#E8D48B', fontSize: '0.8rem', fontWeight: 600 }}>{f.q}</div>
+                        <div style={{ color: '#cbd5e1', fontSize: '0.74rem', marginTop: '3px' }}>{f.a}</div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
                 {currentChapter.gallery && (
                   <div style={{ marginTop: '0.85rem' }}>
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '6px' }}>

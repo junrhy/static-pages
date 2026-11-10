@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { VideoScrollytelling } from './components/VideoScrollytelling'
 import { MobileStoryView } from './components/MobileStoryView'
+import { SITE_DATA } from './data/siteData'
 
 const CHAPTERS = [
   {
@@ -20,8 +21,17 @@ const CHAPTERS = [
     doctorImg: './images/dr-aldrine.jpg'
   },
   {
+    id: 'services',
+    badge: '03 · CLINICAL CARE',
+    title: 'Comprehensive Dental Services',
+    sub: 'From oral surgery to cosmetic makeovers, specialized care tailored to your unique smile.',
+    desc: 'We offer full-spectrum modern dentistry with advanced diagnostics, gentle pain-free anesthesia techniques, and personalized recovery roadmaps.',
+    isServicesChapter: true,
+    servicesList: SITE_DATA.services
+  },
+  {
     id: 'implants',
-    badge: '03 · SURGICAL MASTERY',
+    badge: '04 · SURGICAL MASTERY',
     title: 'Dental Implants & Oral Surgery',
     sub: 'Permanent titanium teeth replacements, wisdom tooth extractions & bone regeneration.',
     desc: 'Restore original chewing strength and natural smile contours with biocompatible titanium implants designed for lifetime structural integrity.',
@@ -29,7 +39,7 @@ const CHAPTERS = [
   },
   {
     id: 'cosmetic',
-    badge: '04 · SMILE DESIGN',
+    badge: '05 · SMILE DESIGN',
     title: 'Porcelain Veneers & Laser Whitening',
     sub: 'Artistic cosmetic makeovers designed to elevate your personal confidence.',
     desc: 'From custom micro-thin E-Max ceramic veneers to in-office laser whitening, we craft naturally radiant smiles tailored to your unique facial geometry.',
@@ -37,7 +47,7 @@ const CHAPTERS = [
   },
   {
     id: 'gallery',
-    badge: '05 · STUDIO ATMOSPHERE',
+    badge: '06 · STUDIO ATMOSPHERE',
     title: 'Inside The Studio Experience',
     sub: 'A peek into our modern, clean, and welcoming clinical environment at APM Centrale.',
     desc: 'See our dedicated dental team in action—providing thoughtful, patient-first care in an atmosphere designed to remove clinic anxiety.',
@@ -51,16 +61,22 @@ const CHAPTERS = [
     ]
   },
   {
-    id: 'location',
-    badge: '06 · VISIT US',
-    title: 'Visit Us at APM Centrale',
-    sub: '2nd Floor, APM Centrale, A. Soriano Ave, Mabolo (Directly across SM City Cebu).',
-    desc: 'Easily accessible with secure mall parking, direct Grab drop-off, and elevator access. Open Monday to Saturday from 9:00 AM to 8:00 PM.',
-    contact: {
-      phone: '+63 945 599 7475',
-      landline: '(032) 256-0878',
-      hours: 'Mon–Sat: 9:00 AM – 8:00 PM'
-    }
+    id: 'reviews',
+    badge: '07 · PATIENT STORIES',
+    title: 'Real Google Patient Reviews (5.0★)',
+    sub: 'Hear directly from patients who trusted Armamento Dental Studio with their smiles.',
+    desc: 'Rated 5.0 stars on Google Maps. Read real stories of painless wisdom tooth extractions, friendly care teams, and affordable excellence.',
+    isReviewsChapter: true,
+    reviewsList: SITE_DATA.reviews
+  },
+  {
+    id: 'faq',
+    badge: '08 · QUESTIONS ANSWERED',
+    title: 'Frequently Asked Questions',
+    sub: 'Quick, transparent answers on appointments, pain management, implants, and HMOs.',
+    desc: 'Everything you need to know before visiting our dental studio at APM Centrale.',
+    isFaqChapter: true,
+    faqList: SITE_DATA.faqs
   }
 ]
 

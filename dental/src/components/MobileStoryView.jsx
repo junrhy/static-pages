@@ -46,7 +46,9 @@ export function MobileStoryView({
     { start: 7.2, end: 11.5 },
     { start: 11.5, end: 15.5 },
     { start: 15.5, end: 19.5 },
-    { start: 19.5, end: 23.0 }
+    { start: 19.5, end: 23.0 },
+    { start: 23.0, end: 27.0 },
+    { start: 27.0, end: 31.0 }
   ]
 
   useEffect(() => {
@@ -226,6 +228,67 @@ export function MobileStoryView({
                     <div key={i} className="mobile-highlight-item">
                       <ShieldCheck size={14} color="#C9A84B" />
                       <span>{h}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {/* Mobile Services List */}
+              {current.isServicesChapter && (
+                <div style={{ marginTop: '0.75rem', display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                  {current.servicesList?.map((s) => (
+                    <div
+                      key={s.id}
+                      style={{
+                        background: 'rgba(255, 255, 255, 0.05)',
+                        border: '1px solid rgba(201, 168, 75, 0.25)',
+                        borderRadius: '8px',
+                        padding: '0.5rem 0.75rem'
+                      }}
+                    >
+                      <div style={{ color: '#E8D48B', fontWeight: 600, fontSize: '0.8rem' }}>{s.title}</div>
+                      <div style={{ color: '#cbd5e1', fontSize: '0.72rem' }}>{s.desc}</div>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {/* Mobile Reviews List */}
+              {current.isReviewsChapter && (
+                <div style={{ marginTop: '0.75rem', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                  {current.reviewsList?.map((r, i) => (
+                    <div
+                      key={i}
+                      style={{
+                        background: 'rgba(255, 255, 255, 0.05)',
+                        border: '1px solid rgba(201, 168, 75, 0.25)',
+                        borderRadius: '8px',
+                        padding: '0.65rem'
+                      }}
+                    >
+                      <div style={{ color: '#E8D48B', fontSize: '0.78rem' }}>★★★★★</div>
+                      <div style={{ color: '#e2e8f0', fontSize: '0.74rem', fontStyle: 'italic', margin: '3px 0' }}>"{r.quote}"</div>
+                      <div style={{ color: '#fff', fontSize: '0.72rem', fontWeight: 600 }}>{r.name}</div>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {/* Mobile FAQ List */}
+              {current.isFaqChapter && (
+                <div style={{ marginTop: '0.75rem', display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                  {current.faqList?.map((f, i) => (
+                    <div
+                      key={i}
+                      style={{
+                        background: 'rgba(255, 255, 255, 0.05)',
+                        border: '1px solid rgba(201, 168, 75, 0.25)',
+                        borderRadius: '8px',
+                        padding: '0.5rem 0.75rem'
+                      }}
+                    >
+                      <div style={{ color: '#E8D48B', fontSize: '0.78rem', fontWeight: 600 }}>{f.q}</div>
+                      <div style={{ color: '#cbd5e1', fontSize: '0.72rem', marginTop: '2px' }}>{f.a}</div>
                     </div>
                   ))}
                 </div>
