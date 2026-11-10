@@ -25,6 +25,7 @@ export function VideoScrollytelling({
   const containerRef = useRef(null)
   const videoRef = useRef(null)
   const [activeChapterIndex, setActiveChapterIndex] = useState(0)
+  const [scrollProgress, setScrollProgress] = useState(0)
   const [isExpanded, setIsExpanded] = useState(false)
   const [bookingOpen, setBookingOpen] = useState(false)
   const [activeGalleryBg, setActiveGalleryBg] = useState(null)
@@ -47,8 +48,9 @@ export function VideoScrollytelling({
         trigger: container,
         start: 'top top',
         end: 'bottom bottom',
-        scrub: 1.5,
+        scrub: 1.2,
         onUpdate: (self) => {
+          setScrollProgress(self.progress)
           const video = videoRef.current
           if (video && video.duration && !isNaN(video.duration)) {
             video.currentTime = self.progress * video.duration
@@ -85,14 +87,18 @@ export function VideoScrollytelling({
     setActiveChapterIndex(index)
     const totalHeight = containerRef.current.scrollHeight - window.innerHeight
     const targetScroll = (index / (chapters.length - 1)) * totalHeight
+    setScrollProgress(index / (chapters.length - 1))
     window.scrollTo({ top: targetScroll, behavior: 'smooth' })
   }
+
+  // Fade poster out immediately once the user starts scrolling (> 0.01 progress)
+  const isPosterActive = scrollProgress < 0.01 && activeChapterIndex === 0 && !activeGalleryBg
 
   return (
     <div ref={containerRef} className="video-scrolly-container">
       {/* 1. Fullscreen Background Media Viewport */}
       <div className="fixed-video-viewport">
-        {/* Poster image visible on chapter 0 */}
+        {/* Poster image visible on initial landing, fades smoothly to video upon scrolling */}
         <img
           src="./videos/armamento-dental-studio-poster.jpg"
           alt="Armamento Dental Studio"
@@ -100,9 +106,9 @@ export function VideoScrollytelling({
           style={{
             position: 'absolute',
             inset: 0,
-            opacity: activeChapterIndex === 0 && !activeGalleryBg ? 1 : 0,
+            opacity: isPosterActive ? 1 : 0,
             pointerEvents: 'none',
-            transition: 'opacity 0.6s ease'
+            transition: 'opacity 0.4s ease'
           }}
         />
 
@@ -137,8 +143,8 @@ export function VideoScrollytelling({
           preload="auto"
           className="scrolly-video-element"
           style={{
-            opacity: (activeChapterIndex === 0 || activeGalleryBg) ? 0 : 1,
-            transition: 'opacity 0.6s ease'
+            opacity: (isPosterActive || activeGalleryBg) ? 0 : 1,
+            transition: 'opacity 0.4s ease'
           }}
         />
         <div className="video-cinema-overlay" />
