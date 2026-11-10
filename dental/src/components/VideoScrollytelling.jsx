@@ -79,21 +79,30 @@ export function VideoScrollytelling({
 
   return (
     <div ref={containerRef} className="video-scrolly-container">
-      {/* 1. Fullscreen Background Video Viewport */}
+      {/* 1. Fullscreen Background Media Viewport */}
       <div className="fixed-video-viewport">
-        <video
-          ref={videoRef}
-          src={videoSrc}
-          poster={posterSrc}
-          playsInline
-          webkit-playsinline="true"
-          disablePictureInPicture
-          disableRemotePlayback
-          muted
-          autoPlay={false}
-          preload="auto"
-          className="scrolly-video-element"
-        />
+        {/* On Chapter 1 (Precision Dentistry / Intro), show the high-definition studio poster */}
+        {activeChapterIndex === 0 ? (
+          <img
+            src="./videos/armamento-dental-studio-poster.jpg"
+            alt="Armamento Dental Studio"
+            className="scrolly-poster-element animate-fade-in"
+          />
+        ) : (
+          <video
+            ref={videoRef}
+            src={videoSrc}
+            poster={posterSrc}
+            playsInline
+            webkit-playsinline="true"
+            disablePictureInPicture
+            disableRemotePlayback
+            muted
+            autoPlay={false}
+            preload="auto"
+            className="scrolly-video-element"
+          />
+        )}
         <div className="video-cinema-overlay" />
       </div>
 
