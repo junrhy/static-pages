@@ -276,19 +276,24 @@ export function MobileStoryView({
       <div className={`mobile-nav-drawer ${mobileMenuOpen ? 'open' : ''}`}>
         <div className="mobile-drawer-content">
           <nav className="mobile-links">
-            {chapters.map((ch, idx) => (
-              <a
-                key={ch.id}
-                href={`#${ch.id}`}
-                onClick={(e) => {
-                  e.preventDefault()
-                  setActiveIndex(idx)
-                  setMobileMenuOpen(false)
-                }}
-              >
-                {ch.title}
-              </a>
-            ))}
+            {chapters
+              .filter((ch) => ch.id !== 'location')
+              .map((ch) => {
+                const idx = chapters.findIndex((c) => c.id === ch.id)
+                return (
+                  <a
+                    key={ch.id}
+                    href={`#${ch.id}`}
+                    onClick={(e) => {
+                      e.preventDefault()
+                      setActiveIndex(idx)
+                      setMobileMenuOpen(false)
+                    }}
+                  >
+                    {ch.title}
+                  </a>
+                )
+              })}
             <div style={{ margin: '1rem 0 0.5rem 0', height: '1px', background: 'rgba(255, 255, 255, 0.1)' }} />
             <a
               href="#services"

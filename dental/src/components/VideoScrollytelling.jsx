@@ -178,16 +178,24 @@ export function VideoScrollytelling({
 
         <div className="nav-center-group">
           <nav className="nav-links">
-            {chapters.map((ch, idx) => (
-              <button
-                key={ch.id}
-                onClick={() => scrollToChapter(idx)}
-                className={`nav-pill ${activeChapterIndex === idx ? 'active' : ''}`}
-                style={{ background: 'transparent', border: 'none', cursor: 'pointer' }}
-              >
-                {ch.title.split('.')[0].replace('Visit Us at ', '').replace('Inside The Studio Experience', 'Studio Tour').replace('Porcelain Veneers & Laser Whitening', 'Cosmetics')}
-              </button>
-            ))}
+            {chapters
+              .filter((ch) => ch.id !== 'location')
+              .map((ch) => {
+                const idx = chapters.findIndex((c) => c.id === ch.id)
+                return (
+                  <button
+                    key={ch.id}
+                    onClick={() => scrollToChapter(idx)}
+                    className={`nav-pill ${activeChapterIndex === idx ? 'active' : ''}`}
+                    style={{ background: 'transparent', border: 'none', cursor: 'pointer' }}
+                  >
+                    {ch.title
+                      .split('.')[0]
+                      .replace('Inside The Studio Experience', 'Studio Tour')
+                      .replace('Porcelain Veneers & Laser Whitening', 'Cosmetics')}
+                  </button>
+                )
+              })}
             <button
               onClick={() => {
                 setServicesModalTab('services')
