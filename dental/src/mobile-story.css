@@ -29,6 +29,15 @@
   display: block;
 }
 
+/* Static full-view poster for Slide 1 (no animation, shows full image instantly) */
+.mobile-story-image-full-poster {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center 30%;
+  display: block;
+}
+
 .mobile-pan-container {
   position: absolute;
   inset: 0;
