@@ -1,12 +1,9 @@
-name: Deploy Ri-Ly Architects 3D to GitHub Pages
+name: Deploy Static Pages to GitHub Pages
 
 on:
   push:
     branches:
       - main
-    paths:
-      - 'rily-architects-3d/**'
-      - '.github/workflows/deploy-rily-3d.yml'
   workflow_dispatch:
 
 permissions:
@@ -49,12 +46,17 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
-      - name: Assemble Site (publish under /rily-architects-3d/)
+      - name: Assemble Site
         working-directory: ${{ github.workspace }}
         run: |
+          mkdir -p _site
+          # Copy all static directories into _site, excluding git, github configs, and the build source
+          rsync -av --exclude='.git' --exclude='.github' --exclude='_site' --exclude='rily-architects-3d' ./ _site/
+          # Copy the built dist for rily-architects-3d
           mkdir -p _site/rily-architects-3d
           cp -R rily-architects-3d/dist/. _site/rily-architects-3d/
-          echo '<!doctype html><meta charset="utf-8"><meta http-equiv="refresh" content="0; url=./rily-architects-3d/"><a href="./rily-architects-3d/">Ri-Ly Architects</a>' > _site/index.html
+          # Add .nojekyll so files/folders starting with underscores or special names are preserved
+          touch _site/.nojekyll
 
       - name: Upload Artifact
         uses: actions/upload-pages-artifact@v3
