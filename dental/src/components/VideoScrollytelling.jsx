@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { BookingModal } from './BookingModal'
+import { ServicesModal } from './ServicesModal'
 import {
   Phone,
   Clock,
@@ -12,7 +13,9 @@ import {
   Award,
   Sparkles,
   MapPin,
-  ArrowUpRight
+  ArrowUpRight,
+  MessageSquareQuote,
+  HelpCircle
 } from 'lucide-react'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -28,6 +31,8 @@ export function VideoScrollytelling({
   const [scrollProgress, setScrollProgress] = useState(0)
   const [isExpanded, setIsExpanded] = useState(false)
   const [bookingOpen, setBookingOpen] = useState(false)
+  const [servicesModalOpen, setServicesModalOpen] = useState(false)
+  const [servicesModalTab, setServicesModalTab] = useState('services')
   const [activeGalleryBg, setActiveGalleryBg] = useState(null)
 
   const currentChapter = chapters[activeChapterIndex]
@@ -183,6 +188,36 @@ export function VideoScrollytelling({
                 {ch.title.split('.')[0].replace('Visit Us at ', '').replace('Inside The Studio Experience', 'Studio Tour').replace('Porcelain Veneers & Laser Whitening', 'Cosmetics')}
               </button>
             ))}
+            <button
+              onClick={() => {
+                setServicesModalTab('services')
+                setServicesModalOpen(true)
+              }}
+              className="nav-pill"
+              style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: '#E8D48B' }}
+            >
+              Services
+            </button>
+            <button
+              onClick={() => {
+                setServicesModalTab('reviews')
+                setServicesModalOpen(true)
+              }}
+              className="nav-pill"
+              style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: '#E8D48B' }}
+            >
+              Reviews
+            </button>
+            <button
+              onClick={() => {
+                setServicesModalTab('faqs')
+                setServicesModalOpen(true)
+              }}
+              className="nav-pill"
+              style={{ background: 'transparent', border: 'none', cursor: 'pointer', color: '#E8D48B' }}
+            >
+              FAQ
+            </button>
           </nav>
         </div>
 
@@ -337,6 +372,13 @@ export function VideoScrollytelling({
       <BookingModal
         isOpen={bookingOpen}
         onClose={() => setBookingOpen(false)}
+      />
+
+      <ServicesModal
+        isOpen={servicesModalOpen}
+        onClose={() => setServicesModalOpen(false)}
+        initialTab={servicesModalTab}
+        onOpenBooking={() => setBookingOpen(true)}
       />
     </div>
   )

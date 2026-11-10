@@ -12,6 +12,7 @@ import {
   Menu
 } from 'lucide-react'
 import { BookingModal } from './BookingModal'
+import { ServicesModal } from './ServicesModal'
 
 import { HoloToothHero } from './HoloToothHero'
 
@@ -25,6 +26,8 @@ export function MobileStoryView({
   const [isExpanded, setIsExpanded] = useState(false)
   const [bookingOpen, setBookingOpen] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [servicesModalOpen, setServicesModalOpen] = useState(false)
+  const [servicesModalTab, setServicesModalTab] = useState('services')
   const videoRef = useRef(null)
   const touchStartX = useRef(null)
 
@@ -286,6 +289,43 @@ export function MobileStoryView({
                 {ch.title}
               </a>
             ))}
+            <div style={{ margin: '1rem 0 0.5rem 0', height: '1px', background: 'rgba(255, 255, 255, 0.1)' }} />
+            <a
+              href="#services"
+              onClick={(e) => {
+                e.preventDefault()
+                setMobileMenuOpen(false)
+                setServicesModalTab('services')
+                setServicesModalOpen(true)
+              }}
+              style={{ color: '#E8D48B' }}
+            >
+              All Dental Services
+            </a>
+            <a
+              href="#reviews"
+              onClick={(e) => {
+                e.preventDefault()
+                setMobileMenuOpen(false)
+                setServicesModalTab('reviews')
+                setServicesModalOpen(true)
+              }}
+              style={{ color: '#E8D48B' }}
+            >
+              Patient Reviews (5.0★)
+            </a>
+            <a
+              href="#faq"
+              onClick={(e) => {
+                e.preventDefault()
+                setMobileMenuOpen(false)
+                setServicesModalTab('faqs')
+                setServicesModalOpen(true)
+              }}
+              style={{ color: '#E8D48B' }}
+            >
+              Frequently Asked Questions
+            </a>
           </nav>
 
           <button
@@ -311,6 +351,13 @@ export function MobileStoryView({
       <BookingModal
         isOpen={bookingOpen}
         onClose={() => setBookingOpen(false)}
+      />
+
+      <ServicesModal
+        isOpen={servicesModalOpen}
+        onClose={() => setServicesModalOpen(false)}
+        initialTab={servicesModalTab}
+        onOpenBooking={() => setBookingOpen(true)}
       />
     </div>
   )
