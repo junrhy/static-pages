@@ -12,16 +12,18 @@
   --navy-mid: #121E33;
   --navy-light: #1A2A45;
   --navy-card: #152238;
-  --navy-glass: rgba(18, 30, 51, 0.85);
+  --navy-glass: rgba(11, 20, 38, 0.88);
+  --navy-hud: rgba(11, 20, 38, 0.92);
 
   --text: #F5F0E6;
   --text-muted: #A8B0C0;
-  --border-glass: rgba(201, 168, 75, 0.22);
+  --border-glass: rgba(201, 168, 75, 0.28);
   --border-subtle: rgba(255, 255, 255, 0.08);
 
   --radius-sm: 8px;
   --radius-md: 14px;
   --radius-lg: 20px;
+  --radius-full: 9999px;
 
   --font-serif: 'Cinzel', Georgia, serif;
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
@@ -72,7 +74,7 @@ html, body, #root {
   justify-content: space-between;
   align-items: center;
   padding: 1.25rem 3.5rem;
-  background: linear-gradient(180deg, rgba(11, 20, 38, 0.95) 0%, rgba(11, 20, 38, 0.4) 70%, transparent 100%);
+  background: linear-gradient(180deg, rgba(11, 20, 38, 0.95) 0%, rgba(11, 20, 38, 0.4) 65%, transparent 100%);
   pointer-events: none;
 }
 
@@ -123,7 +125,7 @@ html, body, #root {
 .nav-center-group {
   display: flex;
   align-items: center;
-  gap: 1.25rem;
+  gap: 1rem;
   pointer-events: auto;
 }
 
@@ -131,7 +133,7 @@ html, body, #root {
   display: flex;
   align-items: center;
   gap: 6px;
-  background: rgba(18, 30, 51, 0.75);
+  background: rgba(18, 30, 51, 0.7);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   padding: 0.35rem 0.75rem;
@@ -149,9 +151,9 @@ html, body, #root {
   transition: all 0.25s ease;
 }
 
-.nav-pill:hover {
+.nav-pill:hover, .nav-pill.active {
   color: #fff;
-  background: rgba(201, 168, 75, 0.15);
+  background: rgba(201, 168, 75, 0.16);
 }
 
 .nav-cta-btn {
@@ -264,7 +266,7 @@ html, body, #root {
   min-height: 700vh;
 }
 
-/* Fixed Fullscreen Background Video Viewport */
+/* Fixed Fullscreen Background Video Viewport (Unobstructed!) */
 .fixed-video-viewport {
   position: fixed;
   top: 0;
@@ -293,175 +295,225 @@ html, body, #root {
   width: 100%;
   height: 100%;
   pointer-events: none;
-  background: radial-gradient(circle at center, transparent 40%, rgba(11, 20, 38, 0.7) 100%),
-              linear-gradient(180deg, rgba(11, 20, 38, 0.88) 0%, transparent 15%, transparent 85%, rgba(11, 20, 38, 0.94) 100%);
+  background: radial-gradient(circle at center, transparent 65%, rgba(11, 20, 38, 0.45) 100%),
+              linear-gradient(180deg, rgba(11, 20, 38, 0.8) 0%, transparent 12%, transparent 80%, rgba(11, 20, 38, 0.95) 100%);
 }
 
-/* Scrolly chapters scrolling over fixed video */
-.scrolly-chapters {
+/* Invisible Trigger Runways for GSAP ScrollTriggers */
+.scrolly-trigger-runway {
   position: relative;
-  z-index: 20;
-  pointer-events: none;
-  padding-top: 35vh;
-  padding-bottom: 45vh;
-}
-
-.story-step {
-  min-height: 160vh;
-  display: flex;
-  align-items: center;
-  padding: 0 6rem;
-}
-
-.step-left {
-  justify-content: flex-start;
-}
-
-.step-right {
-  justify-content: flex-end;
-}
-
-.story-card {
-  pointer-events: auto;
-  max-width: 500px;
   width: 100%;
-  background: var(--navy-glass);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  padding: 2.6rem;
-  border-radius: var(--radius-lg);
-  border: 1px solid var(--border-glass);
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.75), inset 0 1px 0 rgba(232, 212, 139, 0.15);
-  transition: border-color 0.3s ease, transform 0.3s ease;
 }
 
-.story-card:hover {
-  border-color: var(--gold);
+.scrolly-trigger-zone {
+  height: 110vh;
+  position: relative;
 }
 
-.step-tag {
-  display: inline-block;
-  font-family: var(--font-serif);
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  color: var(--gold);
-  text-transform: uppercase;
-  margin-bottom: 0.85rem;
-}
-
-.story-card h2 {
-  font-family: var(--font-serif);
-  font-size: 2.1rem;
-  font-weight: 600;
-  line-height: 1.25;
-  letter-spacing: 0.5px;
-  margin-bottom: 1.15rem;
-  color: #FFFFFF;
-}
-
-.story-card p {
-  color: var(--text-muted);
-  font-size: 0.96rem;
-  line-height: 1.7;
-}
-
-/* Doctor Portrait Card */
-.doctor-profile-card {
+/* ==================== OPTION 1: FLOATING GLASS HUD DOCK ==================== */
+.floating-hud-dock-wrapper {
+  position: fixed;
+  bottom: 2rem;
+  left: 0;
+  width: 100%;
   display: flex;
-  gap: 1.25rem;
-  align-items: center;
-  background: rgba(26, 42, 69, 0.4);
+  justify-content: center;
+  z-index: 60;
+  pointer-events: none;
+  padding: 0 1.5rem;
+}
+
+.floating-hud-dock {
+  pointer-events: auto;
+  width: 100%;
+  max-width: 1140px;
+  background: var(--navy-hud);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
   border: 1px solid var(--border-glass);
-  border-radius: 16px;
-  padding: 1.15rem;
-  margin-bottom: 1.25rem;
-}
-
-.doctor-avatar {
-  width: 82px;
-  height: 82px;
-  border-radius: 14px;
-  object-fit: cover;
-  border: 2px solid var(--gold);
-  box-shadow: 0 0 18px var(--gold-glow);
-  flex-shrink: 0;
-}
-
-/* Feature List */
-.feature-list {
+  border-radius: 24px;
+  padding: 1.15rem 1.75rem;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(232, 212, 139, 0.2);
   display: flex;
   flex-direction: column;
-  gap: 11px;
+  gap: 0.75rem;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.feature-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  font-size: 0.9rem;
-  color: var(--text);
-}
-
-.feature-bullet {
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  background: var(--gold-soft);
-  border: 1px solid var(--gold);
+.hud-dock-main-row {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.hud-dock-left {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.hud-chapter-badge {
+  font-family: var(--font-serif);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--gold-light);
+  background: var(--gold-soft);
+  border: 1px solid var(--gold);
+  border-radius: 9999px;
+  padding: 0.35rem 0.85rem;
+  white-space: nowrap;
   flex-shrink: 0;
+}
+
+.hud-text-group {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.hud-headline {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: #FFFFFF;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.2;
+}
+
+.hud-subline {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   margin-top: 2px;
 }
 
-/* Service cards grid */
-.services-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 0.85rem;
-  margin-top: 1.25rem;
+.hud-dock-right {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-shrink: 0;
 }
 
-.service-card-mini {
+.hud-toggle-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-glass);
+  color: var(--gold-light);
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 0.65rem 1.15rem;
+  border-radius: 9999px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+.hud-toggle-btn:hover {
+  background: rgba(201, 168, 75, 0.15);
+  border-color: var(--gold);
+  color: #fff;
+}
+
+/* Expanded Details Tray (Sliding open within HUD without blocking center video) */
+.hud-expanded-tray {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 1rem;
+  margin-top: 0.25rem;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 2rem;
+  align-items: center;
+  animation: fadeInTray 0.3s ease;
+}
+
+@keyframes fadeInTray {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.hud-expanded-desc {
+  font-size: 0.92rem;
+  color: var(--text);
+  line-height: 1.6;
+}
+
+.hud-extra-items {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+/* Minimal Doctor Mini Profile */
+.doctor-mini-chip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   background: rgba(26, 42, 69, 0.4);
-  border: 1px solid var(--border-subtle);
+  border: 1px solid var(--border-glass);
+  padding: 0.4rem 0.85rem;
   border-radius: 12px;
-  padding: 1rem;
+}
+.doctor-mini-chip img {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--gold);
+}
+
+/* Quick Gallery Strip */
+.hud-gallery-strip {
+  display: flex;
+  gap: 8px;
+}
+.hud-gallery-strip img {
+  width: 52px;
+  height: 40px;
+  border-radius: 6px;
+  object-fit: cover;
+  border: 1px solid var(--border-subtle);
+  transition: transform 0.2s, border-color 0.2s;
+}
+.hud-gallery-strip img:hover {
+  transform: scale(1.1);
+  border-color: var(--gold);
+}
+
+/* Interactive Timeline Indicators on Top of HUD */
+.hud-progress-indicators {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+}
+
+.hud-progress-bar {
+  flex: 1;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 9999px;
+  cursor: pointer;
+  position: relative;
   transition: all 0.25s ease;
 }
-.service-card-mini:hover {
-  background: rgba(201, 168, 75, 0.08);
-  border-color: var(--gold);
+.hud-progress-bar:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+.hud-progress-bar.active {
+  background: var(--gold);
+  box-shadow: 0 0 10px var(--gold-glow);
 }
 
-/* Photo Gallery Grid */
-.photo-gallery-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0.65rem;
-  margin: 1.25rem 0;
-}
-
-.photo-gallery-item {
-  border-radius: 10px;
-  overflow: hidden;
-  height: 85px;
-  border: 1px solid var(--border-subtle);
-  transition: transform 0.25s, border-color 0.25s;
-}
-.photo-gallery-item:hover {
-  transform: scale(1.05);
-  border-color: var(--gold);
-}
-.photo-gallery-item img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* Modal */
+/* ==================== MODAL ==================== */
 .modal-backdrop {
   position: fixed;
   inset: 0;
@@ -517,21 +569,24 @@ html, body, #root {
   .mobile-toggle {
     display: block;
   }
-  .story-step {
-    padding: 0 1.5rem;
-    min-height: 130vh;
+  .floating-hud-dock-wrapper {
+    bottom: 1rem;
+    padding: 0 1rem;
   }
-  .story-card {
-    max-width: 100%;
-    padding: 1.85rem;
+  .floating-hud-dock {
+    padding: 1rem 1.25rem;
   }
-  .story-card h2 {
-    font-size: 1.75rem;
+  .hud-dock-main-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.85rem;
   }
-  .services-grid {
+  .hud-dock-right {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .hud-expanded-tray {
     grid-template-columns: 1fr;
-  }
-  .photo-gallery-grid {
-    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
   }
 }

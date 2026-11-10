@@ -4,18 +4,82 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { BookingModal } from './BookingModal'
 import {
   Sparkles,
-  ShieldCheck,
   Phone,
   Clock,
   MapPin,
-  ArrowUpRight,
+  ChevronUp,
+  ChevronDown,
+  Calendar,
   Menu,
   X,
-  ChevronRight,
-  Calendar
+  ArrowUpRight,
+  ShieldCheck,
+  Award
 } from 'lucide-react'
 
 gsap.registerPlugin(ScrollTrigger)
+
+const CHAPTERS = [
+  {
+    id: 'intro',
+    badge: '01 · WELCOME',
+    title: 'Precision Dentistry. Personalized Care.',
+    sub: 'Your trusted dental sanctuary in Mabolo, Cebu City across SM City Cebu.',
+    desc: 'At Armamento Dental Studio, we blend state-of-the-art clinical techniques and gentle, focused attention to give you an unhurried, comfortable dental experience.',
+    highlights: ['Specialized Implants & Oral Surgery', 'Laser Teeth Whitening', 'Open Mon–Sat: 9AM – 8PM']
+  },
+  {
+    id: 'team',
+    badge: '02 · CLINICAL LEAD',
+    title: 'Meet Dr. Aldrine Armamento',
+    sub: 'Founder & Principal Dentist with 12+ years of surgical and clinical expertise.',
+    desc: 'Dedicated to painless dentistry and clear patient communication. Dr. Aldrine and his team take the time to listen and demystify every treatment before starting.',
+    doctorImg: './images/dr-aldrine.jpg'
+  },
+  {
+    id: 'implants',
+    badge: '03 · SURGICAL MASTERY',
+    title: 'Dental Implants & Oral Surgery',
+    sub: 'Permanent titanium teeth replacements, wisdom tooth extractions & bone regeneration.',
+    desc: 'Restore original chewing strength and natural smile contours with biocompatible titanium implants designed for lifetime structural integrity.',
+    highlights: ['Single & Multi Implants', 'Minimally Invasive Extractions', 'Site Preservation & Grafting']
+  },
+  {
+    id: 'cosmetic',
+    badge: '04 · SMILE DESIGN',
+    title: 'Porcelain Veneers & Laser Whitening',
+    sub: 'Artistic cosmetic makeovers designed to elevate your personal confidence.',
+    desc: 'From custom micro-thin E-Max ceramic veneers to in-office laser whitening, we craft naturally radiant smiles tailored to your unique facial geometry.',
+    highlights: ['Instant In-Office Laser Whitening', 'Ultra-Thin E-Max Veneers', 'Seamless Aesthetic Bonding']
+  },
+  {
+    id: 'gallery',
+    badge: '05 · STUDIO ATMOSPHERE',
+    title: 'Inside The Studio Experience',
+    sub: 'A peek into our modern, clean, and welcoming clinical environment at APM Centrale.',
+    desc: 'See our dedicated dental team in action—providing thoughtful, patient-first care in an atmosphere designed to remove clinic anxiety.',
+    gallery: [
+      './images/team-group.jpg',
+      './images/team-dentists.jpg',
+      './images/team-opening.jpg',
+      './images/team-care.jpg',
+      './images/team-fun.jpg',
+      './images/team-care-portrait.jpg'
+    ]
+  },
+  {
+    id: 'location',
+    badge: '06 · VISIT US',
+    title: 'Visit Us at APM Centrale',
+    sub: '2nd Floor, APM Centrale, A. Soriano Ave, Mabolo (Directly across SM City Cebu).',
+    desc: 'Easily accessible with secure mall parking, direct Grab drop-off, and elevator access. Open Monday to Saturday from 9:00 AM to 8:00 PM.',
+    contact: {
+      phone: '+63 945 599 7475',
+      landline: '(032) 256-0878',
+      hours: 'Mon–Sat: 9:00 AM – 8:00 PM'
+    }
+  }
+]
 
 export function VideoScrollytelling({
   videoSrc = './videos/armamento-dental-studio-video.mp4',
@@ -23,8 +87,12 @@ export function VideoScrollytelling({
 }) {
   const containerRef = useRef(null)
   const videoRef = useRef(null)
+  const [activeChapterIndex, setActiveChapterIndex] = useState(0)
+  const [isExpanded, setIsExpanded] = useState(false)
   const [bookingOpen, setBookingOpen] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+
+  const currentChapter = CHAPTERS[activeChapterIndex]
 
   useEffect(() => {
     const video = videoRef.current
@@ -63,6 +131,7 @@ export function VideoScrollytelling({
     video.addEventListener('loadeddata', prime, { once: true })
 
     const setupScroller = () => {
+      // 1. Continuous video scrubbing across entire scroll runway
       ScrollTrigger.create({
         trigger: container,
         start: 'top top',
@@ -72,28 +141,13 @@ export function VideoScrollytelling({
           if (video.duration && !isNaN(video.duration)) {
             video.currentTime = self.progress * video.duration
           }
+          // Compute chapter based on scroll progress
+          const index = Math.min(
+            Math.floor(self.progress * CHAPTERS.length),
+            CHAPTERS.length - 1
+          )
+          setActiveChapterIndex(index)
         }
-      })
-
-      const cards = container.querySelectorAll('.story-card')
-      cards.forEach((card) => {
-        gsap.fromTo(
-          card,
-          { opacity: 0, y: 45, scale: 0.95 },
-          {
-            opacity: 1,
-            y: 0,
-            scale: 1,
-            duration: 0.85,
-            ease: 'power2.out',
-            scrollTrigger: {
-              trigger: card,
-              start: 'top 82%',
-              end: 'bottom 18%',
-              toggleActions: 'play reverse play reverse'
-            }
-          }
-        )
       })
 
       ScrollTrigger.refresh()
@@ -111,9 +165,15 @@ export function VideoScrollytelling({
     }
   }, [videoSrc])
 
+  const scrollToChapter = (index) => {
+    const totalHeight = containerRef.current.scrollHeight - window.innerHeight
+    const targetScroll = (index / (CHAPTERS.length - 1)) * totalHeight
+    window.scrollTo({ top: targetScroll, behavior: 'smooth' })
+  }
+
   return (
     <div ref={containerRef} className="video-scrolly-container">
-      {/* Fixed Background Video Viewport */}
+      {/* 1. Fullscreen Background Video Viewport (100% unobstructed on big screens) */}
       <div className="fixed-video-viewport">
         <video
           ref={videoRef}
@@ -131,9 +191,9 @@ export function VideoScrollytelling({
         <div className="video-cinema-overlay" />
       </div>
 
-      {/* Global Navbar with Official Armamento SVG Emblem Logo */}
+      {/* 2. Global Top Navbar */}
       <header className="nav-header">
-        <a aria-label="Armamento Dental Studio Home" className="logo" href="#intro">
+        <a aria-label="Armamento Dental Studio Home" className="logo" href="#intro" onClick={(e) => { e.preventDefault(); scrollToChapter(0) }}>
           <svg aria-hidden="true" className="logo-icon" fill="none" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
             <defs>
               <linearGradient id="navGoldGrad" x1="0%" x2="100%" y1="0%" y2="100%">
@@ -154,11 +214,16 @@ export function VideoScrollytelling({
 
         <div className="nav-center-group">
           <nav className="nav-links">
-            <a href="#intro" className="nav-pill">Home</a>
-            <a href="#team" className="nav-pill">About</a>
-            <a href="#implants" className="nav-pill">Services</a>
-            <a href="#gallery" className="nav-pill">Inside The Studio</a>
-            <a href="#location" className="nav-pill">Contact</a>
+            {CHAPTERS.map((ch, idx) => (
+              <button
+                key={ch.id}
+                onClick={() => scrollToChapter(idx)}
+                className={`nav-pill ${activeChapterIndex === idx ? 'active' : ''}`}
+                style={{ background: 'transparent', border: 'none', cursor: 'pointer' }}
+              >
+                {ch.title.split('.')[0].replace('Visit Us at ', '').replace('Inside The Studio Experience', 'Studio Tour').replace('Porcelain Veneers & Laser Whitening', 'Cosmetics')}
+              </button>
+            ))}
           </nav>
         </div>
 
@@ -180,15 +245,23 @@ export function VideoScrollytelling({
         </div>
       </header>
 
-      {/* Mobile Menu Drawer */}
+      {/* Mobile Drawer */}
       <div className={`mobile-nav-drawer ${mobileMenuOpen ? 'open' : ''}`}>
         <div className="mobile-drawer-content">
           <nav className="mobile-links">
-            <a href="#intro" onClick={() => setMobileMenuOpen(false)}>Home</a>
-            <a href="#team" onClick={() => setMobileMenuOpen(false)}>About</a>
-            <a href="#implants" onClick={() => setMobileMenuOpen(false)}>Services</a>
-            <a href="#gallery" onClick={() => setMobileMenuOpen(false)}>Inside The Studio</a>
-            <a href="#location" onClick={() => setMobileMenuOpen(false)}>Contact</a>
+            {CHAPTERS.map((ch, idx) => (
+              <a
+                key={ch.id}
+                href={`#${ch.id}`}
+                onClick={(e) => {
+                  e.preventDefault()
+                  setMobileMenuOpen(false)
+                  scrollToChapter(idx)
+                }}
+              >
+                {ch.title}
+              </a>
+            ))}
           </nav>
 
           <button
@@ -204,248 +277,106 @@ export function VideoScrollytelling({
         </div>
       </div>
 
-      {/* Synchronized Scrollytelling Story Chapters */}
-      <div className="scrolly-chapters">
-        
-        {/* CHAPTER 1: Welcome & Studio Overview */}
-        <section className="story-step step-left" id="intro">
-          <div className="story-card">
-            <span className="step-tag">01 &middot; Precision Dentistry &amp; Care</span>
-            <h2>Precision Dentistry. Personalized Care.</h2>
-            <p>
-              Your trusted dental home in Mabolo, Cebu City. At <strong>Armamento Dental Studio</strong>, we blend modern techniques and gentle, focused attention to give you a truly calm dental experience.
-            </p>
-            <div className="feature-list" style={{ margin: '1.25rem 0' }}>
-              <div className="feature-item">
-                <div className="feature-bullet"><ShieldCheck size={14} color="#C9A84B" /></div>
-                <span>Specialized Dental Implants &amp; Oral Surgery</span>
-              </div>
-              <div className="feature-item">
-                <div className="feature-bullet"><Sparkles size={14} color="#C9A84B" /></div>
-                <span>Aesthetic Veneers &amp; In-Office Laser Whitening</span>
-              </div>
-              <div className="feature-item">
-                <div className="feature-bullet"><Clock size={14} color="#C9A84B" /></div>
-                <span>Mon–Sat: 9:00 AM – 8:00 PM (Across SM City Cebu)</span>
-              </div>
-            </div>
-            <div style={{ marginTop: '1.5rem', display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
-              <button onClick={() => setBookingOpen(true)} className="nav-cta-btn">
-                Schedule Consultation <ChevronRight size={16} />
-              </button>
-              <a href="tel:09455997475" className="glass-pill" style={{ color: '#fff', textDecoration: 'none', padding: '0.65rem 1.25rem', display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '0.85rem' }}>
-                <Phone size={14} color="#C9A84B" /> (032) 256-0878
-              </a>
-            </div>
-          </div>
-        </section>
+      {/* 3. Invisible Scroll Runway for GSAP */}
+      <div className="scrolly-trigger-runway">
+        {CHAPTERS.map((ch) => (
+          <div key={ch.id} className="scrolly-trigger-zone" />
+        ))}
+      </div>
 
-        {/* CHAPTER 2: Meet Dr. Aldrine Armamento */}
-        <section className="story-step step-right" id="team">
-          <div className="story-card">
-            <span className="step-tag">02 &middot; Meet Your Doctor</span>
-            <div className="doctor-profile-card">
-              <img
-                src="./images/dr-aldrine.jpg"
-                alt="Dr. Aldrine Armamento"
-                className="doctor-avatar"
+      {/* 4. OPTION 1: Ultra-Thin Floating Glass HUD Dock (Leaves center video 100% open) */}
+      <div className="floating-hud-dock-wrapper">
+        <div className="floating-hud-dock">
+          
+          {/* Timeline Bar on top */}
+          <div className="hud-progress-indicators">
+            {CHAPTERS.map((ch, idx) => (
+              <div
+                key={ch.id}
+                onClick={() => scrollToChapter(idx)}
+                className={`hud-progress-bar ${activeChapterIndex === idx ? 'active' : ''}`}
+                title={ch.title}
               />
-              <div>
-                <h3 style={{ fontFamily: 'Cinzel, Georgia, serif', fontSize: '1.25rem', fontWeight: 600, color: '#fff' }}>
-                  Dr. Aldrine Armamento
-                </h3>
-                <div style={{ color: '#C9A84B', fontSize: '0.82rem', fontWeight: 600, marginBottom: '4px' }}>
-                  Founder &amp; Principal Dentist
-                </div>
-                <p style={{ color: '#A8B0C0', fontSize: '0.82rem', lineHeight: 1.5 }}>
-                  Dedicated to meticulous clinical care, clear patient education, and painless treatment.
-                </p>
-              </div>
-            </div>
-            <p>
-              "We designed our studio so you never feel rushed or anxious. From routine prophylaxis to complex surgeries, we walk you through every option with total transparency."
-            </p>
-            <div style={{ marginTop: '1.35rem' }}>
-              <button onClick={() => setBookingOpen(true)} className="nav-cta-btn">
-                Book with Dr. Aldrine
-              </button>
-            </div>
+            ))}
           </div>
-        </section>
 
-        {/* CHAPTER 3: Implants & Oral Surgery */}
-        <section className="story-step step-left" id="implants">
-          <div className="story-card">
-            <span className="step-tag">03 &middot; Restorative Surgery</span>
-            <h2>Dental Implants &amp; Oral Surgery</h2>
-            <p>
-              Permanent tooth replacement engineered for strength, biocompatibility, and natural aesthetic harmony.
-            </p>
-            <div className="services-grid">
-              <div className="service-card-mini">
-                <div style={{ color: '#C9A84B', fontWeight: 600, fontSize: '0.9rem', marginBottom: '3px' }}>
-                  Dental Implants
-                </div>
-                <p style={{ color: '#A8B0C0', fontSize: '0.8rem' }}>
-                  Titanium fixtures that integrate with bone to replace missing teeth permanently.
-                </p>
-              </div>
-              <div className="service-card-mini">
-                <div style={{ color: '#C9A84B', fontWeight: 600, fontSize: '0.9rem', marginBottom: '3px' }}>
-                  Wisdom Tooth Removal
-                </div>
-                <p style={{ color: '#A8B0C0', fontSize: '0.8rem' }}>
-                  Safe, gentle extractions of impacted molars with minimal post-op swelling.
-                </p>
-              </div>
-              <div className="service-card-mini">
-                <div style={{ color: '#C9A84B', fontWeight: 600, fontSize: '0.9rem', marginBottom: '3px' }}>
-                  Bone Grafting
-                </div>
-                <p style={{ color: '#A8B0C0', fontSize: '0.8rem' }}>
-                  Site preservation to support solid, long-lasting implant placement.
-                </p>
-              </div>
-              <div className="service-card-mini">
-                <div style={{ color: '#C9A84B', fontWeight: 600, fontSize: '0.9rem', marginBottom: '3px' }}>
-                  Tooth Extractions
-                </div>
-                <p style={{ color: '#A8B0C0', fontSize: '0.8rem' }}>
-                  Careful, trauma-controlled removal when teeth cannot be preserved.
-                </p>
+          {/* Main Low-Profile HUD Row */}
+          <div className="hud-dock-main-row">
+            <div className="hud-dock-left">
+              <span className="hud-chapter-badge">{currentChapter.badge}</span>
+              <div className="hud-text-group">
+                <h2 className="hud-headline">{currentChapter.title}</h2>
+                <p className="hud-subline">{currentChapter.sub}</p>
               </div>
             </div>
-            <div style={{ marginTop: '1.5rem' }}>
-              <button onClick={() => setBookingOpen(true)} className="nav-cta-btn">
-                Inquire About Implants
-              </button>
-            </div>
-          </div>
-        </section>
 
-        {/* CHAPTER 4: Cosmetic Dentistry & Veneers */}
-        <section className="story-step step-right" id="cosmetic">
-          <div className="story-card">
-            <span className="step-tag">04 &middot; Cosmetic Smile Design</span>
-            <h2>Veneers &amp; Teeth Whitening</h2>
-            <p>
-              Transform your smile with artistic precision. We craft individual smile makeovers that bring out your natural beauty.
-            </p>
-            <div className="feature-list" style={{ margin: '1.25rem 0' }}>
-              <div className="feature-item">
-                <div className="feature-bullet"><Sparkles size={14} color="#C9A84B" /></div>
-                <span><strong>In-Office Laser Whitening:</strong> Lift deep staining caused by coffee, tea, and age in just one sitting.</span>
-              </div>
-              <div className="feature-item">
-                <div className="feature-bullet"><Sparkles size={14} color="#C9A84B" /></div>
-                <span><strong>Custom Porcelain Veneers:</strong> Micro-thin ceramic shells crafted to fix gaps, chips, and shape.</span>
-              </div>
-              <div className="feature-item">
-                <div className="feature-bullet"><Sparkles size={14} color="#C9A84B" /></div>
-                <span><strong>Composite Dental Fillings:</strong> Color-matched composite restorations that blend seamlessly.</span>
-              </div>
-            </div>
-            <button onClick={() => setBookingOpen(true)} className="nav-cta-btn">
-              Consult Smile Makeover
-            </button>
-          </div>
-        </section>
-
-        {/* CHAPTER 5: Inside The Studio Photo Gallery */}
-        <section className="story-step step-left" id="gallery">
-          <div className="story-card" style={{ maxWidth: '560px' }}>
-            <span className="step-tag">05 &middot; Clinic Atmosphere</span>
-            <h2>Inside Our Dental Sanctuary</h2>
-            <p>
-              Step inside our calm studio environment at APM Centrale. Meet our team dedicated to making every visit comfortable.
-            </p>
-            <div className="photo-gallery-grid">
-              <div className="photo-gallery-item">
-                <img src="./images/team-group.jpg" alt="Team Group" loading="lazy" />
-              </div>
-              <div className="photo-gallery-item">
-                <img src="./images/team-dentists.jpg" alt="Dentists in White Coats" loading="lazy" />
-              </div>
-              <div className="photo-gallery-item">
-                <img src="./images/team-opening.jpg" alt="Clinic Entrance Opening" loading="lazy" />
-              </div>
-              <div className="photo-gallery-item">
-                <img src="./images/team-care.jpg" alt="Care Team in Scrubs" loading="lazy" />
-              </div>
-              <div className="photo-gallery-item">
-                <img src="./images/team-fun.jpg" alt="Fun Team Moments" loading="lazy" />
-              </div>
-              <div className="photo-gallery-item">
-                <img src="./images/team-care-portrait.jpg" alt="Dr. Aldrine and Team" loading="lazy" />
-              </div>
-            </div>
-            <button onClick={() => setBookingOpen(true)} className="nav-cta-btn">
-              Experience the Studio
-            </button>
-          </div>
-        </section>
-
-        {/* CHAPTER 6: Visit Us & Booking */}
-        <section className="story-step step-right" id="location">
-          <div className="story-card">
-            <span className="step-tag">06 &middot; Studio Location</span>
-            <h2>Visit Us at APM Centrale</h2>
-            <p>
-              Conveniently located directly across SM City Cebu with secure mall parking and taxi/Grab accessibility.
-            </p>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem', background: 'rgba(26, 42, 69, 0.4)', padding: '1.2rem', borderRadius: '16px', border: '1px solid var(--border-glass)', margin: '1.25rem 0' }}>
-              <div style={{ display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
-                <MapPin size={18} color="#C9A84B" style={{ flexShrink: 0, marginTop: '2px' }} />
-                <div>
-                  <div style={{ fontWeight: 600, color: '#fff', fontSize: '0.9rem' }}>Address</div>
-                  <div style={{ color: '#cbd5e1', fontSize: '0.82rem' }}>
-                    2nd Floor, APM Centrale, A. Soriano Ave, Mabolo, Cebu City
-                  </div>
-                  <div style={{ color: '#A8B0C0', fontSize: '0.74rem' }}>(Directly opposite SM City Cebu)</div>
-                </div>
-              </div>
-              <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                <Clock size={18} color="#C9A84B" style={{ flexShrink: 0 }} />
-                <div>
-                  <div style={{ fontWeight: 600, color: '#fff', fontSize: '0.9rem' }}>Clinic Hours</div>
-                  <div style={{ color: '#cbd5e1', fontSize: '0.82rem' }}>Monday – Saturday: 9:00 AM – 8:00 PM (Closed Sundays)</div>
-                </div>
-              </div>
-              <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                <Phone size={18} color="#C9A84B" style={{ flexShrink: 0 }} />
-                <div>
-                  <div style={{ fontWeight: 600, color: '#fff', fontSize: '0.9rem' }}>Contact</div>
-                  <div style={{ color: '#cbd5e1', fontSize: '0.82rem' }}>
-                    <a href="tel:09455997475" style={{ color: '#C9A84B', textDecoration: 'none' }}>+63 945 599 7475</a> • (032) 256-0878
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
-              <button onClick={() => setBookingOpen(true)} className="nav-cta-btn">
-                Reserve Appointment Now
-              </button>
-              <a
-                href="https://www.google.com/maps/search/?api=1&query=APM+Centrale+Mabolo+Cebu+City"
-                target="_blank"
-                rel="noreferrer"
-                className="glass-pill"
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '6px',
-                  color: '#fff',
-                  textDecoration: 'none',
-                  padding: '0.65rem 1.25rem',
-                  fontSize: '0.85rem'
-                }}
+            <div className="hud-dock-right">
+              <button
+                className="hud-toggle-btn"
+                onClick={() => setIsExpanded(!isExpanded)}
+                aria-label="Toggle details"
               >
-                Google Maps <ArrowUpRight size={14} />
-              </a>
+                {isExpanded ? (
+                  <>Less Details <ChevronDown size={14} /></>
+                ) : (
+                  <>More Details <ChevronUp size={14} /></>
+                )}
+              </button>
+
+              <button
+                onClick={() => setBookingOpen(true)}
+                className="nav-cta-btn"
+                style={{ padding: '0.65rem 1.25rem', fontSize: '0.8rem' }}
+              >
+                Book Now
+              </button>
             </div>
           </div>
-        </section>
 
+          {/* Optional Expanding Tray (Kept contained within bottom HUD dock) */}
+          {isExpanded && (
+            <div className="hud-expanded-tray">
+              <div>
+                <p className="hud-expanded-desc">{currentChapter.desc}</p>
+                {currentChapter.highlights && (
+                  <div style={{ display: 'flex', gap: '1rem', marginTop: '0.6rem', flexWrap: 'wrap' }}>
+                    {currentChapter.highlights.map((h, i) => (
+                      <span key={i} style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '0.8rem', color: '#E8D48B' }}>
+                        <ShieldCheck size={13} color="#C9A84B" /> {h}
+                      </span>
+                    ))}
+                  </div>
+                )}
+                {currentChapter.contact && (
+                  <div style={{ display: 'flex', gap: '1.25rem', marginTop: '0.6rem', flexWrap: 'wrap', fontSize: '0.82rem', color: '#cbd5e1' }}>
+                    <span><Phone size={13} color="#C9A84B" style={{ verticalAlign: 'middle', marginRight: '4px' }} />{currentChapter.contact.phone}</span>
+                    <span><Clock size={13} color="#C9A84B" style={{ verticalAlign: 'middle', marginRight: '4px' }} />{currentChapter.contact.hours}</span>
+                  </div>
+                )}
+              </div>
+
+              {/* Extra visual element if available in chapter */}
+              {currentChapter.doctorImg && (
+                <div className="doctor-mini-chip">
+                  <img src={currentChapter.doctorImg} alt="Dr. Aldrine" />
+                  <div>
+                    <div style={{ color: '#fff', fontSize: '0.82rem', fontWeight: 600 }}>Dr. Aldrine Armamento</div>
+                    <div style={{ color: '#C9A84B', fontSize: '0.72rem' }}>Principal Dental Surgeon</div>
+                  </div>
+                </div>
+              )}
+
+              {currentChapter.gallery && (
+                <div className="hud-gallery-strip">
+                  {currentChapter.gallery.slice(0, 4).map((img, i) => (
+                    <img key={i} src={img} alt="Studio gallery thumbnail" />
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+
+        </div>
       </div>
 
       {/* Booking Modal */}
