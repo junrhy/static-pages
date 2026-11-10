@@ -8,9 +8,11 @@ import {
   ChevronUp,
   ChevronDown,
   Calendar,
-  Menu,
-  X,
-  ShieldCheck
+  ShieldCheck,
+  Award,
+  Sparkles,
+  MapPin,
+  ArrowUpRight
 } from 'lucide-react'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -25,7 +27,6 @@ export function VideoScrollytelling({
   const [activeChapterIndex, setActiveChapterIndex] = useState(0)
   const [isExpanded, setIsExpanded] = useState(false)
   const [bookingOpen, setBookingOpen] = useState(false)
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   const currentChapter = chapters[activeChapterIndex]
 
@@ -78,7 +79,7 @@ export function VideoScrollytelling({
 
   return (
     <div ref={containerRef} className="video-scrolly-container">
-      {/* 1. Fullscreen Background Video Viewport (Desktop) */}
+      {/* 1. Fullscreen Background Video Viewport */}
       <div className="fixed-video-viewport">
         <video
           ref={videoRef}
@@ -149,7 +150,55 @@ export function VideoScrollytelling({
         ))}
       </div>
 
-      {/* 4. Desktop Low-Profile Glass HUD Dock */}
+      {/* 4. PROMINENT FLOATING SHOWCASE BADGE (Top-Right / Floating when on Doctor or Gallery) */}
+      {currentChapter.id === 'team' && (
+        <div className="prominent-feature-card doctor-spotlight animate-fade-in">
+          <div className="spotlight-portrait-frame">
+            <img
+              src="./images/dr-aldrine.jpg"
+              alt="Dr. Aldrine Armamento"
+              className="spotlight-img"
+            />
+            <div className="spotlight-gold-badge">
+              <Award size={14} color="#0B1426" /> Principal Surgeon
+            </div>
+          </div>
+          <div className="spotlight-info">
+            <div className="spotlight-title">Dr. Aldrine Armamento</div>
+            <div className="spotlight-role">Founder &amp; Clinical Director</div>
+            <div className="spotlight-tagline">12+ Years of Advanced Implantology &amp; Aesthetic Restorations</div>
+          </div>
+        </div>
+      )}
+
+      {currentChapter.id === 'gallery' && (
+        <div className="prominent-feature-card gallery-spotlight animate-fade-in">
+          <div className="gallery-spotlight-header">
+            <Sparkles size={16} color="#C9A84B" />
+            <span>Studio Opening &amp; Clinical Care Team</span>
+          </div>
+          <div className="prominent-gallery-strip">
+            <div className="prominent-gallery-cell featured">
+              <img src="./images/team-group.jpg" alt="Care Team Group" />
+              <div className="gallery-caption">Our Dental Doctors &amp; Staff</div>
+            </div>
+            <div className="prominent-gallery-cell">
+              <img src="./images/team-dentists.jpg" alt="Dentists in White Coats" />
+              <div className="gallery-caption">Clinical Dentists</div>
+            </div>
+            <div className="prominent-gallery-cell">
+              <img src="./images/team-opening.jpg" alt="Grand Opening Entrance" />
+              <div className="gallery-caption">APM Centrale Studio</div>
+            </div>
+            <div className="prominent-gallery-cell">
+              <img src="./images/team-care.jpg" alt="Care Team in Scrubs" />
+              <div className="gallery-caption">Surgical Care Staff</div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 5. Desktop Low-Profile Glass HUD Dock */}
       <div className="floating-hud-dock-wrapper">
         <div className="floating-hud-dock">
           
@@ -216,24 +265,6 @@ export function VideoScrollytelling({
                   </div>
                 )}
               </div>
-
-              {currentChapter.doctorImg && (
-                <div className="doctor-mini-chip">
-                  <img src={currentChapter.doctorImg} alt="Dr. Aldrine" />
-                  <div>
-                    <div style={{ color: '#fff', fontSize: '0.82rem', fontWeight: 600 }}>Dr. Aldrine Armamento</div>
-                    <div style={{ color: '#C9A84B', fontSize: '0.72rem' }}>Principal Dental Surgeon</div>
-                  </div>
-                </div>
-              )}
-
-              {currentChapter.gallery && (
-                <div className="hud-gallery-strip">
-                  {currentChapter.gallery.slice(0, 4).map((img, i) => (
-                    <img key={i} src={img} alt="Studio gallery thumbnail" />
-                  ))}
-                </div>
-              )}
             </div>
           )}
 

@@ -3,14 +3,12 @@ import {
   Sparkles,
   Phone,
   Clock,
-  MapPin,
-  Calendar,
   ChevronLeft,
   ChevronRight,
   ShieldCheck,
   ChevronDown,
   ChevronUp,
-  X,
+  Award,
   Menu
 } from 'lucide-react'
 import { BookingModal } from './BookingModal'
@@ -29,17 +27,15 @@ export function MobileStoryView({
 
   const current = chapters[activeIndex]
 
-  // Time segment markers for each chapter inside the video
   const chapterTimecodes = [
-    { start: 0.0, end: 3.5 },   // Chapter 1: Overview
-    { start: 3.5, end: 7.2 },   // Chapter 2: Dr. Aldrine
-    { start: 7.2, end: 11.5 },  // Chapter 3: Implants
-    { start: 11.5, end: 15.5 }, // Chapter 4: Cosmetics
-    { start: 15.5, end: 19.5 }, // Chapter 5: Gallery
-    { start: 19.5, end: 23.0 }  // Chapter 6: Location
+    { start: 0.0, end: 3.5 },
+    { start: 3.5, end: 7.2 },
+    { start: 7.2, end: 11.5 },
+    { start: 11.5, end: 15.5 },
+    { start: 15.5, end: 19.5 },
+    { start: 19.5, end: 23.0 }
   ]
 
-  // When chapter changes, jump video to that segment and play
   useEffect(() => {
     const video = videoRef.current
     if (!video) return
@@ -59,7 +55,6 @@ export function MobileStoryView({
     } catch (e) {}
   }, [activeIndex])
 
-  // Loop current segment smoothly or progress
   const handleTimeUpdate = () => {
     const video = videoRef.current
     if (!video) return
@@ -80,7 +75,6 @@ export function MobileStoryView({
     setActiveIndex((prev) => (prev > 0 ? prev - 1 : chapters.length - 1))
   }
 
-  // Swipe detection
   const handleTouchStart = (e) => {
     touchStartX.current = e.touches[0].clientX
   }
@@ -91,9 +85,9 @@ export function MobileStoryView({
     const diff = touchStartX.current - touchEndX
 
     if (diff > 45) {
-      goNext() // Swiped left -> next story
+      goNext()
     } else if (diff < -45) {
-      goPrev() // Swiped right -> prev story
+      goPrev()
     }
     touchStartX.current = null
   }
@@ -120,7 +114,7 @@ export function MobileStoryView({
         <div className="mobile-story-overlay" />
       </div>
 
-      {/* 2. Instagram/TikTok Story Progress Bars at Top */}
+      {/* 2. Instagram Story Progress Bars at Top */}
       <div className="mobile-story-header">
         <div className="story-bars-row">
           {chapters.map((ch, idx) => (
@@ -132,7 +126,6 @@ export function MobileStoryView({
           ))}
         </div>
 
-        {/* Minimal Nav Row */}
         <div className="mobile-top-bar">
           <div className="logo-text">
             <span className="brand" style={{ fontSize: '1rem', letterSpacing: '1px' }}>ARMAMENTO</span>
@@ -149,11 +142,34 @@ export function MobileStoryView({
         </div>
       </div>
 
-      {/* 3. Left/Right Tap Target Zones for Quick Tapping */}
+      {/* 3. Left/Right Tap Target Zones */}
       <div className="story-tap-zone tap-left" onClick={goPrev} />
       <div className="story-tap-zone tap-right" onClick={goNext} />
 
-      {/* 4. Bottom Story Card HUD */}
+      {/* 4. PROMINENT PHOTO HERO ON MOBILE (Doctor or Gallery) */}
+      {current.id === 'team' && (
+        <div className="mobile-spotlight-hero animate-fade-in">
+          <div className="mobile-hero-frame">
+            <img src="./images/dr-aldrine.jpg" alt="Dr. Aldrine Armamento" />
+            <div className="spotlight-gold-badge">
+              <Award size={13} color="#0B1426" /> Dr. Aldrine Armamento
+            </div>
+          </div>
+        </div>
+      )}
+
+      {current.id === 'gallery' && (
+        <div className="mobile-spotlight-hero animate-fade-in">
+          <div className="mobile-gallery-card">
+            <img src="./images/team-group.jpg" alt="Care Team Group" />
+            <div className="mobile-gallery-badge">
+              <Sparkles size={13} color="#0B1426" /> APM Centrale Care Team
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 5. Bottom Story Card HUD */}
       <div className="mobile-story-card-container">
         <div className={`mobile-story-card ${isExpanded ? 'expanded' : ''}`}>
           
@@ -187,7 +203,7 @@ export function MobileStoryView({
             </div>
           </div>
 
-          {/* Expanded Tray Details on Mobile */}
+          {/* Expanded Tray Details */}
           {isExpanded && (
             <div className="mobile-story-tray">
               <p className="mobile-story-desc">{current.desc}</p>
@@ -203,19 +219,9 @@ export function MobileStoryView({
                 </div>
               )}
 
-              {current.doctorImg && (
-                <div className="doctor-mini-chip" style={{ marginTop: '0.75rem' }}>
-                  <img src={current.doctorImg} alt="Dr. Aldrine" />
-                  <div>
-                    <div style={{ color: '#fff', fontSize: '0.85rem', fontWeight: 600 }}>Dr. Aldrine Armamento</div>
-                    <div style={{ color: '#C9A84B', fontSize: '0.74rem' }}>Principal Dental Surgeon</div>
-                  </div>
-                </div>
-              )}
-
               {current.gallery && (
                 <div className="hud-gallery-strip" style={{ marginTop: '0.75rem' }}>
-                  {current.gallery.slice(0, 4).map((img, i) => (
+                  {current.gallery.slice(1, 5).map((img, i) => (
                     <img key={i} src={img} alt="Studio gallery thumbnail" />
                   ))}
                 </div>
@@ -233,7 +239,7 @@ export function MobileStoryView({
         </div>
       </div>
 
-      {/* Navigation arrows hint */}
+      {/* Navigation hints */}
       <div className="story-nav-hints">
         <button className="story-arrow-btn" onClick={goPrev} aria-label="Previous story">
           <ChevronLeft size={16} color="#E8D48B" />
@@ -271,7 +277,7 @@ export function MobileStoryView({
             className="nav-cta-btn"
             style={{ marginTop: '1.5rem', width: '100%', justifyContent: 'center' }}
           >
-            <Calendar size={16} /> Book Appointment
+            Book Appointment
           </button>
 
           <button
@@ -283,7 +289,6 @@ export function MobileStoryView({
         </div>
       </div>
 
-      {/* Booking Modal */}
       <BookingModal
         isOpen={bookingOpen}
         onClose={() => setBookingOpen(false)}
