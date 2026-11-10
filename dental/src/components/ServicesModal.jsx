@@ -276,10 +276,10 @@ export function ServicesModal({ isOpen, onClose, initialTab = 'services', onOpen
               <div style={{ marginBottom: '1.25rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '10px' }}>
                 <div>
                   <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.3rem', color: '#E8D48B', margin: '0 0 4px 0' }}>
-                    Real Google Patient Reviews
+                    Verified Patient Reviews
                   </h3>
                   <p style={{ color: '#94a3b8', fontSize: '0.85rem', margin: 0 }}>
-                    Verified patient experiences from Armamento Dental Studio at APM Centrale.
+                    Real patient experiences from Armamento Dental Studio at APM Centrale.
                   </p>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '6px', background: 'rgba(201, 168, 75, 0.15)', padding: '6px 14px', borderRadius: '999px', border: '1px solid var(--gold)' }}>
@@ -326,16 +326,7 @@ export function ServicesModal({ isOpen, onClose, initialTab = 'services', onOpen
               </div>
 
               <div style={{ marginTop: '1.25rem', textAlign: 'center', fontSize: '0.82rem', color: '#94a3b8' }}>
-                Read more reviews on{' '}
-                <a
-                  href="https://maps.app.goo.gl/mRj2ayEd6CPRwSL29"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{ color: '#E8D48B', textDecoration: 'underline' }}
-                >
-                  Google Maps
-                </a>{' '}
-                or visit our{' '}
+                Read more reviews or visit our{' '}
                 <a
                   href="https://www.facebook.com/share/1CJP1UctqA/"
                   target="_blank"
@@ -430,3 +421,4 @@ export function ServicesModal({ isOpen, onClose, initialTab = 'services', onOpen
     </div>
   )
 }
+

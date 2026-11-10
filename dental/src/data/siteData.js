@@ -62,19 +62,19 @@ export const SITE_DATA = {
     {
       stars: 5,
       name: "Gael Angel Nerves",
-      source: "Google Review · Wisdom tooth removal",
+      source: "Verified Patient · Wisdom tooth removal",
       quote: "Highly recommend! I’m not originally from Cebu and it was hard for me to find a good and reliable dentist clinic until I found this one. So happy that the staffs were friendly and approachable, also the services are affordable. … I just had my wisdom tooth removed and it was pain free. A numbing spray was given before the injection of anesthesia and I didn’t feel any pain during the removal."
     },
     {
       stars: 5,
       name: "Stephen Keierleber",
-      source: "Google Review · Dental cleaning",
+      source: "Verified Patient · Dental cleaning",
       quote: "I was very happy with Dr. Michael. He provided a great cleaning and a great analysis of my teeth. I highly recommend! Competitive prices."
     },
     {
       stars: 5,
       name: "Dong Ran",
-      source: "Google Review · Studio care",
+      source: "Verified Patient · Studio care",
       quote: "Excellent service, warm experienced team dedicated to making every visit comfortable."
     }
   ],
@@ -106,3 +106,4 @@ export const SITE_DATA = {
     }
   ]
 }
+

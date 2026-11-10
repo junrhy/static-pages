@@ -63,9 +63,9 @@ const CHAPTERS = [
   {
     id: 'reviews',
     badge: '07 · PATIENT STORIES',
-    title: 'Real Google Patient Reviews (5.0★)',
+    title: 'Verified Patient Reviews (5.0★)',
     sub: 'Hear directly from patients who trusted Armamento Dental Studio with their smiles.',
-    desc: 'Rated 5.0 stars on Google Maps. Read real stories of painless wisdom tooth extractions, friendly care teams, and affordable excellence.',
+    desc: 'Rated 5.0 stars by our patients. Read real stories of painless wisdom tooth extractions, friendly care teams, and affordable excellence.',
     isReviewsChapter: true,
     reviewsList: SITE_DATA.reviews
   },
