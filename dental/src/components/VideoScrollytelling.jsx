@@ -197,7 +197,7 @@ export function VideoScrollytelling({
         ))}
       </div>
 
-      {/* 4. PROMINENT FLOATING SHOWCASE BADGE (Top-Right / Floating when on Doctor or Gallery) */}
+      {/* 4. PROMINENT FLOATING SHOWCASE BADGE (Top-Right / Floating when on Doctor) */}
       {currentChapter.id === 'team' && (
         <div className="prominent-feature-card doctor-spotlight animate-fade-in">
           <div className="spotlight-portrait-frame">
@@ -214,67 +214,6 @@ export function VideoScrollytelling({
             <div className="spotlight-title">Dr. Aldrine Armamento</div>
             <div className="spotlight-role">Founder &amp; Clinical Director</div>
             <div className="spotlight-tagline">12+ Years of Advanced Implantology &amp; Aesthetic Restorations</div>
-          </div>
-        </div>
-      )}
-
-      {currentChapter.id === 'gallery' && (
-        <div className="prominent-feature-card gallery-spotlight animate-fade-in">
-          <div className="gallery-spotlight-header" style={{ justifyContent: 'space-between', width: '100%' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <Sparkles size={16} color="#C9A84B" />
-              <span>Studio Opening &amp; Clinical Care Team</span>
-            </div>
-            {activeGalleryBg && (
-              <button
-                onClick={() => setActiveGalleryBg(null)}
-                style={{
-                  background: 'rgba(201, 168, 75, 0.15)',
-                  border: '1px solid rgba(201, 168, 75, 0.4)',
-                  color: '#E8D48B',
-                  borderRadius: '12px',
-                  padding: '2px 8px',
-                  fontSize: '0.72rem',
-                  cursor: 'pointer'
-                }}
-              >
-                Back to Video
-              </button>
-            )}
-          </div>
-          <div className="prominent-gallery-strip">
-            <div
-              className={`prominent-gallery-cell featured ${activeGalleryBg === './images/team-group.jpg' ? 'thumbnail-active' : ''}`}
-              onClick={() => setActiveGalleryBg('./images/team-group.jpg')}
-              style={{ cursor: 'pointer' }}
-            >
-              <img src="./images/team-group.jpg" alt="Care Team Group" />
-              <div className="gallery-caption">Our Dental Doctors &amp; Staff</div>
-            </div>
-            <div
-              className={`prominent-gallery-cell ${activeGalleryBg === './images/team-dentists.jpg' ? 'thumbnail-active' : ''}`}
-              onClick={() => setActiveGalleryBg('./images/team-dentists.jpg')}
-              style={{ cursor: 'pointer' }}
-            >
-              <img src="./images/team-dentists.jpg" alt="Dentists in White Coats" />
-              <div className="gallery-caption">Clinical Dentists</div>
-            </div>
-            <div
-              className={`prominent-gallery-cell ${activeGalleryBg === './images/team-opening.jpg' ? 'thumbnail-active' : ''}`}
-              onClick={() => setActiveGalleryBg('./images/team-opening.jpg')}
-              style={{ cursor: 'pointer' }}
-            >
-              <img src="./images/team-opening.jpg" alt="Grand Opening Entrance" />
-              <div className="gallery-caption">APM Centrale Studio</div>
-            </div>
-            <div
-              className={`prominent-gallery-cell ${activeGalleryBg === './images/team-care.jpg' ? 'thumbnail-active' : ''}`}
-              onClick={() => setActiveGalleryBg('./images/team-care.jpg')}
-              style={{ cursor: 'pointer' }}
-            >
-              <img src="./images/team-care.jpg" alt="Care Team in Scrubs" />
-              <div className="gallery-caption">Surgical Care Staff</div>
-            </div>
           </div>
         </div>
       )}
@@ -337,6 +276,43 @@ export function VideoScrollytelling({
                         <ShieldCheck size={13} color="#C9A84B" /> {h}
                       </span>
                     ))}
+                  </div>
+                )}
+                {currentChapter.gallery && (
+                  <div style={{ marginTop: '0.85rem' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '6px' }}>
+                      <span style={{ fontSize: '0.78rem', color: '#E8D48B', fontWeight: 600, letterSpacing: '0.5px' }}>
+                        SELECT BACKDROP PHOTO:
+                      </span>
+                      {activeGalleryBg && (
+                        <button
+                          onClick={() => setActiveGalleryBg(null)}
+                          style={{
+                            background: 'rgba(201, 168, 75, 0.15)',
+                            border: '1px solid rgba(201, 168, 75, 0.4)',
+                            color: '#E8D48B',
+                            borderRadius: '10px',
+                            padding: '2px 8px',
+                            fontSize: '0.7rem',
+                            cursor: 'pointer'
+                          }}
+                        >
+                          Back to Video
+                        </button>
+                      )}
+                    </div>
+                    <div className="hud-gallery-strip">
+                      {currentChapter.gallery.map((img, i) => (
+                        <img
+                          key={i}
+                          src={img}
+                          alt={`Studio photo ${i + 1}`}
+                          onClick={() => setActiveGalleryBg(img)}
+                          className={activeGalleryBg === img ? 'thumbnail-active' : ''}
+                          style={{ cursor: 'pointer' }}
+                        />
+                      ))}
+                    </div>
                   </div>
                 )}
                 {currentChapter.contact && (
