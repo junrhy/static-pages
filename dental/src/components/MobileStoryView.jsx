@@ -108,7 +108,15 @@ export function MobileStoryView({
     >
       {/* 1. Fullscreen Background Media Screen (Video OR Cinematic Ken Burns Pan/Zoom Photo) */}
       <div className="mobile-video-screen">
-        {current.id === 'team' ? (
+        {current.id === 'intro' ? (
+          <div className="mobile-pan-container">
+            <img
+              src="./videos/armamento-dental-studio-poster.jpg"
+              alt="Armamento Dental Studio Intro"
+              className="mobile-story-image-wide-pan"
+            />
+          </div>
+        ) : current.id === 'team' ? (
           <div className="mobile-pan-container">
             <img
               src="./images/dr-aldrine.jpg"
