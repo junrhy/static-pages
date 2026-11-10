@@ -1,0 +1,229 @@
+/* ==================== MOBILE STORY / REEL CAROUSEL STYLES ==================== */
+.mobile-story-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  background: var(--navy);
+  user-select: none;
+  -webkit-user-select: none;
+  z-index: 10;
+}
+
+.mobile-video-screen {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.mobile-story-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.mobile-story-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(11, 20, 38, 0.8) 0%, transparent 20%, transparent 60%, rgba(11, 20, 38, 0.95) 100%);
+  pointer-events: none;
+}
+
+/* Top Progress Bars (Instagram / TikTok Stories) */
+.mobile-story-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 40;
+  padding: 0.85rem 1rem 0 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  background: linear-gradient(180deg, rgba(11, 20, 38, 0.9) 0%, transparent 100%);
+}
+
+.story-bars-row {
+  display: flex;
+  gap: 4px;
+  width: 100%;
+}
+
+.story-bar-segment {
+  flex: 1;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.story-bar-segment.active {
+  background: var(--gold);
+  box-shadow: 0 0 8px var(--gold-glow);
+}
+
+.story-bar-segment.completed {
+  background: var(--gold-light);
+}
+
+.mobile-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+/* Left & Right Tap Zones (Instagram Stories Tap Navigation) */
+.story-tap-zone {
+  position: absolute;
+  top: 15%;
+  height: 60%;
+  width: 35%;
+  z-index: 25;
+  cursor: pointer;
+}
+.tap-left {
+  left: 0;
+}
+.tap-right {
+  right: 0;
+}
+
+/* Bottom Card Container */
+.mobile-story-card-container {
+  position: absolute;
+  bottom: 2.85rem;
+  left: 0;
+  width: 100%;
+  padding: 0 1rem;
+  z-index: 35;
+  pointer-events: none;
+}
+
+.mobile-story-card {
+  pointer-events: auto;
+  width: 100%;
+  background: var(--navy-hud);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  border: 1px solid var(--border-glass);
+  border-radius: 20px;
+  padding: 1.15rem 1.25rem;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.85), inset 0 1px 0 rgba(232, 212, 139, 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mobile-story-card-main {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.mobile-story-title {
+  font-family: var(--font-serif);
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #FFFFFF;
+  line-height: 1.25;
+  margin-top: 2px;
+}
+
+.mobile-story-sub {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  line-height: 1.45;
+}
+
+.mobile-card-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 0.75rem;
+}
+
+.mobile-card-actions .hud-toggle-btn,
+.mobile-card-actions .nav-cta-btn {
+  flex: 1;
+  justify-content: center;
+  padding: 0.65rem 0.85rem;
+  font-size: 0.8rem;
+}
+
+.mobile-story-tray {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 0.85rem;
+  margin-top: 0.25rem;
+  max-height: 38vh;
+  overflow-y: auto;
+  animation: fadeInTray 0.25s ease;
+}
+
+.mobile-story-desc {
+  font-size: 0.88rem;
+  color: var(--text);
+  line-height: 1.55;
+}
+
+.mobile-highlights-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 0.65rem;
+}
+
+.mobile-highlight-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.82rem;
+  color: #E8D48B;
+}
+
+/* Nav hint bar at bottom */
+.story-nav-hints {
+  position: absolute;
+  bottom: 0.75rem;
+  left: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.25rem;
+  z-index: 40;
+  pointer-events: none;
+}
+
+.story-arrow-btn {
+  pointer-events: auto;
+  background: rgba(18, 30, 51, 0.7);
+  border: 1px solid var(--border-glass);
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.story-swipe-hint {
+  font-size: 0.68rem;
+  letter-spacing: 0.05em;
+  color: var(--gold-light);
+  opacity: 0.8;
+  text-transform: uppercase;
+}

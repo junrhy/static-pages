@@ -3,85 +3,20 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { BookingModal } from './BookingModal'
 import {
-  Sparkles,
   Phone,
   Clock,
-  MapPin,
   ChevronUp,
   ChevronDown,
   Calendar,
   Menu,
   X,
-  ArrowUpRight,
-  ShieldCheck,
-  Award
+  ShieldCheck
 } from 'lucide-react'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const CHAPTERS = [
-  {
-    id: 'intro',
-    badge: '01 · WELCOME',
-    title: 'Precision Dentistry. Personalized Care.',
-    sub: 'Your trusted dental sanctuary in Mabolo, Cebu City across SM City Cebu.',
-    desc: 'At Armamento Dental Studio, we blend state-of-the-art clinical techniques and gentle, focused attention to give you an unhurried, comfortable dental experience.',
-    highlights: ['Specialized Implants & Oral Surgery', 'Laser Teeth Whitening', 'Open Mon–Sat: 9AM – 8PM']
-  },
-  {
-    id: 'team',
-    badge: '02 · CLINICAL LEAD',
-    title: 'Meet Dr. Aldrine Armamento',
-    sub: 'Founder & Principal Dentist with 12+ years of surgical and clinical expertise.',
-    desc: 'Dedicated to painless dentistry and clear patient communication. Dr. Aldrine and his team take the time to listen and demystify every treatment before starting.',
-    doctorImg: './images/dr-aldrine.jpg'
-  },
-  {
-    id: 'implants',
-    badge: '03 · SURGICAL MASTERY',
-    title: 'Dental Implants & Oral Surgery',
-    sub: 'Permanent titanium teeth replacements, wisdom tooth extractions & bone regeneration.',
-    desc: 'Restore original chewing strength and natural smile contours with biocompatible titanium implants designed for lifetime structural integrity.',
-    highlights: ['Single & Multi Implants', 'Minimally Invasive Extractions', 'Site Preservation & Grafting']
-  },
-  {
-    id: 'cosmetic',
-    badge: '04 · SMILE DESIGN',
-    title: 'Porcelain Veneers & Laser Whitening',
-    sub: 'Artistic cosmetic makeovers designed to elevate your personal confidence.',
-    desc: 'From custom micro-thin E-Max ceramic veneers to in-office laser whitening, we craft naturally radiant smiles tailored to your unique facial geometry.',
-    highlights: ['Instant In-Office Laser Whitening', 'Ultra-Thin E-Max Veneers', 'Seamless Aesthetic Bonding']
-  },
-  {
-    id: 'gallery',
-    badge: '05 · STUDIO ATMOSPHERE',
-    title: 'Inside The Studio Experience',
-    sub: 'A peek into our modern, clean, and welcoming clinical environment at APM Centrale.',
-    desc: 'See our dedicated dental team in action—providing thoughtful, patient-first care in an atmosphere designed to remove clinic anxiety.',
-    gallery: [
-      './images/team-group.jpg',
-      './images/team-dentists.jpg',
-      './images/team-opening.jpg',
-      './images/team-care.jpg',
-      './images/team-fun.jpg',
-      './images/team-care-portrait.jpg'
-    ]
-  },
-  {
-    id: 'location',
-    badge: '06 · VISIT US',
-    title: 'Visit Us at APM Centrale',
-    sub: '2nd Floor, APM Centrale, A. Soriano Ave, Mabolo (Directly across SM City Cebu).',
-    desc: 'Easily accessible with secure mall parking, direct Grab drop-off, and elevator access. Open Monday to Saturday from 9:00 AM to 8:00 PM.',
-    contact: {
-      phone: '+63 945 599 7475',
-      landline: '(032) 256-0878',
-      hours: 'Mon–Sat: 9:00 AM – 8:00 PM'
-    }
-  }
-]
-
 export function VideoScrollytelling({
+  chapters,
   videoSrc = './videos/armamento-dental-studio-video.mp4',
   posterSrc = './videos/armamento-dental-studio-poster.jpg'
 }) {
@@ -92,7 +27,7 @@ export function VideoScrollytelling({
   const [bookingOpen, setBookingOpen] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
-  const currentChapter = CHAPTERS[activeChapterIndex]
+  const currentChapter = chapters[activeChapterIndex]
 
   useEffect(() => {
     const video = videoRef.current
@@ -103,37 +38,8 @@ export function VideoScrollytelling({
     video.defaultMuted = true
     video.setAttribute('muted', '')
     video.setAttribute('playsinline', '')
-    video.setAttribute('webkit-playsinline', 'true')
-
-    // Mobile priming for iOS Safari & Chrome
-    let primed = false
-    const prime = () => {
-      if (primed) return
-      const p = video.play()
-      if (p && typeof p.then === 'function') {
-        p.then(() => {
-          video.pause()
-          primed = true
-          removePrimeListeners()
-        }).catch(() => {})
-      } else {
-        video.pause()
-        primed = true
-        removePrimeListeners()
-      }
-    }
-    const primeEvents = ['touchstart', 'touchend', 'pointerdown', 'scroll', 'click', 'visibilitychange']
-    const removePrimeListeners = () =>
-      primeEvents.forEach(e => window.removeEventListener(e, prime))
-    primeEvents.forEach(e => window.addEventListener(e, prime, { passive: true }))
-    document.addEventListener('visibilitychange', prime)
-    video.load()
-    prime()
-    video.addEventListener('loadeddata', prime, { once: true })
-    video.addEventListener('canplay', prime, { once: true })
 
     const setupScroller = () => {
-      // 1. Continuous video scrubbing across entire scroll runway
       ScrollTrigger.create({
         trigger: container,
         start: 'top top',
@@ -143,15 +49,13 @@ export function VideoScrollytelling({
           if (video.duration && !isNaN(video.duration)) {
             video.currentTime = self.progress * video.duration
           }
-          // Compute chapter based on scroll progress
           const index = Math.min(
-            Math.floor(self.progress * CHAPTERS.length),
-            CHAPTERS.length - 1
+            Math.floor(self.progress * chapters.length),
+            chapters.length - 1
           )
           setActiveChapterIndex(index)
         }
       })
-
       ScrollTrigger.refresh()
     }
 
@@ -162,20 +66,19 @@ export function VideoScrollytelling({
     }
 
     return () => {
-      removePrimeListeners()
       ScrollTrigger.getAll().forEach(t => t.kill())
     }
-  }, [videoSrc])
+  }, [videoSrc, chapters])
 
   const scrollToChapter = (index) => {
     const totalHeight = containerRef.current.scrollHeight - window.innerHeight
-    const targetScroll = (index / (CHAPTERS.length - 1)) * totalHeight
+    const targetScroll = (index / (chapters.length - 1)) * totalHeight
     window.scrollTo({ top: targetScroll, behavior: 'smooth' })
   }
 
   return (
     <div ref={containerRef} className="video-scrolly-container">
-      {/* 1. Fullscreen Background Video Viewport (100% unobstructed on big screens) */}
+      {/* 1. Fullscreen Background Video Viewport (Desktop) */}
       <div className="fixed-video-viewport">
         <video
           ref={videoRef}
@@ -216,7 +119,7 @@ export function VideoScrollytelling({
 
         <div className="nav-center-group">
           <nav className="nav-links">
-            {CHAPTERS.map((ch, idx) => (
+            {chapters.map((ch, idx) => (
               <button
                 key={ch.id}
                 onClick={() => scrollToChapter(idx)}
@@ -236,63 +139,22 @@ export function VideoScrollytelling({
           >
             <Calendar size={15} /> Book Appointment
           </button>
-
-          <button
-            className="mobile-toggle"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label="Toggle Menu"
-          >
-            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
         </div>
       </header>
 
-      {/* Mobile Drawer */}
-      <div className={`mobile-nav-drawer ${mobileMenuOpen ? 'open' : ''}`}>
-        <div className="mobile-drawer-content">
-          <nav className="mobile-links">
-            {CHAPTERS.map((ch, idx) => (
-              <a
-                key={ch.id}
-                href={`#${ch.id}`}
-                onClick={(e) => {
-                  e.preventDefault()
-                  setMobileMenuOpen(false)
-                  scrollToChapter(idx)
-                }}
-              >
-                {ch.title}
-              </a>
-            ))}
-          </nav>
-
-          <button
-            onClick={() => {
-              setMobileMenuOpen(false)
-              setBookingOpen(true)
-            }}
-            className="nav-cta-btn"
-            style={{ marginTop: '1.5rem', width: '100%', justifyContent: 'center' }}
-          >
-            <Calendar size={16} /> Book Appointment
-          </button>
-        </div>
-      </div>
-
       {/* 3. Invisible Scroll Runway for GSAP */}
       <div className="scrolly-trigger-runway">
-        {CHAPTERS.map((ch) => (
+        {chapters.map((ch) => (
           <div key={ch.id} className="scrolly-trigger-zone" />
         ))}
       </div>
 
-      {/* 4. OPTION 1: Ultra-Thin Floating Glass HUD Dock (Leaves center video 100% open) */}
+      {/* 4. Desktop Low-Profile Glass HUD Dock */}
       <div className="floating-hud-dock-wrapper">
         <div className="floating-hud-dock">
           
-          {/* Timeline Bar on top */}
           <div className="hud-progress-indicators">
-            {CHAPTERS.map((ch, idx) => (
+            {chapters.map((ch, idx) => (
               <div
                 key={ch.id}
                 onClick={() => scrollToChapter(idx)}
@@ -302,7 +164,6 @@ export function VideoScrollytelling({
             ))}
           </div>
 
-          {/* Main Low-Profile HUD Row */}
           <div className="hud-dock-main-row">
             <div className="hud-dock-left">
               <span className="hud-chapter-badge">{currentChapter.badge}</span>
@@ -335,7 +196,6 @@ export function VideoScrollytelling({
             </div>
           </div>
 
-          {/* Optional Expanding Tray (Kept contained within bottom HUD dock) */}
           {isExpanded && (
             <div className="hud-expanded-tray">
               <div>
@@ -357,7 +217,6 @@ export function VideoScrollytelling({
                 )}
               </div>
 
-              {/* Extra visual element if available in chapter */}
               {currentChapter.doctorImg && (
                 <div className="doctor-mini-chip">
                   <img src={currentChapter.doctorImg} alt="Dr. Aldrine" />
@@ -381,7 +240,6 @@ export function VideoScrollytelling({
         </div>
       </div>
 
-      {/* Booking Modal */}
       <BookingModal
         isOpen={bookingOpen}
         onClose={() => setBookingOpen(false)}
