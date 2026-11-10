@@ -31,14 +31,8 @@ export function VideoScrollytelling({
   const currentChapter = chapters[activeChapterIndex]
 
   useEffect(() => {
-    const video = videoRef.current
     const container = containerRef.current
-    if (!video || !container) return
-
-    video.muted = true
-    video.defaultMuted = true
-    video.setAttribute('muted', '')
-    video.setAttribute('playsinline', '')
+    if (!container) return
 
     const setupScroller = () => {
       ScrollTrigger.create({
@@ -47,7 +41,8 @@ export function VideoScrollytelling({
         end: 'bottom bottom',
         scrub: 1.0,
         onUpdate: (self) => {
-          if (video.duration && !isNaN(video.duration)) {
+          const video = videoRef.current
+          if (video && video.duration && !isNaN(video.duration)) {
             video.currentTime = self.progress * video.duration
           }
           const index = Math.min(
@@ -60,18 +55,26 @@ export function VideoScrollytelling({
       ScrollTrigger.refresh()
     }
 
-    if (video.readyState >= 1) {
-      setupScroller()
-    } else {
-      video.addEventListener('loadedmetadata', setupScroller, { once: true })
-    }
+    setupScroller()
 
     return () => {
       ScrollTrigger.getAll().forEach(t => t.kill())
     }
-  }, [videoSrc, chapters])
+  }, [chapters])
+
+  // Separate effect to handle video element initialization when activeChapterIndex changes
+  useEffect(() => {
+    const video = videoRef.current
+    if (video) {
+      video.muted = true
+      video.defaultMuted = true
+      video.setAttribute('muted', '')
+      video.setAttribute('playsinline', '')
+    }
+  }, [activeChapterIndex])
 
   const scrollToChapter = (index) => {
+    setActiveChapterIndex(index)
     const totalHeight = containerRef.current.scrollHeight - window.innerHeight
     const targetScroll = (index / (chapters.length - 1)) * totalHeight
     window.scrollTo({ top: targetScroll, behavior: 'smooth' })
@@ -81,28 +84,37 @@ export function VideoScrollytelling({
     <div ref={containerRef} className="video-scrolly-container">
       {/* 1. Fullscreen Background Media Viewport */}
       <div className="fixed-video-viewport">
-        {/* On Chapter 1 (Precision Dentistry / Intro), show the high-definition studio poster */}
-        {activeChapterIndex === 0 ? (
-          <img
-            src="./videos/armamento-dental-studio-poster.jpg"
-            alt="Armamento Dental Studio"
-            className="scrolly-poster-element animate-fade-in"
-          />
-        ) : (
-          <video
-            ref={videoRef}
-            src={videoSrc}
-            poster={posterSrc}
-            playsInline
-            webkit-playsinline="true"
-            disablePictureInPicture
-            disableRemotePlayback
-            muted
-            autoPlay={false}
-            preload="auto"
-            className="scrolly-video-element"
-          />
-        )}
+        {/* Poster image visible on chapter 0 */}
+        <img
+          src="./videos/armamento-dental-studio-poster.jpg"
+          alt="Armamento Dental Studio"
+          className="scrolly-poster-element"
+          style={{
+            position: 'absolute',
+            inset: 0,
+            opacity: activeChapterIndex === 0 ? 1 : 0,
+            pointerEvents: 'none',
+            transition: 'opacity 0.6s ease'
+          }}
+        />
+        {/* Video element always mounted so ScrollTrigger never unbinds */}
+        <video
+          ref={videoRef}
+          src={videoSrc}
+          poster={posterSrc}
+          playsInline
+          webkit-playsinline="true"
+          disablePictureInPicture
+          disableRemotePlayback
+          muted
+          autoPlay={false}
+          preload="auto"
+          className="scrolly-video-element"
+          style={{
+            opacity: activeChapterIndex === 0 ? 0 : 1,
+            transition: 'opacity 0.6s ease'
+          }}
+        />
         <div className="video-cinema-overlay" />
       </div>
 
