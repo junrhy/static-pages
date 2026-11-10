@@ -207,13 +207,15 @@ export function MobileStoryView({
                 )}
               </button>
 
-              <button
-                onClick={() => setBookingOpen(true)}
+              <a
+                href="https://www.armamentodentalsytem.com/book.html"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="nav-cta-btn"
                 style={{ padding: '0.65rem 1.25rem', fontSize: '0.8rem' }}
               >
                 Book Now
-              </button>
+              </a>
             </div>
           </div>
 
@@ -396,16 +398,16 @@ export function MobileStoryView({
             </a>
           </nav>
 
-          <button
-            onClick={() => {
-              setMobileMenuOpen(false)
-              setBookingOpen(true)
-            }}
+          <a
+            href="https://www.armamentodentalsytem.com/book.html"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => setMobileMenuOpen(false)}
             className="nav-cta-btn"
             style={{ marginTop: '1.5rem', width: '100%', justifyContent: 'center' }}
           >
             Book Appointment
-          </button>
+          </a>
 
           <button
             onClick={() => setMobileMenuOpen(false)}
@@ -416,16 +418,11 @@ export function MobileStoryView({
         </div>
       </div>
 
-      <BookingModal
-        isOpen={bookingOpen}
-        onClose={() => setBookingOpen(false)}
-      />
-
       <ServicesModal
         isOpen={servicesModalOpen}
         onClose={() => setServicesModalOpen(false)}
         initialTab={servicesModalTab}
-        onOpenBooking={() => setBookingOpen(true)}
+        onOpenBooking={() => window.open('https://www.armamentodentalsytem.com/book.html', '_blank', 'noopener,noreferrer')}
       />
     </div>
   )

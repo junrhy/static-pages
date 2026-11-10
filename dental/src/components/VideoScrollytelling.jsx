@@ -207,12 +207,14 @@ export function VideoScrollytelling({
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', pointerEvents: 'auto' }}>
-          <button
-            onClick={() => setBookingOpen(true)}
+          <a
+            href="https://www.armamentodentalsytem.com/book.html"
+            target="_blank"
+            rel="noopener noreferrer"
             className="nav-cta-btn"
           >
             <Calendar size={15} /> Book Appointment
-          </button>
+          </a>
         </div>
       </header>
 
@@ -281,13 +283,15 @@ export function VideoScrollytelling({
                 )}
               </button>
 
-              <button
-                onClick={() => setBookingOpen(true)}
+              <a
+                href="https://www.armamentodentalsytem.com/book.html"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="nav-cta-btn"
                 style={{ padding: '0.65rem 1.25rem', fontSize: '0.8rem' }}
               >
                 Book Now
-              </button>
+              </a>
             </div>
           </div>
 
@@ -418,16 +422,11 @@ export function VideoScrollytelling({
         </div>
       </div>
 
-      <BookingModal
-        isOpen={bookingOpen}
-        onClose={() => setBookingOpen(false)}
-      />
-
       <ServicesModal
         isOpen={servicesModalOpen}
         onClose={() => setServicesModalOpen(false)}
         initialTab={servicesModalTab}
-        onOpenBooking={() => setBookingOpen(true)}
+        onOpenBooking={() => window.open('https://www.armamentodentalsytem.com/book.html', '_blank', 'noopener,noreferrer')}
       />
     </div>
   )
