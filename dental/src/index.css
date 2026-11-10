@@ -263,7 +263,7 @@ html, body, #root {
 .video-scrolly-container {
   position: relative;
   width: 100%;
-  min-height: 700vh;
+  min-height: 1400vh;
 }
 
 /* Fixed Fullscreen Background Video Viewport (Unobstructed!) */

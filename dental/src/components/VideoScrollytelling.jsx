@@ -39,7 +39,7 @@ export function VideoScrollytelling({
         trigger: container,
         start: 'top top',
         end: 'bottom bottom',
-        scrub: 1.0,
+        scrub: 1.5,
         onUpdate: (self) => {
           const video = videoRef.current
           if (video && video.duration && !isNaN(video.duration)) {
