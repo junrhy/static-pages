@@ -27,8 +27,16 @@ export function VideoScrollytelling({
   const [activeChapterIndex, setActiveChapterIndex] = useState(0)
   const [isExpanded, setIsExpanded] = useState(false)
   const [bookingOpen, setBookingOpen] = useState(false)
+  const [activeGalleryBg, setActiveGalleryBg] = useState(null)
 
   const currentChapter = chapters[activeChapterIndex]
+
+  // Reset custom background image when navigating away from the gallery chapter
+  useEffect(() => {
+    if (currentChapter.id !== 'gallery') {
+      setActiveGalleryBg(null)
+    }
+  }, [activeChapterIndex, currentChapter.id])
 
   useEffect(() => {
     const container = containerRef.current
@@ -92,11 +100,29 @@ export function VideoScrollytelling({
           style={{
             position: 'absolute',
             inset: 0,
-            opacity: activeChapterIndex === 0 ? 1 : 0,
+            opacity: activeChapterIndex === 0 && !activeGalleryBg ? 1 : 0,
             pointerEvents: 'none',
             transition: 'opacity 0.6s ease'
           }}
         />
+
+        {/* Dynamic Gallery Background Image when a thumbnail is clicked */}
+        <div
+          className="scrolly-gallery-bg"
+          style={{
+            position: 'absolute',
+            inset: 0,
+            backgroundImage: activeGalleryBg ? `url(${activeGalleryBg})` : 'none',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            opacity: activeGalleryBg ? 1 : 0,
+            pointerEvents: 'none',
+            transition: 'opacity 0.6s ease, transform 10s ease-out',
+            transform: activeGalleryBg ? 'scale(1.05)' : 'scale(1)',
+            zIndex: 1
+          }}
+        />
+
         {/* Video element always mounted so ScrollTrigger never unbinds */}
         <video
           ref={videoRef}
@@ -111,7 +137,7 @@ export function VideoScrollytelling({
           preload="auto"
           className="scrolly-video-element"
           style={{
-            opacity: activeChapterIndex === 0 ? 0 : 1,
+            opacity: (activeChapterIndex === 0 || activeGalleryBg) ? 0 : 1,
             transition: 'opacity 0.6s ease'
           }}
         />
@@ -194,24 +220,58 @@ export function VideoScrollytelling({
 
       {currentChapter.id === 'gallery' && (
         <div className="prominent-feature-card gallery-spotlight animate-fade-in">
-          <div className="gallery-spotlight-header">
-            <Sparkles size={16} color="#C9A84B" />
-            <span>Studio Opening &amp; Clinical Care Team</span>
+          <div className="gallery-spotlight-header" style={{ justifyContent: 'space-between', width: '100%' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <Sparkles size={16} color="#C9A84B" />
+              <span>Studio Opening &amp; Clinical Care Team</span>
+            </div>
+            {activeGalleryBg && (
+              <button
+                onClick={() => setActiveGalleryBg(null)}
+                style={{
+                  background: 'rgba(201, 168, 75, 0.15)',
+                  border: '1px solid rgba(201, 168, 75, 0.4)',
+                  color: '#E8D48B',
+                  borderRadius: '12px',
+                  padding: '2px 8px',
+                  fontSize: '0.72rem',
+                  cursor: 'pointer'
+                }}
+              >
+                Back to Video
+              </button>
+            )}
           </div>
           <div className="prominent-gallery-strip">
-            <div className="prominent-gallery-cell featured">
+            <div
+              className={`prominent-gallery-cell featured ${activeGalleryBg === './images/team-group.jpg' ? 'thumbnail-active' : ''}`}
+              onClick={() => setActiveGalleryBg('./images/team-group.jpg')}
+              style={{ cursor: 'pointer' }}
+            >
               <img src="./images/team-group.jpg" alt="Care Team Group" />
               <div className="gallery-caption">Our Dental Doctors &amp; Staff</div>
             </div>
-            <div className="prominent-gallery-cell">
+            <div
+              className={`prominent-gallery-cell ${activeGalleryBg === './images/team-dentists.jpg' ? 'thumbnail-active' : ''}`}
+              onClick={() => setActiveGalleryBg('./images/team-dentists.jpg')}
+              style={{ cursor: 'pointer' }}
+            >
               <img src="./images/team-dentists.jpg" alt="Dentists in White Coats" />
               <div className="gallery-caption">Clinical Dentists</div>
             </div>
-            <div className="prominent-gallery-cell">
+            <div
+              className={`prominent-gallery-cell ${activeGalleryBg === './images/team-opening.jpg' ? 'thumbnail-active' : ''}`}
+              onClick={() => setActiveGalleryBg('./images/team-opening.jpg')}
+              style={{ cursor: 'pointer' }}
+            >
               <img src="./images/team-opening.jpg" alt="Grand Opening Entrance" />
               <div className="gallery-caption">APM Centrale Studio</div>
             </div>
-            <div className="prominent-gallery-cell">
+            <div
+              className={`prominent-gallery-cell ${activeGalleryBg === './images/team-care.jpg' ? 'thumbnail-active' : ''}`}
+              onClick={() => setActiveGalleryBg('./images/team-care.jpg')}
+              style={{ cursor: 'pointer' }}
+            >
               <img src="./images/team-care.jpg" alt="Care Team in Scrubs" />
               <div className="gallery-caption">Surgical Care Staff</div>
             </div>

@@ -867,6 +867,15 @@ html, body, #root {
   transform: scale(1.05);
 }
 
+.prominent-gallery-cell.thumbnail-active {
+  border: 2px solid var(--gold);
+  box-shadow: 0 0 16px var(--gold-glow);
+}
+
+.prominent-gallery-cell.thumbnail-active img {
+  transform: scale(1.04);
+}
+
 .gallery-caption {
   position: absolute;
   bottom: 0;
