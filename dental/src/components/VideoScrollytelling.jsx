@@ -106,55 +106,6 @@ export function VideoScrollytelling({
           }}
         />
 
-        {/* Doctor Photo visible as background on chapter 1 (Meet Dr) */}
-        <div
-          className="scrolly-doctor-bg-container"
-          style={{
-            position: 'absolute',
-            inset: 0,
-            opacity: currentChapter.id === 'team' && !activeGalleryBg ? 1 : 0,
-            pointerEvents: 'none',
-            transition: 'opacity 0.6s ease',
-            backgroundColor: '#DFE5E2',
-            overflow: 'hidden',
-            zIndex: 1
-          }}
-        >
-          {/* Blurred ambient background to seamlessly fill ultra-wide screens */}
-          <div
-            style={{
-              position: 'absolute',
-              inset: '-10%',
-              backgroundImage: `url(${currentChapter.doctorImg || './images/dr-aldrine.jpg'})`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center 35%',
-              filter: 'blur(30px) brightness(0.9)',
-              transform: 'scale(1.1)',
-              opacity: 0.65
-            }}
-          />
-          {/* Crisp, contained portrait of Dr. Aldrine & Armamento Studio Sign with proper head room */}
-          <img
-            src={currentChapter.doctorImg || './images/dr-aldrine.jpg'}
-            alt="Dr. Aldrine Armamento"
-            style={{
-              position: 'absolute',
-              top: 0,
-              bottom: 0,
-              left: 0,
-              right: 0,
-              margin: 'auto',
-              width: '100%',
-              height: '100%',
-              maxHeight: '100vh',
-              objectFit: 'contain',
-              objectPosition: 'center center',
-              zIndex: 2,
-              filter: 'drop-shadow(0 15px 35px rgba(11, 20, 38, 0.45))'
-            }}
-          />
-        </div>
-
         {/* Dynamic Gallery Background Image when a thumbnail is clicked */}
         <div
           className="scrolly-gallery-bg"
@@ -168,7 +119,7 @@ export function VideoScrollytelling({
             pointerEvents: 'none',
             transition: 'opacity 0.6s ease, transform 10s ease-out',
             transform: activeGalleryBg ? 'scale(1.05)' : 'scale(1)',
-            zIndex: 2
+            zIndex: 1
           }}
         />
 
@@ -186,7 +137,7 @@ export function VideoScrollytelling({
           preload="auto"
           className="scrolly-video-element"
           style={{
-            opacity: (activeChapterIndex === 0 || currentChapter.id === 'team' || activeGalleryBg) ? 0 : 1,
+            opacity: (activeChapterIndex === 0 || activeGalleryBg) ? 0 : 1,
             transition: 'opacity 0.6s ease'
           }}
         />
@@ -246,7 +197,28 @@ export function VideoScrollytelling({
         ))}
       </div>
 
-      {/* 4. Desktop Low-Profile Glass HUD Dock */}
+      {/* 4. PROMINENT FLOATING SHOWCASE BADGE (Top-Right when on Meet Dr) */}
+      {currentChapter.id === 'team' && (
+        <div className="prominent-feature-card doctor-spotlight animate-fade-in">
+          <div className="spotlight-portrait-frame">
+            <img
+              src="./images/dr-aldrine.jpg"
+              alt="Dr. Aldrine Armamento"
+              className="spotlight-img"
+            />
+            <div className="spotlight-gold-badge">
+              <Award size={14} color="#0B1426" /> Principal Surgeon
+            </div>
+          </div>
+          <div className="spotlight-info">
+            <div className="spotlight-title">Dr. Aldrine Armamento</div>
+            <div className="spotlight-role">Founder &amp; Clinical Director</div>
+            <div className="spotlight-tagline">12+ Years of Advanced Implantology &amp; Aesthetic Restorations</div>
+          </div>
+        </div>
+      )}
+
+      {/* 5. Desktop Low-Profile Glass HUD Dock */}
       <div className="floating-hud-dock-wrapper">
         <div className="floating-hud-dock">
           
