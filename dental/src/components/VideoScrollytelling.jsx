@@ -108,20 +108,52 @@ export function VideoScrollytelling({
 
         {/* Doctor Photo visible as background on chapter 1 (Meet Dr) */}
         <div
-          className="scrolly-doctor-bg"
+          className="scrolly-doctor-bg-container"
           style={{
             position: 'absolute',
             inset: 0,
-            backgroundImage: `url(${currentChapter.doctorImg || './images/dr-aldrine.jpg'})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center 20%',
             opacity: currentChapter.id === 'team' && !activeGalleryBg ? 1 : 0,
             pointerEvents: 'none',
-            transition: 'opacity 0.6s ease, transform 10s ease-out',
-            transform: currentChapter.id === 'team' ? 'scale(1.03)' : 'scale(1)',
+            transition: 'opacity 0.6s ease',
+            backgroundColor: '#DFE5E2',
+            overflow: 'hidden',
             zIndex: 1
           }}
-        />
+        >
+          {/* Blurred ambient background to seamlessly fill ultra-wide screens */}
+          <div
+            style={{
+              position: 'absolute',
+              inset: '-10%',
+              backgroundImage: `url(${currentChapter.doctorImg || './images/dr-aldrine.jpg'})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center 35%',
+              filter: 'blur(30px) brightness(0.9)',
+              transform: 'scale(1.1)',
+              opacity: 0.65
+            }}
+          />
+          {/* Crisp, contained portrait of Dr. Aldrine & Armamento Studio Sign with proper head room */}
+          <img
+            src={currentChapter.doctorImg || './images/dr-aldrine.jpg'}
+            alt="Dr. Aldrine Armamento"
+            style={{
+              position: 'absolute',
+              top: 0,
+              bottom: 0,
+              left: 0,
+              right: 0,
+              margin: 'auto',
+              width: '100%',
+              height: '100%',
+              maxHeight: '100vh',
+              objectFit: 'contain',
+              objectPosition: 'center center',
+              zIndex: 2,
+              filter: 'drop-shadow(0 15px 35px rgba(11, 20, 38, 0.45))'
+            }}
+          />
+        </div>
 
         {/* Dynamic Gallery Background Image when a thumbnail is clicked */}
         <div
